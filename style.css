@@ -49,7 +49,7 @@ html {
   #banner{
     background-repeat: repeat-x;
     background-image: url('banner1.png');
-    background-size: 50%;
+    background-size: 40%;
     height: 115px;
     width: 100%;
     box-shadow: 1px 1px 2px black, 0 0 20px rgb(185, 135, 48);
