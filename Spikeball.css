@@ -49,7 +49,7 @@ p {
   background-size: cover;
   background-repeat: no-repeat;
   background-position: top; /* Adjusted property */
-  height: 18vh; /* Set a constant height using vh unit */
+  height: 18%; /* Set a constant height using vh unit */
   width: 100%;
   max-width: 100%;
   box-shadow: 1px 1px 2px black, 0 0 20px rgb(28, 90, 147);
