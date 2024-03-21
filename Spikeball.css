@@ -1,11 +1,14 @@
 html {
   min-height: 100%;
   position: relative;
+  height: -webkit-fill-available;
 }
 
 body {
   height: 100%;
   background-color: #6e9cc2;
+  height: -webkit-fill-available;
+
 }
 
 h1 {
