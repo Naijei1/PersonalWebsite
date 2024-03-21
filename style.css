@@ -69,7 +69,7 @@ html {
   background-attachment: fixed; /* Add this line */
   animation: Gradient 15s ease infinite;
   position: absolute;
-  height: 100vh; /* Modify this line */
+  height: 100%; /* Modify this line */
   width: 100%;
   overflow: hidden;
   padding: 0;

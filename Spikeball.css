@@ -44,11 +44,12 @@ p {
   margin-top: -5px;
 }
 
-#banner {
+#banner{
   background-image: url('Spike.png');
   background-size: cover;
   background-repeat: no-repeat;
   background-position: top; /* Adjusted property */
+  height: 18vh; /* Set a constant height using vh unit */
   width: 100%;
   max-width: 100%;
   box-shadow: 1px 1px 2px black, 0 0 20px rgb(28, 90, 147);
@@ -56,16 +57,4 @@ p {
   top: 0;
   left: 0;
   z-index: -1;
-}
-
-@media only screen and (orientation: portrait) {
-  #banner {
-    height: 100px; /* Adjusted height for vertical mode */
-  }
-}
-
-@media only screen and (orientation: landscape) {
-  #banner {
-    height: 176px; /* Original height for landscape mode */
-  }
 }
