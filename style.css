@@ -66,13 +66,14 @@ html {
 .background {
   background: linear-gradient(132deg, #cb7b4a, #dfa567, #f7bf70);
   background-size: cover;
+  background-attachment: fixed; /* Add this line */
   animation: Gradient 15s ease infinite;
   position: absolute;
   height: 100%;
   width: 100%;
   overflow: hidden;
-  padding:0;
-  margin:0px;
+  padding: 0;
+  margin: 0px;
   top: 0;
   left: 0;
   z-index: -1;
