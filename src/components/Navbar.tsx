@@ -49,7 +49,7 @@ export default function Navbar() {
             href="mailto:nj277@cornell.edu"
             className="text-sm px-4 py-2 rounded-lg border border-indigo-500/50 text-indigo-400 hover:bg-indigo-500/10 hover:border-indigo-400 transition-all font-medium"
           >
-            Hire Me
+            Contact Me
           </a>
         </div>
 
@@ -82,7 +82,7 @@ export default function Navbar() {
             href="mailto:nj277@cornell.edu"
             className="text-sm px-4 py-2 rounded-lg border border-indigo-500/50 text-indigo-400 hover:bg-indigo-500/10 transition-all font-medium text-center"
           >
-            Hire Me
+            Contact Me
           </a>
         </div>
       )}

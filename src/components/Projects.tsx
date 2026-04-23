@@ -40,6 +40,56 @@ const projects = [
     tags: ['Slurm', 'NFS', 'Cloudflare', 'vLLM', 'Distributed Systems'],
     highlight: false,
   },
+  {
+    name: 'Distributed Downloader',
+    award: 'Cornell Data Science',
+    period: '2026',
+    description:
+      'Peer-to-peer chunked file distribution system designed to accelerate large file downloads and reduce origin bandwidth usage.',
+    bullets: [
+      'Implemented chunk-based transfer coordination with integrity verification to improve reliability over unstable peers.',
+      'Designed downloader orchestration for concurrent multi-peer retrieval to increase throughput and reduce total download time.',
+    ],
+    tags: ['Python', 'P2P', 'Distributed Systems', 'Concurrency', 'Networking'],
+    highlight: false,
+    link: 'https://github.com/CornellDataScience/distributed-downloader',
+  },
+  {
+    name: 'ML Final Web',
+    award: null,
+    period: '2025',
+    description:
+      'Web-based machine learning application for predicting diabetes risk through an accessible, user-friendly interface.',
+    bullets: [
+      'Built a full prediction workflow from form capture to model inference and clear results presentation.',
+    ],
+    tags: ['Python', 'Machine Learning', 'Web App'],
+    highlight: false,
+    link: 'https://github.com/Naijei1/ML-Final-Web',
+  },
+  {
+    name: 'VR Bioprinting Research Project',
+    award: null,
+    period: '2023',
+    description:
+      'Virtual reality simulation exploring 3D bioprinting concepts for education research in collaboration with RIT.',
+    bullets: [
+      'Developed immersive educational interactions and evaluated usability in a research-focused learning environment.',
+    ],
+    tags: ['Unity', 'C#', 'VR', 'Research'],
+    highlight: false,
+    link: 'https://github.com/Naijei1/VR-Bioprinting-Research-Project',
+  },
+  {
+    name: 'Cruisin VR',
+    award: null,
+    period: '2023',
+    description: 'A VR driving simulator game focused on vehicle handling and player immersion.',
+    bullets: ['Implemented gameplay systems and interactions to deliver a polished VR driving experience.'],
+    tags: ['Unity', 'C#', 'VR', 'Game Development'],
+    highlight: false,
+    link: 'https://github.com/Naijei1/Cruisin-VR',
+  },
 ]
 
 export default function Projects() {
@@ -73,6 +123,16 @@ export default function Projects() {
                   <p className="text-indigo-400 text-xs font-medium">{project.award}</p>
                 )}
                 <p className="text-gray-600 text-xs font-mono mt-1">{project.period}</p>
+                {project.link && (
+                  <a
+                    href={project.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-block mt-2 text-xs text-indigo-400 hover:text-indigo-300 transition-colors"
+                  >
+                    View on GitHub
+                  </a>
+                )}
               </div>
 
               <p className="text-gray-400 text-sm leading-relaxed mb-4">

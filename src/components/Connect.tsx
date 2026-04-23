@@ -1,4 +1,4 @@
-import { Mail, Github, Youtube, Instagram, MessageSquare, ExternalLink, Phone } from 'lucide-react'
+import { Mail, Github, Youtube, Instagram, MessageSquare, Phone } from 'lucide-react'
 import SectionHeader from './SectionHeader'
 
 const links = [
@@ -41,14 +41,6 @@ const links = [
     href: 'https://discordapp.com/users/447773523868647424/',
     color: 'from-indigo-500/10 to-blue-500/10 border-indigo-500/20 hover:border-indigo-400/40',
     iconColor: 'text-indigo-400',
-  },
-  {
-    icon: ExternalLink,
-    label: 'Spikeball',
-    value: 'naijei.com/Spikeball',
-    href: 'https://naijei.com/Spikeball.html',
-    color: 'from-green-500/10 to-emerald-500/10 border-green-500/20 hover:border-green-400/40',
-    iconColor: 'text-green-400',
   },
 ]
 
