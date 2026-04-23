@@ -52,7 +52,7 @@ const projects = [
     ],
     tags: ['Python', 'P2P', 'Distributed Systems', 'Concurrency', 'Networking'],
     highlight: false,
-    link: 'https://github.com/Naijei1',
+    link: 'https://github.com/CornellDataScience/distributed-downloader',
   },
   {
     name: 'ML Final Web',
