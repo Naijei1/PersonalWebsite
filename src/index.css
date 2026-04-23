@@ -32,6 +32,25 @@
   .glow-md {
     box-shadow: 0 0 40px rgba(99, 102, 241, 0.2);
   }
+
+  .timeline-card {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .timeline-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(110deg, rgba(99, 102, 241, 0.08), transparent 42%);
+    opacity: 0;
+    transition: opacity 0.35s ease;
+    pointer-events: none;
+  }
+
+  .timeline-card:hover::before {
+    opacity: 1;
+  }
 }
 
 /* Custom scrollbar */

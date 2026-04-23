@@ -1,4 +1,4 @@
-import { Mail, Github, Youtube, Instagram, MessageSquare, Phone } from 'lucide-react'
+import { Mail, Github, Youtube, Instagram, MessageSquare, Phone, Linkedin } from 'lucide-react'
 import SectionHeader from './SectionHeader'
 
 const links = [
@@ -9,6 +9,14 @@ const links = [
     href: 'mailto:nj277@cornell.edu',
     color: 'from-blue-500/10 to-indigo-500/10 border-blue-500/20 hover:border-blue-400/40',
     iconColor: 'text-blue-400',
+  },
+  {
+    icon: Linkedin,
+    label: 'LinkedIn',
+    value: 'linkedin.com/in/naijei',
+    href: 'https://www.linkedin.com/in/naijei',
+    color: 'from-cyan-500/10 to-blue-500/10 border-cyan-500/20 hover:border-cyan-400/40',
+    iconColor: 'text-cyan-400',
   },
   {
     icon: Github,
