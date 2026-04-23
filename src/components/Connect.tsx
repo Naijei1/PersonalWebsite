@@ -1,4 +1,5 @@
 import { Mail, Github, Youtube, Instagram, MessageSquare, ExternalLink, Phone } from 'lucide-react'
+import SectionHeader from './SectionHeader'
 
 const links = [
   {
@@ -55,13 +56,7 @@ export default function Connect() {
   return (
     <section id="connect" className="py-24 px-6">
       <div className="max-w-6xl mx-auto">
-        <div className="flex items-center gap-3 mb-4">
-          <div className="w-8 h-8 rounded-lg bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center">
-            <Mail className="w-4 h-4 text-indigo-400" />
-          </div>
-          <h2 className="text-2xl font-bold text-white">Connect</h2>
-          <div className="flex-1 h-px bg-gradient-to-r from-gray-800 to-transparent ml-4" />
-        </div>
+        <SectionHeader title="Connect" icon={<Mail className="w-4 h-4 text-indigo-400" />} className="mb-4" />
         <p className="text-gray-500 mb-12">
           Based in Rochester, NY · Available for internships &amp; collaboration
         </p>

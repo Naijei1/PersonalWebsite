@@ -1,4 +1,5 @@
 import { Briefcase, ChevronRight } from 'lucide-react'
+import SectionHeader from './SectionHeader'
 
 const experiences = [
   {
@@ -51,13 +52,7 @@ export default function Experience() {
   return (
     <section id="experience" className="py-24 px-6 bg-gray-900/20">
       <div className="max-w-6xl mx-auto">
-        <div className="flex items-center gap-3 mb-12">
-          <div className="w-8 h-8 rounded-lg bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center">
-            <Briefcase className="w-4 h-4 text-indigo-400" />
-          </div>
-          <h2 className="text-2xl font-bold text-white">Experience</h2>
-          <div className="flex-1 h-px bg-gradient-to-r from-gray-800 to-transparent ml-4" />
-        </div>
+        <SectionHeader icon={<Briefcase className="w-4 h-4 text-indigo-400" />} title="Experience" />
 
         <div className="relative">
           {/* Timeline line */}

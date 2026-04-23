@@ -1,4 +1,5 @@
 import { GraduationCap, BookOpen } from 'lucide-react'
+import SectionHeader from './SectionHeader'
 
 const courses = [
   'Data Structures & Algorithms',
@@ -17,13 +18,7 @@ export default function Education() {
   return (
     <section className="py-24 px-6">
       <div className="max-w-6xl mx-auto">
-        <div className="flex items-center gap-3 mb-12">
-          <div className="w-8 h-8 rounded-lg bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center">
-            <GraduationCap className="w-4 h-4 text-indigo-400" />
-          </div>
-          <h2 className="text-2xl font-bold text-white">Education</h2>
-          <div className="flex-1 h-px bg-gradient-to-r from-gray-800 to-transparent ml-4" />
-        </div>
+        <SectionHeader icon={<GraduationCap className="w-4 h-4 text-indigo-400" />} title="Education" />
 
         <div className="bg-gray-900/50 border border-gray-800 rounded-2xl p-8 card-hover glow-sm">
           <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4 mb-6">

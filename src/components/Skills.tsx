@@ -1,4 +1,5 @@
 import { Code2, Zap } from 'lucide-react'
+import SectionHeader from './SectionHeader'
 
 const skillGroups = [
   {
@@ -41,13 +42,7 @@ export default function Skills() {
   return (
     <section id="skills" className="py-24 px-6 bg-gray-900/20">
       <div className="max-w-6xl mx-auto">
-        <div className="flex items-center gap-3 mb-12">
-          <div className="w-8 h-8 rounded-lg bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center">
-            <Code2 className="w-4 h-4 text-indigo-400" />
-          </div>
-          <h2 className="text-2xl font-bold text-white">Skills</h2>
-          <div className="flex-1 h-px bg-gradient-to-r from-gray-800 to-transparent ml-4" />
-        </div>
+        <SectionHeader icon={<Code2 className="w-4 h-4 text-indigo-400" />} title="Skills" />
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
           {skillGroups.map((group) => (
