@@ -36,7 +36,7 @@ const projects: Project[] = [
     stars: 0,
     repoDescription:
       'AR-assisted real-time drumming trainer that maps songs to timed 4-lane percussion cues.',
-    image: 'https://opengraph.githubassets.com/1/Naijei1/GroovyAR',
+    image: '/project-logos/groovyar.png',
   },
   {
     name: 'Astra',
@@ -70,7 +70,7 @@ const projects: Project[] = [
     language: 'C++',
     stars: 2,
     repoDescription: 'CDS Compute Cluster.',
-    image: 'https://opengraph.githubassets.com/1/CornellDataScience/computecluster',
+    image: '/project-logos/computecluster.png',
   },
   {
     name: 'Distributed Downloader',
@@ -90,7 +90,7 @@ const projects: Project[] = [
     stars: 2,
     repoDescription:
       'LAN-first peer-to-peer distributed downloader for game/software installs and updates.',
-    image: 'https://opengraph.githubassets.com/1/CornellDataScience/distributed-downloader',
+    image: '/project-logos/distributed-downloader.png',
   },
   {
     name: 'ML Final Web',
@@ -109,7 +109,7 @@ const projects: Project[] = [
     stars: 0,
     repoDescription:
       'Web based machine learning application for predicting diabetes risk using a user friendly interface.',
-    image: 'https://opengraph.githubassets.com/1/Naijei1/ML-Final-Web',
+    image: '/project-logos/ml-final-web.png',
   },
   {
     name: 'VR Bioprinting Research Project',
@@ -128,7 +128,7 @@ const projects: Project[] = [
     stars: 0,
     repoDescription:
       'A virtual reality simulator on 3D bioprinting for education-effectiveness research.',
-    image: 'https://opengraph.githubassets.com/1/Naijei1/VR-Bioprinting-Research-Project',
+    image: '/project-logos/vr-bioprinting.png',
   },
   {
     name: 'Cruisin VR',
@@ -143,7 +143,7 @@ const projects: Project[] = [
     language: 'C#',
     stars: 0,
     repoDescription: 'A VR car game that simulates driving.',
-    image: 'https://opengraph.githubassets.com/1/Naijei1/Cruisin-VR',
+    image: '/project-logos/cruisin-vr.png',
   },
 ]
 
