@@ -1,4 +1,4 @@
-import { Github, Mail, Youtube, Instagram, ExternalLink } from 'lucide-react'
+import { Github, Mail, Youtube, Instagram } from 'lucide-react'
 
 const socialLinks = [
   {
@@ -148,17 +148,6 @@ export default function Hero() {
               </span>
             </a>
           ))}
-          <a
-            href="https://naijei.com/Spikeball.html"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="group flex items-center gap-2 px-4 py-2.5 rounded-xl bg-gray-900 border border-gray-800 hover:border-indigo-500/50 hover:bg-gray-800 transition-all duration-200"
-          >
-            <ExternalLink className="w-4 h-4 text-gray-500 group-hover:text-indigo-400 transition-colors" />
-            <span className="text-sm text-gray-400 group-hover:text-gray-200 transition-colors">
-              Spikeball
-            </span>
-          </a>
         </div>
       </div>
 
