@@ -1,0 +1,49 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-gray-950 text-gray-100 antialiased;
+  }
+
+  ::selection {
+    @apply bg-indigo-500/30 text-indigo-200;
+  }
+}
+
+@layer utilities {
+  .text-gradient {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400;
+  }
+
+  .card-hover {
+    @apply transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl hover:shadow-indigo-500/10;
+  }
+
+  .glow-sm {
+    box-shadow: 0 0 20px rgba(99, 102, 241, 0.15);
+  }
+
+  .glow-md {
+    box-shadow: 0 0 40px rgba(99, 102, 241, 0.2);
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  @apply bg-gray-900;
+}
+::-webkit-scrollbar-thumb {
+  @apply bg-indigo-600 rounded-full;
+}
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-indigo-500;
+}
