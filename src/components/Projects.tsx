@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react'
 import { Rocket, Trophy, ChevronRight, ExternalLink, Star, X } from 'lucide-react'
 import SectionHeader from './SectionHeader'
 
+const projectImagePath = (fileName: string) => `${import.meta.env.BASE_URL}project-logos/${fileName}`
+
 type Project = {
   name: string
   award: string | null
@@ -36,7 +38,7 @@ const projects: Project[] = [
     stars: 0,
     repoDescription:
       'AR-assisted real-time drumming trainer that maps songs to timed 4-lane percussion cues.',
-    image: '/project-logos/groovyar.png',
+    image: projectImagePath('groovyar.png'),
   },
   {
     name: 'Astra',
@@ -70,7 +72,7 @@ const projects: Project[] = [
     language: 'C++',
     stars: 2,
     repoDescription: 'CDS Compute Cluster.',
-    image: '/project-logos/computecluster.png',
+    image: projectImagePath('computecluster.png'),
   },
   {
     name: 'Distributed Downloader',
@@ -90,7 +92,7 @@ const projects: Project[] = [
     stars: 2,
     repoDescription:
       'LAN-first peer-to-peer distributed downloader for game/software installs and updates.',
-    image: '/project-logos/distributed-downloader.png',
+    image: projectImagePath('distributed-downloader.png'),
   },
   {
     name: 'ML Final Web',
@@ -109,7 +111,7 @@ const projects: Project[] = [
     stars: 0,
     repoDescription:
       'Web based machine learning application for predicting diabetes risk using a user friendly interface.',
-    image: '/project-logos/ml-final-web.png',
+    image: projectImagePath('ml-final-web.png'),
   },
   {
     name: 'VR Bioprinting Research Project',
@@ -128,7 +130,7 @@ const projects: Project[] = [
     stars: 0,
     repoDescription:
       'A virtual reality simulator on 3D bioprinting for education-effectiveness research.',
-    image: '/project-logos/vr-bioprinting.png',
+    image: projectImagePath('vr-bioprinting.png'),
   },
   {
     name: 'Cruisin VR',
@@ -143,7 +145,7 @@ const projects: Project[] = [
     language: 'C#',
     stars: 0,
     repoDescription: 'A VR car game that simulates driving.',
-    image: '/project-logos/cruisin-vr.png',
+    image: projectImagePath('cruisin-vr.png'),
   },
 ]
 
