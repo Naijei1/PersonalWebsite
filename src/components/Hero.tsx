@@ -63,7 +63,7 @@ export default function Hero() {
           <div className="relative">
             <div className="w-32 h-32 rounded-full bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 p-0.5 shadow-2xl shadow-indigo-500/30">
               <img
-                src="/project-logos/naijei-owner.png"
+                src={`${import.meta.env.BASE_URL}project-logos/naijei-owner.png`}
                 alt="Naijei Jiang"
                 className="w-full h-full rounded-full object-cover object-center"
               />
