@@ -10,7 +10,7 @@ import ScrollProgress from './components/ScrollProgress'
 
 export default function App() {
   return (
-    <div className="min-h-screen bg-gray-950 font-sans">
+    <div className="min-h-dvh overflow-x-hidden bg-gray-950 font-sans">
       <ScrollProgress />
       <Navbar />
       <main>

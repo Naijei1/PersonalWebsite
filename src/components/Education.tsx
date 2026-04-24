@@ -17,11 +17,11 @@ const courses = [
 
 export default function Education() {
   return (
-    <ScrollSection className="py-24 px-6">
+    <ScrollSection className="section-shell py-20 sm:py-24">
       <div className="max-w-6xl mx-auto">
         <SectionHeader icon={<GraduationCap className="w-4 h-4 text-indigo-400" />} title="Education" />
 
-        <div className="bg-gray-900/50 border border-gray-800 rounded-2xl p-8 card-hover glow-sm">
+        <div className="card-hover glow-sm rounded-2xl border border-gray-800 bg-gray-900/50 p-5 sm:p-8">
           <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4 mb-6">
             <div>
               <h3 className="text-xl font-bold text-white">Cornell University</h3>
@@ -34,7 +34,7 @@ export default function Education() {
                 </span>
               </div>
             </div>
-            <div className="text-right">
+            <div className="text-left md:text-right">
               <p className="text-gray-500 text-sm font-mono">Expected May 2028</p>
               <p className="text-gray-500 text-sm mt-1">Ithaca, NY</p>
             </div>

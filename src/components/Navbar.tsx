@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { Menu, X } from 'lucide-react'
 
 const navLinks = [
   { href: '#about', label: 'About' },
@@ -18,6 +19,21 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
+  useEffect(() => {
+    document.body.style.overflow = menuOpen ? 'hidden' : ''
+
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') setMenuOpen(false)
+    }
+
+    window.addEventListener('keydown', onKeyDown)
+
+    return () => {
+      document.body.style.overflow = ''
+      window.removeEventListener('keydown', onKeyDown)
+    }
+  }, [menuOpen])
+
   return (
     <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
@@ -26,10 +42,12 @@ export default function Navbar() {
           : 'bg-transparent'
       }`}
     >
-      <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+      <div className="nav-safe-top">
+        <div className="page-shell mx-auto flex max-w-6xl items-center justify-between py-3 sm:py-4">
         <a
           href="#about"
-          className="font-mono text-indigo-400 font-semibold text-lg tracking-tight hover:text-indigo-300 transition-colors"
+          className="touch-target inline-flex items-center font-mono text-base font-semibold tracking-tight text-indigo-400 transition-colors hover:text-indigo-300 sm:text-lg"
+          onClick={() => setMenuOpen(false)}
         >
           NJ<span className="text-gray-500">.</span>
         </a>
@@ -40,14 +58,14 @@ export default function Navbar() {
             <a
               key={link.href}
               href={link.href}
-              className="text-sm text-gray-400 hover:text-white transition-colors font-medium"
+              className="touch-target inline-flex items-center text-sm text-gray-400 hover:text-white transition-colors font-medium"
             >
               {link.label}
             </a>
           ))}
           <a
             href="mailto:nj277@cornell.edu"
-            className="text-sm px-4 py-2 rounded-lg border border-indigo-500/50 text-indigo-400 hover:bg-indigo-500/10 hover:border-indigo-400 transition-all font-medium"
+            className="touch-target inline-flex items-center rounded-lg border border-indigo-500/50 px-4 py-2 text-sm font-medium text-indigo-400 transition-all hover:border-indigo-400 hover:bg-indigo-500/10"
           >
             Contact Me
           </a>
@@ -55,35 +73,44 @@ export default function Navbar() {
 
         {/* Mobile hamburger */}
         <button
-          className="md:hidden text-gray-400 hover:text-white transition-colors"
+          className="touch-target inline-flex items-center justify-center rounded-xl border border-gray-800 bg-gray-900/70 text-gray-300 transition-colors hover:border-gray-700 hover:text-white md:hidden"
           onClick={() => setMenuOpen(!menuOpen)}
           aria-label="Toggle menu"
+          aria-expanded={menuOpen}
+          aria-controls="mobile-navigation"
         >
-          <div className={`w-6 h-0.5 bg-current mb-1.5 transition-all ${menuOpen ? 'rotate-45 translate-y-2' : ''}`} />
-          <div className={`w-6 h-0.5 bg-current mb-1.5 transition-all ${menuOpen ? 'opacity-0' : ''}`} />
-          <div className={`w-6 h-0.5 bg-current transition-all ${menuOpen ? '-rotate-45 -translate-y-2' : ''}`} />
+          {menuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
         </button>
+      </div>
       </div>
 
       {/* Mobile menu */}
       {menuOpen && (
-        <div className="md:hidden bg-gray-950/95 backdrop-blur-md border-t border-gray-800/50 px-6 py-4 flex flex-col gap-4">
-          {navLinks.map((link) => (
-            <a
-              key={link.href}
-              href={link.href}
-              onClick={() => setMenuOpen(false)}
-              className="text-gray-400 hover:text-white transition-colors font-medium"
-            >
-              {link.label}
-            </a>
-          ))}
-          <a
-            href="mailto:nj277@cornell.edu"
-            className="text-sm px-4 py-2 rounded-lg border border-indigo-500/50 text-indigo-400 hover:bg-indigo-500/10 transition-all font-medium text-center"
+        <div className="page-shell safe-bottom border-t border-gray-800/60 bg-gray-950/95 pb-5 backdrop-blur-md md:hidden">
+          <div
+            id="mobile-navigation"
+            className="max-h-[calc(100dvh-4.5rem-env(safe-area-inset-top))] overflow-y-auto pt-4"
           >
-            Contact Me
-          </a>
+            <div className="flex flex-col gap-2">
+              {navLinks.map((link) => (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  onClick={() => setMenuOpen(false)}
+                  className="touch-target flex items-center rounded-xl border border-transparent bg-gray-900/70 px-4 py-3 text-base font-medium text-gray-300 transition-colors hover:border-indigo-500/30 hover:text-white"
+                >
+                  {link.label}
+                </a>
+              ))}
+              <a
+                href="mailto:nj277@cornell.edu"
+                onClick={() => setMenuOpen(false)}
+                className="touch-target mt-2 inline-flex items-center justify-center rounded-xl border border-indigo-500/50 bg-indigo-500/10 px-4 py-3 text-base font-semibold text-indigo-300 transition-all hover:border-indigo-400 hover:bg-indigo-500/15"
+              >
+                Contact Me
+              </a>
+            </div>
+          </div>
         </div>
       )}
     </nav>

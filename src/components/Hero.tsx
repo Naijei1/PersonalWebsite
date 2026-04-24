@@ -33,7 +33,7 @@ export default function Hero() {
   return (
     <section
       id="about"
-      className="relative min-h-screen flex flex-col items-center justify-center px-6 overflow-hidden"
+      className="section-shell relative flex min-h-dvh flex-col items-center justify-center overflow-hidden pt-28 pb-16 sm:pt-32 sm:pb-20"
     >
       {/* Animated background blobs */}
       <div className="absolute inset-0 pointer-events-none">
@@ -57,43 +57,43 @@ export default function Hero() {
         />
       </div>
 
-      <div className="relative z-10 max-w-4xl w-full text-center">
+      <div className="relative z-10 w-full max-w-4xl text-center">
         {/* Profile image */}
-        <div className="mb-8 flex justify-center animate-fade-in">
+        <div className="mb-7 flex justify-center animate-fade-in sm:mb-8">
           <div className="relative">
-            <div className="w-32 h-32 rounded-full bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 p-0.5 shadow-2xl shadow-indigo-500/30">
+            <div className="h-24 w-24 rounded-full bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 p-0.5 shadow-2xl shadow-indigo-500/30 sm:h-32 sm:w-32">
               <img
                 src={`${import.meta.env.BASE_URL}project-logos/naijei-owner.png`}
                 alt="Naijei Jiang"
                 className="w-full h-full rounded-full object-cover object-center"
               />
             </div>
-            <div className="absolute -bottom-1 -right-1 w-6 h-6 bg-green-500 rounded-full border-2 border-gray-950" />
+            <div className="absolute -bottom-1 -right-1 h-5 w-5 rounded-full border-2 border-gray-950 bg-green-500 sm:h-6 sm:w-6" />
           </div>
         </div>
 
         {/* Name & headline */}
         <div className="animate-slide-up" style={{ animationDelay: '0.1s' }}>
-          <p className="text-indigo-400 font-mono text-sm mb-3 tracking-widest uppercase">
+          <p className="mb-3 text-xs font-mono uppercase tracking-[0.3em] text-indigo-400 sm:text-sm">
             Hello, I'm
           </p>
-          <h1 className="text-5xl md:text-7xl font-black mb-4 leading-tight">
+          <h1 className="mb-4 text-4xl font-black leading-[1.05] sm:text-5xl md:text-6xl lg:text-7xl">
             <span className="text-gradient">Naijei Jiang</span>
           </h1>
-          <p className="text-xl md:text-2xl text-gray-400 font-light mb-8">
+          <p className="mx-auto mb-7 max-w-2xl text-base font-light leading-relaxed text-gray-400 sm:mb-8 sm:text-xl md:text-2xl">
             Software Engineer &amp; Distributed Systems Enthusiast
           </p>
         </div>
 
         {/* Badges */}
         <div
-          className="flex flex-wrap justify-center gap-2 mb-10 animate-slide-up"
+          className="mb-8 flex flex-wrap justify-center gap-2 animate-slide-up sm:mb-10"
           style={{ animationDelay: '0.2s' }}
         >
           {badges.map((badge) => (
             <span
               key={badge}
-              className="px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-300 text-xs font-medium"
+              className="rounded-full border border-indigo-500/20 bg-indigo-500/10 px-3 py-1.5 text-[11px] font-medium text-indigo-300 sm:text-xs"
             >
               {badge}
             </span>
@@ -102,7 +102,7 @@ export default function Hero() {
 
         {/* Short bio */}
         <p
-          className="text-gray-400 text-lg max-w-2xl mx-auto mb-12 leading-relaxed animate-slide-up"
+          className="mx-auto mb-10 max-w-2xl text-base leading-7 text-gray-400 animate-slide-up sm:mb-12 sm:text-lg sm:leading-relaxed"
           style={{ animationDelay: '0.3s' }}
         >
           CS sophomore at Cornell building distributed systems, teaching Data Structures &amp;
@@ -112,18 +112,18 @@ export default function Hero() {
 
         {/* CTA buttons */}
         <div
-          className="flex flex-wrap justify-center gap-4 mb-14 animate-slide-up"
+          className="mb-12 grid w-full max-w-md gap-3 animate-slide-up sm:mb-14 sm:max-w-none sm:grid-flow-col sm:auto-cols-max sm:justify-center sm:gap-4"
           style={{ animationDelay: '0.4s' }}
         >
           <a
             href="#projects"
-            className="px-6 py-3 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-semibold transition-all duration-200 shadow-lg shadow-indigo-600/30 hover:shadow-indigo-500/40 hover:-translate-y-0.5"
+            className="touch-target inline-flex items-center justify-center rounded-xl bg-indigo-600 px-6 py-3 text-base font-semibold text-white shadow-lg shadow-indigo-600/30 transition-all duration-200 hover:-translate-y-0.5 hover:bg-indigo-500 hover:shadow-indigo-500/40"
           >
             View Projects
           </a>
           <a
             href="mailto:nj277@cornell.edu"
-            className="px-6 py-3 rounded-xl border border-gray-700 hover:border-gray-500 text-gray-300 hover:text-white font-semibold transition-all duration-200 hover:-translate-y-0.5"
+            className="touch-target inline-flex items-center justify-center rounded-xl border border-gray-700 px-6 py-3 text-base font-semibold text-gray-300 transition-all duration-200 hover:-translate-y-0.5 hover:border-gray-500 hover:text-white"
           >
             Get In Touch
           </a>
@@ -131,7 +131,7 @@ export default function Hero() {
 
         {/* Social links */}
         <div
-          className="flex flex-wrap justify-center gap-3 animate-slide-up"
+          className="grid w-full gap-3 animate-slide-up sm:grid-cols-2 lg:grid-cols-4"
           style={{ animationDelay: '0.5s' }}
         >
           {socialLinks.map(({ icon: Icon, label, href, username }) => (
@@ -140,10 +140,10 @@ export default function Hero() {
               href={href}
               target="_blank"
               rel="noopener noreferrer"
-              className="group flex items-center gap-2 px-4 py-2.5 rounded-xl bg-gray-900 border border-gray-800 hover:border-indigo-500/50 hover:bg-gray-800 transition-all duration-200"
+              className="group touch-target flex min-w-0 items-center gap-3 rounded-xl border border-gray-800 bg-gray-900 px-4 py-3 text-left transition-all duration-200 hover:border-indigo-500/50 hover:bg-gray-800"
             >
-              <Icon className="w-4 h-4 text-gray-500 group-hover:text-indigo-400 transition-colors" />
-              <span className="text-sm text-gray-400 group-hover:text-gray-200 transition-colors">
+              <Icon className="h-4 w-4 flex-shrink-0 text-gray-500 transition-colors group-hover:text-indigo-400" />
+              <span className="min-w-0 truncate text-sm text-gray-400 transition-colors group-hover:text-gray-200">
                 {username}
               </span>
             </a>
@@ -152,7 +152,7 @@ export default function Hero() {
       </div>
 
       {/* Scroll indicator */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-gray-600 animate-bounce">
+      <div className="absolute bottom-6 left-1/2 hidden -translate-x-1/2 flex-col items-center gap-2 text-gray-600 animate-bounce sm:flex">
         <span className="text-xs font-mono tracking-widest uppercase">scroll</span>
         <div className="w-px h-8 bg-gradient-to-b from-gray-600 to-transparent" />
       </div>

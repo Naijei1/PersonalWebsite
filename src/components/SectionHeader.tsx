@@ -8,12 +8,12 @@ type SectionHeaderProps = {
 
 export default function SectionHeader({ icon, title, className = 'mb-12' }: SectionHeaderProps) {
   return (
-    <div className={`flex items-center gap-3 ${className}`.trim()}>
-      <div className="w-8 h-8 rounded-lg bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center">
+    <div className={`flex flex-wrap items-center gap-3 sm:flex-nowrap ${className}`.trim()}>
+      <div className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-lg border border-indigo-500/20 bg-indigo-500/10">
         {icon}
       </div>
-      <h2 className="text-2xl font-bold text-white">{title}</h2>
-      <div className="flex-1 h-px bg-gradient-to-r from-gray-800 to-transparent ml-4" />
+      <h2 className="min-w-0 text-2xl font-bold text-white sm:text-3xl">{title}</h2>
+      <div className="h-px min-w-[5rem] flex-1 bg-gradient-to-r from-gray-800 to-transparent sm:ml-4" />
     </div>
   )
 }

@@ -5,6 +5,7 @@
 @layer base {
   html {
     scroll-behavior: smooth;
+    scroll-padding-top: 6.25rem;
   }
 
   body {
@@ -17,12 +18,37 @@
 }
 
 @layer utilities {
+  .page-shell {
+    padding-left: max(1rem, env(safe-area-inset-left));
+    padding-right: max(1rem, env(safe-area-inset-right));
+  }
+
+  .section-shell {
+    padding-left: max(1.25rem, env(safe-area-inset-left));
+    padding-right: max(1.25rem, env(safe-area-inset-right));
+  }
+
+  .nav-safe-top {
+    padding-top: env(safe-area-inset-top);
+  }
+
+  .safe-bottom {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+
+  .touch-target {
+    min-height: 2.75rem;
+    min-width: 2.75rem;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: rgba(99, 102, 241, 0.16);
+  }
+
   .text-gradient {
     @apply bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400;
   }
 
   .card-hover {
-    @apply transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl hover:shadow-indigo-500/10;
+    @apply transition-all duration-300 active:scale-[0.99];
   }
 
   .glow-sm {
@@ -50,6 +76,13 @@
 
   .timeline-card:hover::before {
     opacity: 1;
+  }
+
+  @media (hover: hover) {
+    .card-hover:hover {
+      transform: translateY(-0.25rem);
+      box-shadow: 0 25px 50px -12px rgba(99, 102, 241, 0.1);
+    }
   }
 
   .scroll-fade-edge {
