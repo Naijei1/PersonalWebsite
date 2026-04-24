@@ -41,15 +41,15 @@ const interests = [
 
 export default function Skills() {
   return (
-    <ScrollSection id="skills" className="py-24 px-6 bg-gray-900/20">
+    <ScrollSection id="skills" className="section-shell py-20 sm:py-24 bg-gray-900/20">
       <div className="max-w-6xl mx-auto">
         <SectionHeader icon={<Code2 className="w-4 h-4 text-indigo-400" />} title="Skills" />
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+        <div className="mb-10 grid gap-4 sm:gap-5 md:grid-cols-2 lg:grid-cols-3 lg:gap-6 sm:mb-12">
           {skillGroups.map((group) => (
             <div
               key={group.label}
-              className="bg-gray-900/60 border border-gray-800 rounded-2xl p-5 card-hover"
+              className="card-hover rounded-2xl border border-gray-800 bg-gray-900/60 p-4 sm:p-5"
             >
               <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-widest mb-3">
                 {group.label}
@@ -69,7 +69,7 @@ export default function Skills() {
         </div>
 
         {/* Interests */}
-        <div className="bg-gray-900/60 border border-gray-800 rounded-2xl p-6">
+        <div className="rounded-2xl border border-gray-800 bg-gray-900/60 p-5 sm:p-6">
           <div className="flex items-center gap-2 mb-4">
             <Zap className="w-4 h-4 text-yellow-400" />
             <h3 className="text-sm font-semibold text-gray-400">Interests</h3>

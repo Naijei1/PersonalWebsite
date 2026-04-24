@@ -96,10 +96,10 @@ export default function Experience() {
   const shouldReduceMotion = useReducedMotion()
 
   return (
-    <ScrollSection id="experience" className="py-24 px-6 bg-gray-900/20" amount={0.12}>
+    <ScrollSection id="experience" className="section-shell py-20 sm:py-24 bg-gray-900/20" amount={0.12}>
       <div className="max-w-6xl mx-auto">
         <SectionHeader icon={<Briefcase className="w-4 h-4 text-indigo-400" />} title="Experience" />
-        <p className="text-gray-500 mb-10 max-w-3xl">
+        <p className="mb-8 max-w-3xl text-sm leading-7 text-gray-500 sm:mb-10 sm:text-base">
           A year-based journey through internships, leadership, and systems work. Scroll down to
           follow the timeline.
         </p>
@@ -116,8 +116,8 @@ export default function Experience() {
                 viewport={{ once: true, amount: 0.1 }}
                 transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
               >
-                <div className="mb-5 md:mb-0 md:flex md:justify-end md:pr-5 md:pt-1.5 relative z-10">
-                  <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-gray-900 border border-indigo-500/30 text-indigo-300 text-sm font-mono shadow-lg shadow-indigo-500/10">
+                <div className="relative z-10 mb-4 md:mb-0 md:flex md:justify-end md:pr-5 md:pt-1.5">
+                  <div className="inline-flex min-h-11 items-center gap-2 rounded-full border border-indigo-500/30 bg-gray-900 px-3 py-1.5 font-mono text-sm text-indigo-300 shadow-lg shadow-indigo-500/10">
                     <Sparkles className="w-3.5 h-3.5" />
                     {year}
                   </div>
@@ -127,7 +127,7 @@ export default function Experience() {
                   {entries.map((exp, i) => (
                     <motion.div
                       key={`${exp.org}-${exp.role}`}
-                      className="relative md:grid md:grid-cols-[2.5rem_minmax(0,1fr)] md:before:absolute md:before:left-5 md:before:top-0 md:before:bottom-0 md:before:w-px md:before:-translate-x-1/2 md:before:bg-gradient-to-b md:before:from-indigo-400/80 md:before:via-purple-500/50 md:before:to-transparent md:before:content-['']"
+                      className="relative pl-5 before:absolute before:bottom-0 before:left-[0.4375rem] before:top-0 before:w-px before:bg-gradient-to-b before:from-indigo-400/70 before:via-purple-500/40 before:to-transparent before:content-[''] md:grid md:grid-cols-[2.5rem_minmax(0,1fr)] md:pl-0 md:before:left-5 md:before:-translate-x-1/2"
                       initial={shouldReduceMotion ? false : { opacity: 0, y: 28, scale: 0.99 }}
                       whileInView={shouldReduceMotion ? undefined : { opacity: 1, y: 0, scale: 1 }}
                       viewport={{ once: true, amount: 0.35 }}
@@ -137,26 +137,26 @@ export default function Experience() {
                         ease: [0.22, 1, 0.36, 1],
                       }}
                     >
-                      <div className="hidden md:flex items-start justify-center pt-7 relative z-10">
-                        <div className="w-3.5 h-3.5 rounded-full bg-indigo-500 border-2 border-gray-950 shadow-lg shadow-indigo-500/40 z-10" />
+                      <div className="absolute left-0 top-6 z-10 flex h-4 w-4 items-center justify-center rounded-full bg-gray-950 md:static md:flex md:items-start md:justify-center md:pt-7">
+                        <div className="h-3.5 w-3.5 rounded-full border-2 border-gray-950 bg-indigo-500 shadow-lg shadow-indigo-500/40" />
                       </div>
 
-                      <div className="bg-gray-900/70 border border-gray-800 rounded-2xl p-6 card-hover timeline-card backdrop-blur-sm">
-                        <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-2 mb-4">
+                      <div className="timeline-card card-hover rounded-2xl border border-gray-800 bg-gray-900/70 p-5 backdrop-blur-sm sm:p-6">
+                        <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
                           <div>
-                            <h3 className="text-lg font-bold text-white">{exp.org}</h3>
-                            <p className="text-indigo-400 text-sm font-medium mt-0.5">{exp.role}</p>
+                            <h3 className="text-base font-bold text-white sm:text-lg">{exp.org}</h3>
+                            <p className="mt-0.5 text-sm font-medium text-indigo-400">{exp.role}</p>
                           </div>
-                          <div className="text-left md:text-right flex-shrink-0">
-                            <p className="text-gray-500 text-xs font-mono">{exp.period}</p>
-                            <p className="text-gray-600 text-xs mt-0.5">{exp.location}</p>
+                          <div className="flex-shrink-0 text-left sm:text-right">
+                            <p className="text-xs font-mono text-gray-500">{exp.period}</p>
+                            <p className="mt-0.5 text-xs text-gray-600">{exp.location}</p>
                           </div>
                         </div>
 
                         <ul className="space-y-2 mb-4">
                           {exp.bullets.map((b) => (
-                            <li key={b} className="flex gap-3 text-gray-400 text-sm leading-relaxed">
-                              <ChevronRight className="w-4 h-4 text-indigo-500 flex-shrink-0 mt-0.5" />
+                            <li key={b} className="flex gap-3 text-sm leading-relaxed text-gray-400">
+                              <ChevronRight className="mt-0.5 h-4 w-4 flex-shrink-0 text-indigo-500" />
                               <span>{b}</span>
                             </li>
                           ))}
@@ -166,7 +166,7 @@ export default function Experience() {
                           {exp.tags.map((tag) => (
                             <span
                               key={tag}
-                              className="px-2.5 py-0.5 rounded-md bg-indigo-500/10 text-indigo-300 text-xs font-medium border border-indigo-500/10"
+                              className="rounded-md border border-indigo-500/10 bg-indigo-500/10 px-2.5 py-1 text-xs font-medium text-indigo-300"
                             >
                               {tag}
                             </span>

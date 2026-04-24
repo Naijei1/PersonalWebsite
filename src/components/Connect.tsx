@@ -55,7 +55,7 @@ const links = [
 
 export default function Connect() {
   return (
-    <ScrollSection id="connect" className="py-24 px-6">
+    <ScrollSection id="connect" className="section-shell py-20 sm:py-24">
       <div className="max-w-6xl mx-auto">
         <SectionHeader title="Connect" icon={<Mail className="w-4 h-4 text-indigo-400" />} className="mb-4" />
         <p className="text-gray-500 mb-12">
@@ -69,7 +69,7 @@ export default function Connect() {
               href={href}
               target={href.startsWith('mailto') ? undefined : '_blank'}
               rel="noopener noreferrer"
-              className={`group flex items-center gap-4 p-5 rounded-2xl bg-gradient-to-br border transition-all duration-200 card-hover ${color}`}
+              className={`group card-hover touch-target flex items-center gap-4 rounded-2xl border bg-gradient-to-br p-4 sm:p-5 transition-all duration-200 ${color}`}
             >
               <div className="w-10 h-10 rounded-xl bg-gray-900/60 flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
                 <Icon className={`w-5 h-5 ${iconColor}`} />
