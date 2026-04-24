@@ -63,9 +63,9 @@ export default function Hero() {
           <div className="relative">
             <div className="w-32 h-32 rounded-full bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 p-0.5 shadow-2xl shadow-indigo-500/30">
               <img
-                src="https://yt3.googleusercontent.com/ytc/AIdro_mU1RdO8vjKuCM46rNCpFE9FPpyIXgqEsHdzvd3JQ=s176-c-k-c0x00ffffff-no-rj"
+                src="/profile-photo.jpg"
                 alt="Naijei Jiang"
-                className="w-full h-full rounded-full object-cover"
+                className="w-full h-full rounded-full object-cover object-[50%_35%]"
               />
             </div>
             <div className="absolute -bottom-1 -right-1 w-6 h-6 bg-green-500 rounded-full border-2 border-gray-950" />
