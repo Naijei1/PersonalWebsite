@@ -1,6 +1,7 @@
 import { Briefcase, ChevronRight, Sparkles } from 'lucide-react'
 import { motion, useReducedMotion } from 'framer-motion'
 import SectionHeader from './SectionHeader'
+import ScrollSection from './ScrollSection'
 
 const experiences = [
   {
@@ -95,7 +96,7 @@ export default function Experience() {
   const shouldReduceMotion = useReducedMotion()
 
   return (
-    <section id="experience" className="py-24 px-6 bg-gray-900/20">
+    <ScrollSection id="experience" className="py-24 px-6 bg-gray-900/20" amount={0.12}>
       <div className="max-w-6xl mx-auto">
         <SectionHeader icon={<Briefcase className="w-4 h-4 text-indigo-400" />} title="Experience" />
         <p className="text-gray-500 mb-10 max-w-3xl">
@@ -103,89 +104,83 @@ export default function Experience() {
           follow the timeline.
         </p>
 
-        <div className="relative">
-          {/* Vertical line runs along the right edge of the year label column (w-32 = 8rem) */}
-          <div className="hidden md:block absolute left-32 top-3 bottom-3 w-px bg-gradient-to-b from-indigo-400/80 via-purple-500/50 to-transparent" />
-
-          <div className="space-y-14">
-            {years.map((year) => {
-              const entries = experiences.filter((exp) => exp.year === year)
-              return (
-                <motion.div
-                  key={year}
-                  className="md:flex md:items-start"
-                  initial={shouldReduceMotion ? false : { opacity: 0, y: 20 }}
-                  whileInView={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
-                  viewport={{ once: true, amount: 0.1 }}
-                  transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
-                >
-                  {/* Year label — block on mobile (above cards), fixed-width column on desktop */}
-                  <div className="mb-5 md:mb-0 md:w-32 md:flex-shrink-0 md:flex md:justify-end md:pr-5 md:pt-1.5 relative z-10">
-                    <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-gray-900 border border-indigo-500/30 text-indigo-300 text-sm font-mono shadow-lg shadow-indigo-500/10">
-                      <Sparkles className="w-3.5 h-3.5" />
-                      {year}
-                    </div>
+        <div className="space-y-14">
+          {years.map((year) => {
+            const entries = experiences.filter((exp) => exp.year === year)
+            return (
+              <motion.div
+                key={year}
+                className="md:grid md:grid-cols-[minmax(0,8rem)_minmax(0,1fr)] md:gap-x-0"
+                initial={shouldReduceMotion ? false : { opacity: 0, y: 20 }}
+                whileInView={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.1 }}
+                transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+              >
+                <div className="mb-5 md:mb-0 md:flex md:justify-end md:pr-5 md:pt-1.5 relative z-10">
+                  <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-gray-900 border border-indigo-500/30 text-indigo-300 text-sm font-mono shadow-lg shadow-indigo-500/10">
+                    <Sparkles className="w-3.5 h-3.5" />
+                    {year}
                   </div>
+                </div>
 
-                  {/* Cards — flex-1 on desktop, full width on mobile */}
-                  <div className="md:flex-1 md:pl-8 space-y-6">
-                    {entries.map((exp, i) => (
-                      <motion.div
-                        key={`${exp.org}-${exp.role}`}
-                        className="relative"
-                        initial={shouldReduceMotion ? false : { opacity: 0, y: 28, scale: 0.99 }}
-                        whileInView={shouldReduceMotion ? undefined : { opacity: 1, y: 0, scale: 1 }}
-                        viewport={{ once: true, amount: 0.35 }}
-                        transition={{
-                          duration: 0.45,
-                          delay: shouldReduceMotion ? 0 : i * 0.08,
-                          ease: [0.22, 1, 0.36, 1],
-                        }}
-                      >
-                        {/* Dot sits at the left edge of pl-8, which lands exactly on the line */}
-                        <div className="hidden md:block absolute -left-8 top-7 w-3.5 h-3.5 rounded-full bg-indigo-500 border-2 border-gray-950 shadow-lg shadow-indigo-500/40 z-10" />
+                <div className="space-y-6">
+                  {entries.map((exp, i) => (
+                    <motion.div
+                      key={`${exp.org}-${exp.role}`}
+                      className="relative md:grid md:grid-cols-[2.5rem_minmax(0,1fr)] md:before:absolute md:before:left-5 md:before:top-0 md:before:bottom-0 md:before:w-px md:before:-translate-x-1/2 md:before:bg-gradient-to-b md:before:from-indigo-400/80 md:before:via-purple-500/50 md:before:to-transparent md:before:content-['']"
+                      initial={shouldReduceMotion ? false : { opacity: 0, y: 28, scale: 0.99 }}
+                      whileInView={shouldReduceMotion ? undefined : { opacity: 1, y: 0, scale: 1 }}
+                      viewport={{ once: true, amount: 0.35 }}
+                      transition={{
+                        duration: 0.45,
+                        delay: shouldReduceMotion ? 0 : i * 0.08,
+                        ease: [0.22, 1, 0.36, 1],
+                      }}
+                    >
+                      <div className="hidden md:flex items-start justify-center pt-7 relative z-10">
+                        <div className="w-3.5 h-3.5 rounded-full bg-indigo-500 border-2 border-gray-950 shadow-lg shadow-indigo-500/40 z-10" />
+                      </div>
 
-                        <div className="bg-gray-900/70 border border-gray-800 rounded-2xl p-6 card-hover timeline-card backdrop-blur-sm">
-                          <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-2 mb-4">
-                            <div>
-                              <h3 className="text-lg font-bold text-white">{exp.org}</h3>
-                              <p className="text-indigo-400 text-sm font-medium mt-0.5">{exp.role}</p>
-                            </div>
-                            <div className="text-left md:text-right flex-shrink-0">
-                              <p className="text-gray-500 text-xs font-mono">{exp.period}</p>
-                              <p className="text-gray-600 text-xs mt-0.5">{exp.location}</p>
-                            </div>
+                      <div className="bg-gray-900/70 border border-gray-800 rounded-2xl p-6 card-hover timeline-card backdrop-blur-sm">
+                        <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-2 mb-4">
+                          <div>
+                            <h3 className="text-lg font-bold text-white">{exp.org}</h3>
+                            <p className="text-indigo-400 text-sm font-medium mt-0.5">{exp.role}</p>
                           </div>
-
-                          <ul className="space-y-2 mb-4">
-                            {exp.bullets.map((b) => (
-                              <li key={b} className="flex gap-3 text-gray-400 text-sm leading-relaxed">
-                                <ChevronRight className="w-4 h-4 text-indigo-500 flex-shrink-0 mt-0.5" />
-                                <span>{b}</span>
-                              </li>
-                            ))}
-                          </ul>
-
-                          <div className="flex flex-wrap gap-2">
-                            {exp.tags.map((tag) => (
-                              <span
-                                key={tag}
-                                className="px-2.5 py-0.5 rounded-md bg-indigo-500/10 text-indigo-300 text-xs font-medium border border-indigo-500/10"
-                              >
-                                {tag}
-                              </span>
-                            ))}
+                          <div className="text-left md:text-right flex-shrink-0">
+                            <p className="text-gray-500 text-xs font-mono">{exp.period}</p>
+                            <p className="text-gray-600 text-xs mt-0.5">{exp.location}</p>
                           </div>
                         </div>
-                      </motion.div>
-                    ))}
-                  </div>
-                </motion.div>
-              )
-            })}
-          </div>
+
+                        <ul className="space-y-2 mb-4">
+                          {exp.bullets.map((b) => (
+                            <li key={b} className="flex gap-3 text-gray-400 text-sm leading-relaxed">
+                              <ChevronRight className="w-4 h-4 text-indigo-500 flex-shrink-0 mt-0.5" />
+                              <span>{b}</span>
+                            </li>
+                          ))}
+                        </ul>
+
+                        <div className="flex flex-wrap gap-2">
+                          {exp.tags.map((tag) => (
+                            <span
+                              key={tag}
+                              className="px-2.5 py-0.5 rounded-md bg-indigo-500/10 text-indigo-300 text-xs font-medium border border-indigo-500/10"
+                            >
+                              {tag}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                    </motion.div>
+                  ))}
+                </div>
+              </motion.div>
+            )
+          })}
         </div>
       </div>
-    </section>
+    </ScrollSection>
   )
 }

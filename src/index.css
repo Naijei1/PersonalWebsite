@@ -51,6 +51,10 @@
   .timeline-card:hover::before {
     opacity: 1;
   }
+
+  .scroll-fade-edge {
+    mask-image: linear-gradient(to bottom, transparent 0, black 48px, black calc(100% - 48px), transparent 100%);
+  }
 }
 
 /* Custom scrollbar */

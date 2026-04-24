@@ -6,10 +6,12 @@ import Projects from './components/Projects'
 import Skills from './components/Skills'
 import Connect from './components/Connect'
 import Footer from './components/Footer'
+import ScrollProgress from './components/ScrollProgress'
 
 export default function App() {
   return (
     <div className="min-h-screen bg-gray-950 font-sans">
+      <ScrollProgress />
       <Navbar />
       <main>
         <Hero />

@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Rocket, Trophy, ChevronRight, ExternalLink, Star, X } from 'lucide-react'
 import SectionHeader from './SectionHeader'
+import ScrollSection from './ScrollSection'
 
 const projectImagePath = (fileName: string) => `${import.meta.env.BASE_URL}project-logos/${fileName}`
 
@@ -171,7 +172,7 @@ export default function Projects() {
   const closeModal = () => setSelectedProject(null)
 
   return (
-    <section id="projects" className="py-24 px-6">
+    <ScrollSection id="projects" className="py-24 px-6">
       <div className="max-w-6xl mx-auto">
         <SectionHeader icon={<Rocket className="w-4 h-4 text-indigo-400" />} title="Projects" />
 
@@ -343,6 +344,6 @@ export default function Projects() {
           </div>
         </div>
       )}
-    </section>
+    </ScrollSection>
   )
 }
