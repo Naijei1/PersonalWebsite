@@ -1,9 +1,12 @@
 import { useEffect, useState } from 'react'
+import { createPortal } from 'react-dom'
 import { Rocket, Trophy, ChevronRight, ExternalLink, Star, X } from 'lucide-react'
 import SectionHeader from './SectionHeader'
 import ScrollSection from './ScrollSection'
 
 const projectImagePath = (fileName: string) => `${import.meta.env.BASE_URL}project-logos/${fileName}`
+
+const normalizeProjectText = (text: string) => text.toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim()
 
 type Project = {
   name: string
@@ -170,6 +173,14 @@ export default function Projects() {
   }, [selectedProject])
 
   const closeModal = () => setSelectedProject(null)
+  const showRepoDescription =
+    selectedProject?.repoDescription &&
+    !normalizeProjectText(selectedProject.description).includes(
+      normalizeProjectText(selectedProject.repoDescription),
+    ) &&
+    !normalizeProjectText(selectedProject.repoDescription).includes(
+      normalizeProjectText(selectedProject.description),
+    )
 
   return (
     <ScrollSection id="projects" className="section-shell py-20 sm:py-24">
@@ -252,98 +263,104 @@ export default function Projects() {
         </div>
       </div>
 
-      {selectedProject && (
-        <div className="fixed inset-0 z-[70] flex items-center justify-center p-3 sm:p-6">
-          <button
-            aria-label="Close project details"
-            className="absolute inset-0 bg-black/75 backdrop-blur-sm"
-            onClick={closeModal}
-          />
-
-          <div className="safe-bottom page-shell relative max-h-[min(92dvh,56rem)] w-full max-w-3xl overflow-y-auto rounded-2xl border border-gray-800 bg-gray-950/95 py-5 shadow-2xl sm:py-7">
+      {selectedProject &&
+        createPortal(
+          <div className="fixed inset-0 z-[70] flex items-center justify-center p-3 sm:p-6">
             <button
-              aria-label="Close"
+              aria-label="Close project details"
+              className="absolute inset-0 bg-black/75 backdrop-blur-sm"
               onClick={closeModal}
-              className="touch-target absolute right-4 top-4 inline-flex items-center justify-center rounded-xl border border-gray-700 bg-gray-900/80 text-gray-400 transition-colors hover:border-gray-500 hover:text-white"
-            >
-              <X className="w-4 h-4" />
-            </button>
+            />
 
-            <div className="pr-14">
-              <p className="text-indigo-300 text-xs uppercase tracking-widest mb-1">{selectedProject.org}</p>
-              <h3 className="text-2xl sm:text-3xl font-bold text-white">{selectedProject.name}</h3>
-              <p className="text-gray-500 text-xs font-mono mt-1">{selectedProject.period}</p>
-              {selectedProject.award && (
-                <p className="text-indigo-400 text-sm font-medium mt-1.5">{selectedProject.award}</p>
-              )}
-            </div>
-
-            {selectedProject.image ? (
-              <div className="mt-5 rounded-xl overflow-hidden border border-gray-800">
-                <img
-                  src={selectedProject.image}
-                  alt={`${selectedProject.name} project preview`}
-                  className="w-full h-auto object-cover"
-                />
-              </div>
-            ) : (
-              <div className="mt-5 rounded-xl border border-gray-800 bg-gray-900/60 p-6 flex items-center gap-3">
-                <Rocket className="w-5 h-5 text-indigo-400" />
-                <p className="text-sm text-gray-400">Project preview coming soon.</p>
-              </div>
-            )}
-
-            <p className="mt-5 text-gray-300 leading-relaxed">{selectedProject.description}</p>
-            {selectedProject.repoDescription && (
-              <p className="mt-2 text-sm text-gray-500 leading-relaxed">{selectedProject.repoDescription}</p>
-            )}
-
-            <div className="mt-4 flex flex-wrap items-center gap-3 text-xs">
-              <span className="px-2 py-1 rounded-md border border-gray-700 bg-gray-900 text-gray-300">
-                Language: {selectedProject.language}
-              </span>
-              {selectedProject.stars !== undefined && (
-                <span className="px-2 py-1 rounded-md border border-gray-700 bg-gray-900 text-gray-300 inline-flex items-center gap-1">
-                  <Star className="w-3.5 h-3.5 text-yellow-400" />
-                  {selectedProject.stars} stars
-                </span>
-              )}
-            </div>
-
-            <ul className="mt-5 space-y-3">
-              {selectedProject.bullets.map((bullet) => (
-                <li key={bullet} className="flex gap-2 text-sm text-gray-300 leading-relaxed">
-                  <ChevronRight className="w-4 h-4 text-indigo-400/90 flex-shrink-0 mt-0.5" />
-                  <span>{bullet}</span>
-                </li>
-              ))}
-            </ul>
-
-            <div className="mt-5 flex flex-wrap gap-2">
-              {selectedProject.tags.map((tag) => (
-                <span
-                  key={tag}
-                  className="px-2 py-1 rounded-md bg-gray-900 text-gray-300 text-xs border border-gray-700/80"
-                >
-                  {tag}
-                </span>
-              ))}
-            </div>
-
-            {selectedProject.link && (
-              <a
-                href={selectedProject.link}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="touch-target mt-6 inline-flex items-center gap-2 rounded-lg border border-indigo-500/40 px-4 py-2 text-indigo-300 transition-colors hover:border-indigo-400 hover:text-indigo-200"
+            <div className="safe-bottom page-shell relative max-h-[min(92dvh,56rem)] w-full max-w-3xl overflow-y-auto rounded-2xl border border-gray-800 bg-gray-950/95 py-5 shadow-2xl sm:py-7">
+              <button
+                aria-label="Close"
+                onClick={closeModal}
+                className="touch-target absolute right-4 top-4 inline-flex items-center justify-center rounded-xl border border-gray-700 bg-gray-900/80 text-gray-400 transition-colors hover:border-gray-500 hover:text-white"
               >
-                <ExternalLink className="w-4 h-4" />
-                Open Repository
-              </a>
-            )}
-          </div>
-        </div>
-      )}
+                <X className="w-4 h-4" />
+              </button>
+
+              <div className="pr-14">
+                <p className="text-indigo-300 text-xs uppercase tracking-widest mb-1">
+                  {selectedProject.org}
+                </p>
+                <h3 className="text-2xl sm:text-3xl font-bold text-white">{selectedProject.name}</h3>
+                <p className="text-gray-500 text-xs font-mono mt-1">{selectedProject.period}</p>
+                {selectedProject.award && (
+                  <p className="text-indigo-400 text-sm font-medium mt-1.5">{selectedProject.award}</p>
+                )}
+              </div>
+
+              {selectedProject.image ? (
+                <div className="mt-5 rounded-xl overflow-hidden border border-gray-800">
+                  <img
+                    src={selectedProject.image}
+                    alt={`${selectedProject.name} project preview`}
+                    className="w-full h-auto object-cover"
+                  />
+                </div>
+              ) : (
+                <div className="mt-5 rounded-xl border border-gray-800 bg-gray-900/60 p-6 flex items-center gap-3">
+                  <Rocket className="w-5 h-5 text-indigo-400" />
+                  <p className="text-sm text-gray-400">Project preview coming soon.</p>
+                </div>
+              )}
+
+              <p className="mt-5 text-gray-300 leading-relaxed">{selectedProject.description}</p>
+              {showRepoDescription && (
+                <p className="mt-2 text-sm text-gray-500 leading-relaxed">
+                  {selectedProject.repoDescription}
+                </p>
+              )}
+
+              <div className="mt-4 flex flex-wrap items-center gap-3 text-xs">
+                <span className="px-2 py-1 rounded-md border border-gray-700 bg-gray-900 text-gray-300">
+                  Language: {selectedProject.language}
+                </span>
+                {selectedProject.stars !== undefined && (
+                  <span className="px-2 py-1 rounded-md border border-gray-700 bg-gray-900 text-gray-300 inline-flex items-center gap-1">
+                    <Star className="w-3.5 h-3.5 text-yellow-400" />
+                    {selectedProject.stars} stars
+                  </span>
+                )}
+              </div>
+
+              <ul className="mt-5 space-y-3">
+                {selectedProject.bullets.map((bullet) => (
+                  <li key={bullet} className="flex gap-2 text-sm text-gray-300 leading-relaxed">
+                    <ChevronRight className="w-4 h-4 text-indigo-400/90 flex-shrink-0 mt-0.5" />
+                    <span>{bullet}</span>
+                  </li>
+                ))}
+              </ul>
+
+              <div className="mt-5 flex flex-wrap gap-2">
+                {selectedProject.tags.map((tag) => (
+                  <span
+                    key={tag}
+                    className="px-2 py-1 rounded-md bg-gray-900 text-gray-300 text-xs border border-gray-700/80"
+                  >
+                    {tag}
+                  </span>
+                ))}
+              </div>
+
+              {selectedProject.link && (
+                <a
+                  href={selectedProject.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="touch-target mt-6 inline-flex items-center gap-2 rounded-lg border border-indigo-500/40 px-4 py-2 text-indigo-300 transition-colors hover:border-indigo-400 hover:text-indigo-200"
+                >
+                  <ExternalLink className="w-4 h-4" />
+                  Open Repository
+                </a>
+              )}
+            </div>
+          </div>,
+          document.body,
+        )}
     </ScrollSection>
   )
 }
