@@ -118,7 +118,7 @@ export default function Experience() {
                   viewport={{ once: true, amount: 0.1 }}
                   transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
                 >
-                  <div className="mb-5 md:mb-0 md:absolute md:-left-2 md:w-20 md:top-2">
+                  <div className="mb-5 md:mb-0 md:absolute md:-left-2 md:w-20 md:top-2 relative z-10">
                     <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-gray-900 border border-indigo-500/30 text-indigo-300 text-sm font-mono shadow-lg shadow-indigo-500/10">
                       <Sparkles className="w-3.5 h-3.5" />
                       {year}
