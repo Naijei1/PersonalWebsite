@@ -1,4 +1,5 @@
 import { Briefcase, ChevronRight, Sparkles } from 'lucide-react'
+import { motion, useReducedMotion } from 'framer-motion'
 import SectionHeader from './SectionHeader'
 
 const experiences = [
@@ -91,6 +92,8 @@ const experiences = [
 const years = [...new Set(experiences.map((exp) => exp.year))].sort((a, b) => b - a)
 
 export default function Experience() {
+  const shouldReduceMotion = useReducedMotion()
+
   return (
     <section id="experience" className="py-24 px-6 bg-gray-900/20">
       <div className="max-w-6xl mx-auto">
@@ -101,15 +104,21 @@ export default function Experience() {
         </p>
 
         <div className="relative pl-0 md:pl-16">
-          <div className="hidden md:block absolute left-8 top-0 bottom-0 w-[2px] bg-gradient-to-b from-indigo-400 via-purple-500/70 to-transparent" />
-          <div className="hidden md:block absolute left-[27px] top-1/4 w-5 h-5 rounded-full bg-indigo-500/20 border border-indigo-400/40 animate-pulse" />
+          <div className="hidden md:block absolute left-8 top-3 bottom-3 w-px bg-gradient-to-b from-indigo-400/80 via-purple-500/50 to-transparent" />
 
           <div className="space-y-14">
             {years.map((year) => {
               const entries = experiences.filter((exp) => exp.year === year)
               return (
-                <div key={year} className="relative">
-                  <div className="md:sticky md:top-24 z-10 mb-5 md:mb-0 md:absolute md:-left-2 md:w-20">
+                <motion.div
+                  key={year}
+                  className="relative"
+                  initial={shouldReduceMotion ? false : { opacity: 0, y: 20 }}
+                  whileInView={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
+                  viewport={{ once: true, amount: 0.1 }}
+                  transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+                >
+                  <div className="mb-5 md:mb-0 md:absolute md:-left-2 md:w-20 md:top-2">
                     <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-gray-900 border border-indigo-500/30 text-indigo-300 text-sm font-mono shadow-lg shadow-indigo-500/10">
                       <Sparkles className="w-3.5 h-3.5" />
                       {year}
@@ -118,16 +127,21 @@ export default function Experience() {
 
                   <div className="space-y-6 md:pl-10">
                     {entries.map((exp, i) => (
-                      <div key={`${exp.org}-${exp.role}`} className="relative">
+                      <motion.div
+                        key={`${exp.org}-${exp.role}`}
+                        className="relative"
+                        initial={shouldReduceMotion ? false : { opacity: 0, y: 28, scale: 0.99 }}
+                        whileInView={shouldReduceMotion ? undefined : { opacity: 1, y: 0, scale: 1 }}
+                        viewport={{ once: true, amount: 0.35 }}
+                        transition={{
+                          duration: 0.45,
+                          delay: shouldReduceMotion ? 0 : i * 0.08,
+                          ease: [0.22, 1, 0.36, 1],
+                        }}
+                      >
                         <div className="hidden md:block absolute -left-[38px] top-8 w-4 h-4 rounded-full bg-indigo-500 border-2 border-gray-950 shadow-lg shadow-indigo-500/40" />
 
-                        <div
-                          className={`bg-gray-900/70 border border-gray-800 rounded-2xl p-6 card-hover backdrop-blur-sm ${
-                            i % 2 === 0
-                              ? 'md:mr-10 md:translate-x-0'
-                              : 'md:ml-10 md:translate-x-1'
-                          }`}
-                        >
+                        <div className="bg-gray-900/70 border border-gray-800 rounded-2xl p-6 card-hover timeline-card backdrop-blur-sm">
                           <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-2 mb-4">
                             <div>
                               <h3 className="text-lg font-bold text-white">{exp.org}</h3>
@@ -159,10 +173,10 @@ export default function Experience() {
                             ))}
                           </div>
                         </div>
-                      </div>
+                      </motion.div>
                     ))}
                   </div>
-                </div>
+                </motion.div>
               )
             })}
           </div>
