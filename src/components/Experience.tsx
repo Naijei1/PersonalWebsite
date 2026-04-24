@@ -103,8 +103,9 @@ export default function Experience() {
           follow the timeline.
         </p>
 
-        <div className="relative pl-0 md:pl-16">
-          <div className="hidden md:block absolute left-8 top-3 bottom-3 w-px bg-gradient-to-b from-indigo-400/80 via-purple-500/50 to-transparent" />
+        <div className="relative">
+          {/* Vertical line runs along the right edge of the year label column (w-32 = 8rem) */}
+          <div className="hidden md:block absolute left-32 top-3 bottom-3 w-px bg-gradient-to-b from-indigo-400/80 via-purple-500/50 to-transparent" />
 
           <div className="space-y-14">
             {years.map((year) => {
@@ -112,20 +113,22 @@ export default function Experience() {
               return (
                 <motion.div
                   key={year}
-                  className="relative"
+                  className="md:flex md:items-start"
                   initial={shouldReduceMotion ? false : { opacity: 0, y: 20 }}
                   whileInView={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
                   viewport={{ once: true, amount: 0.1 }}
                   transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
                 >
-                  <div className="mb-5 md:mb-0 md:absolute md:-left-2 md:w-20 md:top-2 relative z-10">
+                  {/* Year label — block on mobile (above cards), fixed-width column on desktop */}
+                  <div className="mb-5 md:mb-0 md:w-32 md:flex-shrink-0 md:flex md:justify-end md:pr-5 md:pt-1.5 relative z-10">
                     <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-gray-900 border border-indigo-500/30 text-indigo-300 text-sm font-mono shadow-lg shadow-indigo-500/10">
                       <Sparkles className="w-3.5 h-3.5" />
                       {year}
                     </div>
                   </div>
 
-                  <div className="space-y-6 md:pl-10">
+                  {/* Cards — flex-1 on desktop, full width on mobile */}
+                  <div className="md:flex-1 md:pl-8 space-y-6">
                     {entries.map((exp, i) => (
                       <motion.div
                         key={`${exp.org}-${exp.role}`}
@@ -139,7 +142,8 @@ export default function Experience() {
                           ease: [0.22, 1, 0.36, 1],
                         }}
                       >
-                        <div className="hidden md:block absolute -left-[38px] top-8 w-4 h-4 rounded-full bg-indigo-500 border-2 border-gray-950 shadow-lg shadow-indigo-500/40" />
+                        {/* Dot sits at the left edge of pl-8, which lands exactly on the line */}
+                        <div className="hidden md:block absolute -left-8 top-7 w-3.5 h-3.5 rounded-full bg-indigo-500 border-2 border-gray-950 shadow-lg shadow-indigo-500/40 z-10" />
 
                         <div className="bg-gray-900/70 border border-gray-800 rounded-2xl p-6 card-hover timeline-card backdrop-blur-sm">
                           <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-2 mb-4">
