@@ -1,5 +1,6 @@
-import { Mail, Github, Youtube, Instagram, MessageSquare, Phone, Linkedin } from 'lucide-react'
+import { Mail, Github, Youtube, Instagram, MessageSquare, Linkedin } from 'lucide-react'
 import SectionHeader from './SectionHeader'
+import ScrollSection from './ScrollSection'
 
 const links = [
   {
@@ -54,7 +55,7 @@ const links = [
 
 export default function Connect() {
   return (
-    <section id="connect" className="py-24 px-6">
+    <ScrollSection id="connect" className="py-24 px-6">
       <div className="max-w-6xl mx-auto">
         <SectionHeader title="Connect" icon={<Mail className="w-4 h-4 text-indigo-400" />} className="mb-4" />
         <p className="text-gray-500 mb-12">
@@ -82,20 +83,7 @@ export default function Connect() {
             </a>
           ))}
         </div>
-
-        {/* Location + phone strip */}
-        <div className="mt-8 flex flex-wrap items-center justify-center gap-6 text-sm text-gray-600">
-          <span className="flex items-center gap-1.5">
-            <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
-            Rochester, NY 14615
-          </span>
-          <span>·</span>
-          <a href="tel:3478251228" className="hover:text-gray-400 transition-colors flex items-center gap-1.5">
-            <Phone className="w-3.5 h-3.5" />
-            (347) 825-1228
-          </a>
-        </div>
       </div>
-    </section>
+    </ScrollSection>
   )
 }

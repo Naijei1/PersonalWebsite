@@ -1,5 +1,6 @@
 import { GraduationCap, BookOpen } from 'lucide-react'
 import SectionHeader from './SectionHeader'
+import ScrollSection from './ScrollSection'
 
 const courses = [
   'Data Structures & Algorithms',
@@ -16,7 +17,7 @@ const courses = [
 
 export default function Education() {
   return (
-    <section className="py-24 px-6">
+    <ScrollSection className="py-24 px-6">
       <div className="max-w-6xl mx-auto">
         <SectionHeader icon={<GraduationCap className="w-4 h-4 text-indigo-400" />} title="Education" />
 
@@ -57,6 +58,6 @@ export default function Education() {
           </div>
         </div>
       </div>
-    </section>
+    </ScrollSection>
   )
 }

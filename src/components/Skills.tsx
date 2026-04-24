@@ -1,5 +1,6 @@
 import { Code2, Zap } from 'lucide-react'
 import SectionHeader from './SectionHeader'
+import ScrollSection from './ScrollSection'
 
 const skillGroups = [
   {
@@ -38,11 +39,9 @@ const interests = [
   'AI Infrastructure',
 ]
 
-const topSkills = ['Data Structures', 'Mentoring', 'Tutoring']
-
 export default function Skills() {
   return (
-    <section id="skills" className="py-24 px-6 bg-gray-900/20">
+    <ScrollSection id="skills" className="py-24 px-6 bg-gray-900/20">
       <div className="max-w-6xl mx-auto">
         <SectionHeader icon={<Code2 className="w-4 h-4 text-indigo-400" />} title="Skills" />
 
@@ -69,23 +68,6 @@ export default function Skills() {
           ))}
         </div>
 
-        <div className="bg-gray-900/60 border border-gray-800 rounded-2xl p-6 mb-12">
-          <div className="flex items-center gap-2 mb-4">
-            <Code2 className="w-4 h-4 text-indigo-400" />
-            <h3 className="text-sm font-semibold text-gray-400">Top LinkedIn Skills</h3>
-          </div>
-          <div className="flex flex-wrap gap-3">
-            {topSkills.map((skill) => (
-              <span
-                key={skill}
-                className="px-4 py-2 rounded-xl bg-indigo-500/10 border border-indigo-500/20 text-indigo-200 text-sm font-medium"
-              >
-                {skill}
-              </span>
-            ))}
-          </div>
-        </div>
-
         {/* Interests */}
         <div className="bg-gray-900/60 border border-gray-800 rounded-2xl p-6">
           <div className="flex items-center gap-2 mb-4">
@@ -104,6 +86,6 @@ export default function Skills() {
           </div>
         </div>
       </div>
-    </section>
+    </ScrollSection>
   )
 }
