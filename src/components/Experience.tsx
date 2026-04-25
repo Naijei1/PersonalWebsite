@@ -166,13 +166,13 @@ export default function Experience() {
           {timeline.map((timelineYear) => (
             <motion.section
               key={timelineYear.year}
-              className="md:grid md:grid-cols-[minmax(0,9rem)_minmax(0,1fr)] md:gap-8"
+              className="md:grid md:grid-cols-[minmax(0,8rem)_minmax(0,1fr)] md:gap-6"
               initial={shouldReduceMotion ? false : { opacity: 0, y: 20 }}
               whileInView={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.1 }}
               transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
             >
-              <div className="relative z-10 mb-5 md:mb-0 md:flex md:flex-col md:items-end md:pr-2 md:pt-1">
+              <div className="relative z-10 mb-5 md:mb-0 md:flex md:flex-col md:items-end md:pt-1">
                 <div className="inline-flex min-h-11 items-center gap-2 rounded-full border border-indigo-500/30 bg-gray-900 px-3 py-1.5 font-mono text-sm text-indigo-300 shadow-lg shadow-indigo-500/10">
                   <Sparkles className="h-3.5 w-3.5" />
                   {timelineYear.year}
@@ -184,11 +184,11 @@ export default function Experience() {
                 </p>
               </div>
 
-              <div className="space-y-6 pl-5 md:pl-0">
+              <div className="space-y-6">
                 {timelineYear.organizations.map((organization, index) => (
                   <motion.article
                     key={`${timelineYear.year}-${organization.org}`}
-                    className="relative md:grid md:grid-cols-[2.25rem_minmax(0,1fr)] md:gap-4"
+                    className="relative"
                     initial={shouldReduceMotion ? false : { opacity: 0, y: 28, scale: 0.99 }}
                     whileInView={shouldReduceMotion ? undefined : { opacity: 1, y: 0, scale: 1 }}
                     viewport={{ once: true, amount: 0.3 }}
@@ -198,16 +198,6 @@ export default function Experience() {
                       ease: [0.22, 1, 0.36, 1],
                     }}
                   >
-                    <div className="absolute left-0 top-8 z-10 flex h-4 w-4 items-center justify-center rounded-full bg-gray-950 md:static md:h-auto md:w-auto md:items-start md:justify-center md:pt-8">
-                      <div
-                        className={`h-3.5 w-3.5 rounded-full border-2 border-gray-950 shadow-lg ${
-                          organization.isCurrent
-                            ? 'bg-emerald-400 shadow-emerald-500/40'
-                            : 'bg-indigo-500 shadow-indigo-500/40'
-                        }`}
-                      />
-                    </div>
-
                     <div
                       className={`timeline-company-shell card-hover rounded-[1.75rem] border p-0 backdrop-blur-sm ${
                         organization.isCurrent
