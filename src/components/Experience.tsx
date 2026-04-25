@@ -100,25 +100,9 @@ const experiences: ExperienceEntry[] = [
   },
 ]
 
-const YEAR_PATTERN = /\b(20\d{2})\b/g
-const currentYear = new Date().getFullYear()
-
-const formatYearSpan = (startYear: number, endYear: number) =>
-  startYear === endYear ? `${startYear}` : `${startYear} – ${endYear}`
-
 function getExperienceMeta(experience: ExperienceEntry) {
-  const matchedYears = [...experience.period.matchAll(YEAR_PATTERN)].map(([value]) => Number(value))
-  const startYear = matchedYears[0] ?? experience.year
-  const endYear = experience.period.includes('Present')
-    ? currentYear
-    : matchedYears[matchedYears.length - 1] ?? startYear
-
   return {
     isCurrent: experience.period.includes('Present'),
-    startYear,
-    endYear,
-    spansMultipleYears: startYear !== endYear,
-    yearSpanLabel: formatYearSpan(startYear, endYear),
   }
 }
 
@@ -154,7 +138,6 @@ const timeline = [...new Set(experiences.map((experience) => experience.year))]
       return {
         ...group,
         isCurrent: group.roles.some((role) => role.meta.isCurrent),
-        hasMultiYearRole: group.roles.some((role) => role.meta.spansMultipleYears),
         isGrouped: group.roles.length > 1,
         locationLabel: uniqueLocations.join(' · '),
       }
@@ -175,21 +158,21 @@ export default function Experience() {
       <div className="mx-auto max-w-6xl">
         <SectionHeader icon={<Briefcase className="h-4 w-4 text-indigo-400" />} title="Experience" />
         <p className="mb-8 max-w-3xl text-sm leading-7 text-gray-500 sm:mb-10 sm:text-base">
-          A more modern view of internships, leadership, and systems work with ongoing roles highlighted,
-          same-organization work grouped together, and multi-year positions called out clearly.
+          Internships, leadership, and systems work in a cleaner timeline, with current roles highlighted
+          and related positions grouped together.
         </p>
 
         <div className="space-y-16">
           {timeline.map((timelineYear) => (
             <motion.section
               key={timelineYear.year}
-              className="md:grid md:grid-cols-[minmax(0,9rem)_minmax(0,1fr)] md:gap-8"
+              className="md:grid md:grid-cols-[minmax(0,8rem)_minmax(0,1fr)] md:gap-6"
               initial={shouldReduceMotion ? false : { opacity: 0, y: 20 }}
               whileInView={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.1 }}
               transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
             >
-              <div className="relative z-10 mb-5 md:mb-0 md:flex md:flex-col md:items-end md:pr-2 md:pt-1">
+              <div className="relative z-10 mb-5 md:mb-0 md:flex md:flex-col md:items-end md:pt-1">
                 <div className="inline-flex min-h-11 items-center gap-2 rounded-full border border-indigo-500/30 bg-gray-900 px-3 py-1.5 font-mono text-sm text-indigo-300 shadow-lg shadow-indigo-500/10">
                   <Sparkles className="h-3.5 w-3.5" />
                   {timelineYear.year}
@@ -201,11 +184,11 @@ export default function Experience() {
                 </p>
               </div>
 
-              <div className="relative space-y-6 pl-5 before:absolute before:bottom-0 before:left-[0.4375rem] before:top-0 before:w-px before:bg-gradient-to-b before:from-indigo-400/80 before:via-violet-500/35 before:to-transparent before:content-[''] md:pl-0 md:before:left-[1.125rem]">
+              <div className="space-y-6">
                 {timelineYear.organizations.map((organization, index) => (
                   <motion.article
                     key={`${timelineYear.year}-${organization.org}`}
-                    className="relative md:grid md:grid-cols-[2.25rem_minmax(0,1fr)] md:gap-4"
+                    className="relative"
                     initial={shouldReduceMotion ? false : { opacity: 0, y: 28, scale: 0.99 }}
                     whileInView={shouldReduceMotion ? undefined : { opacity: 1, y: 0, scale: 1 }}
                     viewport={{ once: true, amount: 0.3 }}
@@ -215,16 +198,6 @@ export default function Experience() {
                       ease: [0.22, 1, 0.36, 1],
                     }}
                   >
-                    <div className="absolute left-0 top-8 z-10 flex h-4 w-4 items-center justify-center rounded-full bg-gray-950 md:static md:h-auto md:w-auto md:items-start md:justify-center md:pt-8">
-                      <div
-                        className={`h-3.5 w-3.5 rounded-full border-2 border-gray-950 shadow-lg ${
-                          organization.isCurrent
-                            ? 'bg-emerald-400 shadow-emerald-500/40'
-                            : 'bg-indigo-500 shadow-indigo-500/40'
-                        }`}
-                      />
-                    </div>
-
                     <div
                       className={`timeline-company-shell card-hover rounded-[1.75rem] border p-0 backdrop-blur-sm ${
                         organization.isCurrent
@@ -251,11 +224,6 @@ export default function Experience() {
                               </span>
                             )}
                           </div>
-                          <p className="max-w-2xl text-sm leading-6 text-gray-400">
-                            {organization.isGrouped
-                              ? 'Multiple positions at the same organization are grouped together to show the progression more clearly.'
-                              : 'Focused role with the most relevant work and impact highlighted below.'}
-                          </p>
                         </div>
 
                         <div className="text-left sm:text-right">
@@ -264,7 +232,6 @@ export default function Experience() {
                           </p>
                           <p className="mt-1 text-xs text-gray-600">
                             {organization.roles.length} role{organization.roles.length === 1 ? '' : 's'}
-                            {organization.hasMultiYearRole ? ' · includes multi-year span' : ''}
                           </p>
                         </div>
                       </div>
@@ -286,11 +253,6 @@ export default function Experience() {
                               </div>
 
                               <div className="flex flex-wrap gap-2 sm:max-w-[22rem] sm:justify-end">
-                                {role.meta.spansMultipleYears && (
-                                  <span className="rounded-full border border-violet-400/20 bg-violet-500/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-violet-200">
-                                    {role.meta.yearSpanLabel}
-                                  </span>
-                                )}
                                 {role.meta.isCurrent && (
                                   <span className="rounded-full border border-emerald-400/25 bg-emerald-400/15 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-emerald-200">
                                     Active now
