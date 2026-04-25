@@ -59,12 +59,14 @@
     box-shadow: 0 0 40px rgba(99, 102, 241, 0.2);
   }
 
-  .timeline-card {
+  .timeline-card,
+  .timeline-company-shell {
     position: relative;
     overflow: hidden;
   }
 
-  .timeline-card::before {
+  .timeline-card::before,
+  .timeline-company-shell::before {
     content: '';
     position: absolute;
     inset: 0;
@@ -74,14 +76,54 @@
     pointer-events: none;
   }
 
-  .timeline-card:hover::before {
+  .timeline-card:hover::before,
+  .timeline-company-shell:hover::before {
     opacity: 1;
+  }
+
+  .timeline-company-shell {
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.03);
+  }
+
+  .timeline-company-group {
+    background-image:
+      radial-gradient(circle at top right, rgba(129, 140, 248, 0.18), transparent 32%),
+      linear-gradient(180deg, rgba(255, 255, 255, 0.02), transparent 28%);
+  }
+
+  .timeline-current {
+    box-shadow:
+      0 0 0 1px rgba(52, 211, 153, 0.08),
+      0 24px 60px -24px rgba(16, 185, 129, 0.35);
+  }
+
+  .timeline-role-card {
+    position: relative;
+    overflow: hidden;
+    transition:
+      border-color 0.25s ease,
+      background-color 0.25s ease,
+      transform 0.25s ease;
+  }
+
+  .timeline-role-card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(130deg, rgba(255, 255, 255, 0.04), transparent 45%);
+    opacity: 0.7;
+    pointer-events: none;
   }
 
   @media (hover: hover) {
     .card-hover:hover {
       transform: translateY(-0.25rem);
       box-shadow: 0 25px 50px -12px rgba(99, 102, 241, 0.1);
+    }
+
+    .timeline-role-card:hover {
+      transform: translateY(-0.125rem);
+      border-color: rgba(129, 140, 248, 0.18);
     }
   }
 
