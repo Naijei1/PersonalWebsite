@@ -11,8 +11,7 @@ export default function Projects() {
           <Reveal key={project.id}>
             <article
               id={`project-${project.id}`}
-              className="lucky-target surface grid scroll-mt-24 items-center gap-6 p-4 sm:p-6 lg:grid-cols-2 lg:gap-10 lg:p-8"
-              style={{ '--accent': project.accent } as React.CSSProperties}
+              className="surface grid scroll-mt-24 items-center gap-6 p-4 sm:p-6 lg:grid-cols-2 lg:gap-10 lg:p-8"
             >
               <div className={i % 2 ? 'lg:order-2' : ''}>
                 <Showcase project={project} />

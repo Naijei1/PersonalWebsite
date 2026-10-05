@@ -7,6 +7,7 @@ export default {
       fontFamily: {
         sans: ['"Google Sans"', 'Roboto', 'system-ui', 'sans-serif'],
         mono: ['"Google Sans Code"', '"JetBrains Mono"', 'monospace'],
+        hand: ['Caveat', 'cursive'],
       },
       colors: {
         g: {

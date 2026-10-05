@@ -3,13 +3,15 @@ export const asset = (path: string) => `${import.meta.env.BASE_URL}${path}`
 export const profile = {
   name: 'Naijei Jiang',
   firstName: 'Naijei',
-  tagline: 'I build systems that move data fast, and things you can see and touch.',
+  role: 'Backend & systems engineer',
+  tagline:
+    'I build backend services and the systems underneath them: Kafka infrastructure at GEICO, a peer-to-peer downloader at Cornell, and the occasional AR drum kit.',
   intro:
-    'CS student at Cornell (class of 2028) working on backend engineering, distributed systems, and AI + XR. I like figuring out how systems fit together, from splitting files into chunks across peers to connecting computer vision with hardware.',
+    'Backend first, systems all the way down. I like APIs, data pipelines, schedulers, and networks, and making them fast and reliable.',
   photo: asset('project-logos/naijei-owner.png'),
   location: 'Ithaca & Rochester, NY',
   email: 'nj277@cornell.edu',
-  chips: ['CS @ Cornell ’28', 'Tech Chair @ Cornell Data Science', 'CS 2110 TA', 'Learning Rust'],
+  now: ['Leading backend for a P2P downloader', 'TA for CS 2110', 'Learning Rust'],
 }
 
 export type Link = { label: string; href: string; handle: string }
@@ -25,15 +27,6 @@ export const links: Link[] = [
 export const education = {
   school: 'Cornell University',
   degree: 'B.S. Computer Science',
-  detail: 'College of Engineering · Expected May 2028 · GPA 3.8',
-  coursework: [
-    'Data Structures & Algorithms',
-    'Functional Programming',
-    'Computer Systems',
-    'Machine Learning',
-    'Computer Vision',
-    'Probability',
-  ],
 }
 
 export type Experience = {
@@ -56,7 +49,7 @@ export const experience: Experience[] = [
       'Built Kafka schema infrastructure with Terraform.',
       'Developed AI agent workflows for claims operations.',
     ],
-    tags: ['Kafka', 'Terraform', 'AI Agents', 'Backend'],
+    tags: ['Backend', 'Kafka', 'Terraform', 'AI Agents'],
   },
   {
     org: 'Cornell Data Science',
@@ -68,7 +61,7 @@ export const experience: Experience[] = [
       'Leading a 7-person team building a peer-to-peer, chunked distributed downloader with integrity checks to cut origin-server load.',
       'Designed a 6-node cluster for AI workloads with Slurm scheduling and NFS storage, plus a real-time CPU/GPU health dashboard.',
     ],
-    tags: ['Distributed Systems', 'gRPC', 'Slurm', 'P2P'],
+    tags: ['Backend', 'Distributed Systems', 'gRPC', 'Slurm'],
   },
   {
     org: 'Cornell Bowers CIS',
@@ -91,7 +84,7 @@ export const experience: Experience[] = [
       'Built and optimized an MCP server for agent workflows, cutting end-to-end response time from ~10s to ~5s.',
       'Integrated the Canvas API and shipped a file upload and processing pipeline; fixed intent routing for better tool-call accuracy.',
     ],
-    tags: ['Python', 'Flask', 'Gemini API', 'MCP', 'React'],
+    tags: ['Backend', 'Python', 'Flask', 'MCP', 'Gemini API'],
   },
   {
     org: 'Cornell Bowers CIS',
@@ -111,7 +104,7 @@ export const experience: Experience[] = [
     bullets: [
       'Applied MongoDB to an existing backend and fixed critical login, logout-crash, and avatar-rendering bugs.',
     ],
-    tags: ['Node.js', 'MongoDB'],
+    tags: ['Backend', 'Node.js', 'MongoDB'],
   },
   {
     org: 'C-DIME Computer Systems Lab',
@@ -171,7 +164,7 @@ export const featured: Featured[] = [
   {
     id: 'downloader',
     name: 'Distributed Downloader',
-    kicker: 'Cornell Data Science · Tech Lead',
+    kicker: 'Cornell Data Science · Backend tech lead',
     summary: 'A LAN-first peer-to-peer downloader for game and software installs, built by a 7-person team.',
     idea: 'A file split into verified chunks streams in parallel from many peers, so no single server carries the load.',
     bullets: [
@@ -189,7 +182,7 @@ export const featured: Featured[] = [
   {
     id: 'cluster',
     name: 'CDS Compute Cluster',
-    kicker: 'Cornell Data Science · Infrastructure',
+    kicker: 'Cornell Data Science · Systems',
     summary: 'Six networked nodes turned into shared compute for AI workloads, with a live health dashboard.',
     idea: 'Jobs queue up and Slurm drops them onto whichever node is free, while every node reports its health.',
     bullets: [
@@ -270,9 +263,9 @@ export const moreProjects: MoreProject[] = [
 ]
 
 export const toolkit: { label: string; items: string[] }[] = [
+  { label: 'Backend', items: ['Spring Boot', 'gRPC', 'Kafka', 'Flask', 'Node.js', 'PostgreSQL'] },
   { label: 'Languages', items: ['Java', 'Python', 'C', 'TypeScript', 'C#', 'OCaml', 'SQL'] },
-  { label: 'Backend & systems', items: ['Spring Boot', 'gRPC', 'Kafka', 'Flask', 'Node.js'] },
-  { label: 'Infrastructure', items: ['AWS', 'Terraform', 'Docker', 'Linux', 'Slurm', 'NFS'] },
+  { label: 'Systems & infra', items: ['AWS', 'Terraform', 'Docker', 'Linux', 'Slurm', 'NFS'] },
   { label: 'Web, ML & XR', items: ['React', 'Next.js', 'OpenCV', 'scikit-learn', 'Unity', 'Blender'] },
 ]
 

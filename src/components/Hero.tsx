@@ -1,96 +1,103 @@
-import { ArrowDown, Github, Linkedin, Mail, Sparkles } from 'lucide-react'
-import { featured, profile } from '../data/content'
+import { ArrowDown, Github, Linkedin, Mail, Watch } from 'lucide-react'
+import { profile } from '../data/content'
 import Wordmark from './Wordmark'
 
-const DOTS = [
-  { c: '#4285F4', s: 18, x: '12%', y: '22%', d: '0s' },
-  { c: '#EA4335', s: 12, x: '84%', y: '18%', d: '1.2s' },
-  { c: '#FBBC04', s: 22, x: '78%', y: '70%', d: '.6s' },
-  { c: '#34A853', s: 14, x: '18%', y: '74%', d: '1.8s' },
-  { c: '#4285F4', s: 8, x: '62%', y: '12%', d: '2.4s' },
-  { c: '#EA4335', s: 10, x: '30%', y: '88%', d: '.9s' },
+const STICKERS = [
+  { text: '🧗 climber', className: '-right-4 top-6 rotate-[8deg] bg-[#E8F0FE] text-[#174EA6]' },
+  { text: '🥁 1st @ Makeathon', className: '-left-10 top-1/2 -rotate-[7deg] bg-[#FEF7E0] text-[#8C4A00]' },
+  { text: '🀄 学中文', className: '-right-6 bottom-20 rotate-[5deg] bg-[#FCE8E6] text-[#A50E0E]' },
+  { text: '🏃 runner', className: 'left-6 -bottom-4 -rotate-[4deg] bg-[#E6F4EA] text-[#0D652D]' },
 ]
 
-export function feelingLucky() {
-  const pick = featured[Math.floor(Math.random() * featured.length)]
-  const el = document.getElementById(`project-${pick.id}`)
-  if (!el) return
-  el.scrollIntoView({ behavior: 'smooth', block: 'center' })
-  el.dataset.lucky = 'true'
-  window.setTimeout(() => delete el.dataset.lucky, 2200)
-}
+const SOCIALS = [
+  { href: `mailto:${profile.email}`, label: 'Email', Icon: Mail },
+  { href: 'https://www.linkedin.com/in/naijei', label: 'LinkedIn', Icon: Linkedin },
+  { href: 'https://github.com/Naijei1', label: 'GitHub', Icon: Github },
+]
 
-export default function Hero() {
+export default function Hero({ onLucky }: { onLucky: () => void }) {
   return (
-    <section id="top" className="relative flex min-h-[100svh] items-center overflow-hidden pb-16 pt-24">
-      <div aria-hidden className="pointer-events-none absolute inset-0">
-        {DOTS.map((dot, i) => (
-          <span
-            key={i}
-            className="float-dot absolute rounded-full opacity-70 dark:opacity-50"
-            style={{ background: dot.c, width: dot.s, height: dot.s, left: dot.x, top: dot.y, animationDelay: dot.d }}
-          />
-        ))}
-      </div>
+    <section id="top" className="hero-grid relative isolate flex min-h-[100svh] items-center overflow-hidden pb-16 pt-24">
+      <div className="shell grid items-center gap-14 lg:grid-cols-[1.2fr_1fr] lg:gap-10">
+        <div className="order-2 lg:order-1">
+          <p className="animate-rise chip mb-6 bg-white/70 dark:bg-white/5">
+            <span className="relative flex h-2 w-2">
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-g-green opacity-60" />
+              <span className="relative inline-flex h-2 w-2 rounded-full bg-g-green" />
+            </span>
+            {profile.role} · Cornell CS ’28
+          </p>
 
-      <div className="shell relative flex flex-col items-center text-center">
-        <div className="animate-rise mb-7 rounded-full bg-[conic-gradient(#4285F4_0_25%,#EA4335_0_50%,#FBBC04_0_75%,#34A853_0)] p-[3px] shadow-lift">
-          <img
-            src={profile.photo}
-            alt="Portrait of Naijei Jiang"
-            width={128}
-            height={128}
-            className="h-28 w-28 rounded-full border-4 border-white object-cover dark:border-night sm:h-32 sm:w-32"
-          />
-        </div>
+          <div className="animate-rise" style={{ animationDelay: '80ms' }}>
+            <Wordmark text="Hi, I’m Naijei." className="text-[clamp(3.2rem,8.5vw,6.5rem)] leading-[0.98]" />
+          </div>
 
-        <p className="animate-rise eyebrow mb-2" style={{ animationDelay: '80ms' }}>
-          Hi, I’m
-        </p>
-        <div className="animate-rise" style={{ animationDelay: '140ms' }}>
-          <Wordmark text={profile.firstName} className="text-[clamp(4.5rem,16vw,10rem)] leading-[0.95]" />
-        </div>
-        <p
-          className="animate-rise mt-5 text-lg text-ink-soft dark:text-night-soft sm:text-xl"
-          style={{ animationDelay: '200ms' }}
-        >
-          Jiang · CS @ Cornell ’28
-        </p>
+          <p
+            className="animate-rise mt-6 max-w-xl text-xl leading-relaxed text-ink-soft dark:text-night-soft sm:text-2xl"
+            style={{ animationDelay: '160ms' }}
+          >
+            {profile.tagline}
+          </p>
 
-        <p
-          className="animate-rise mx-auto mt-6 max-w-2xl text-balance text-xl leading-relaxed sm:text-2xl"
-          style={{ animationDelay: '260ms' }}
-        >
-          {profile.tagline}
-        </p>
+          <ul className="animate-rise mt-6 flex flex-wrap gap-x-5 gap-y-1 text-sm" style={{ animationDelay: '220ms' }}>
+            <li className="font-hand text-xl text-ink-faint dark:text-night-soft">right now →</li>
+            {profile.now.map((item) => (
+              <li key={item} className="flex items-center gap-2 text-ink-soft dark:text-night-soft">
+                <span aria-hidden className="h-1 w-1 rounded-full bg-current" />
+                {item}
+              </li>
+            ))}
+          </ul>
 
-        <div className="animate-rise mt-8 flex flex-wrap justify-center gap-3" style={{ animationDelay: '320ms' }}>
-          <a href="#projects" className="btn-primary">
-            See my projects <ArrowDown className="h-4 w-4" />
-          </a>
-          <button type="button" onClick={feelingLucky} className="btn-tonal" title="Jump to a random project">
-            <Sparkles className="h-4 w-4 text-g-yellow" /> I’m Feeling Lucky
-          </button>
-        </div>
-
-        <div className="animate-rise mt-8 flex items-center gap-2" style={{ animationDelay: '380ms' }}>
-          {[
-            { href: `mailto:${profile.email}`, label: 'Email', Icon: Mail },
-            { href: 'https://www.linkedin.com/in/naijei', label: 'LinkedIn', Icon: Linkedin },
-            { href: 'https://github.com/Naijei1', label: 'GitHub', Icon: Github },
-          ].map(({ href, label, Icon }) => (
-            <a
-              key={label}
-              href={href}
-              target={href.startsWith('mailto') ? undefined : '_blank'}
-              rel="noreferrer"
-              aria-label={label}
-              title={label}
-              className="grid h-11 w-11 place-items-center rounded-full text-ink-soft transition hover:-translate-y-0.5 hover:bg-black/5 hover:text-ink dark:text-night-soft dark:hover:bg-white/10 dark:hover:text-night-text"
-            >
-              <Icon className="h-5 w-5" />
+          <div className="animate-rise mt-9 flex flex-wrap items-center gap-3" style={{ animationDelay: '280ms' }}>
+            <a href="#projects" className="btn-primary">
+              See my projects <ArrowDown className="h-4 w-4" />
             </a>
-          ))}
+            <button type="button" onClick={onLucky} className="btn-tonal group" title="Peek at my Apple Watch">
+              <Watch className="h-4 w-4 transition-transform group-hover:rotate-12" /> I’m Feeling Lucky
+            </button>
+            <span className="mx-1 hidden h-6 w-px bg-black/10 dark:bg-white/15 sm:block" />
+            {SOCIALS.map(({ href, label, Icon }) => (
+              <a
+                key={label}
+                href={href}
+                target={href.startsWith('mailto') ? undefined : '_blank'}
+                rel="noreferrer"
+                aria-label={label}
+                title={label}
+                className="grid h-11 w-11 place-items-center rounded-full text-ink-soft transition hover:-translate-y-0.5 hover:bg-black/5 hover:text-ink dark:text-night-soft dark:hover:bg-white/10 dark:hover:text-night-text"
+              >
+                <Icon className="h-5 w-5" />
+              </a>
+            ))}
+          </div>
+        </div>
+
+        <div className="animate-rise order-1 flex justify-center lg:order-2" style={{ animationDelay: '120ms' }}>
+          <figure className="polaroid group relative w-[min(68vw,330px)] -rotate-[4deg] rounded-md bg-white p-3 pb-16 shadow-lift transition-transform duration-500 hover:rotate-[-1deg] dark:bg-[#2B2C2E]">
+            <span
+              aria-hidden
+              className="absolute -top-3 left-1/2 h-7 w-28 -translate-x-1/2 rotate-[3deg] bg-g-yellow/50"
+            />
+            <img
+              src={profile.photo}
+              alt="Naijei Jiang, arms raised, outdoors"
+              width={460}
+              height={460}
+              className="aspect-square w-full rounded-sm object-cover"
+            />
+            <figcaption className="absolute inset-x-0 bottom-3 text-center font-hand text-3xl text-ink dark:text-night-text">
+              hi, that’s me 👋
+            </figcaption>
+            {STICKERS.map((s) => (
+              <span
+                key={s.text}
+                className={`sticker absolute hidden whitespace-nowrap rounded-full px-3 py-1.5 text-sm font-medium shadow-card sm:inline-block ${s.className}`}
+              >
+                {s.text}
+              </span>
+            ))}
+          </figure>
         </div>
       </div>
     </section>
