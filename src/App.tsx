@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import About from './components/About'
 import Contact from './components/Contact'
 import Experience from './components/Experience'
@@ -7,6 +7,7 @@ import Hero from './components/Hero'
 import Hobbies from './components/Hobbies'
 import Navbar from './components/Navbar'
 import Projects from './components/Projects'
+import WatchModal from './components/WatchModal'
 import { EGG_EVENT, useEasterEggs, type Egg } from './lib/easterEggs'
 import { useTheme } from './lib/hooks'
 
@@ -20,6 +21,8 @@ export default function App() {
   const { theme, toggle } = useTheme()
   const egg = useEasterEggs()
   const [toast, setToast] = useState<string | null>(null)
+  const [watchOpen, setWatchOpen] = useState(false)
+  const closeWatch = useCallback(() => setWatchOpen(false), [])
 
   useEffect(() => {
     if (egg) setToast(TOASTS[egg])
@@ -52,7 +55,7 @@ export default function App() {
       <Navbar theme={theme} onToggleTheme={toggle} />
       <div className={egg === 'roll' ? 'animate-roll' : egg === 'askew' ? 'askew' : ''}>
         <main>
-          <Hero />
+          <Hero onLucky={() => setWatchOpen(true)} />
           <About />
           <Experience />
           <Projects />
@@ -61,6 +64,7 @@ export default function App() {
         </main>
         <Footer />
       </div>
+      <WatchModal open={watchOpen} onClose={closeWatch} />
       <div
         role="status"
         aria-live="polite"
