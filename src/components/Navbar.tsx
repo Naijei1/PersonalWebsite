@@ -46,7 +46,7 @@ export default function Navbar({ theme, onToggleTheme }: { theme: Theme; onToggl
     >
       <div
         aria-hidden
-        className="absolute left-0 top-0 h-[3px] origin-left bg-[linear-gradient(90deg,#4285F4_0_25%,#EA4335_25%_50%,#FBBC04_50%_75%,#34A853_75%)]"
+        className="absolute left-0 top-0 h-[3px] origin-left bg-g-blue"
         style={{ width: '100%', transform: `scaleX(${progress})` }}
       />
       <nav className="shell flex h-16 items-center gap-3" aria-label="Main">
@@ -55,7 +55,7 @@ export default function Navbar({ theme, onToggleTheme }: { theme: Theme; onToggl
           className="flex shrink-0 items-center gap-2 rounded-full pr-2 font-medium"
           aria-label="Back to top"
         >
-          <span className="grid h-8 w-8 place-items-center rounded-full bg-[conic-gradient(#4285F4_0_25%,#EA4335_0_50%,#FBBC04_0_75%,#34A853_0)] p-[2px]">
+          <span className="grid h-8 w-8 place-items-center rounded-full bg-g-blue p-[2px]">
             <span className="grid h-full w-full place-items-center rounded-full bg-white text-sm font-bold text-g-blue dark:bg-night">
               N
             </span>
@@ -63,7 +63,10 @@ export default function Navbar({ theme, onToggleTheme }: { theme: Theme; onToggl
           <span className="hidden sm:inline">Naijei Jiang</span>
         </a>
 
-        <ul ref={tabs} className="no-scrollbar tab-strip relative mx-auto flex min-w-0 items-center gap-0.5 overflow-x-auto sm:gap-1">
+        <ul
+          ref={tabs}
+          className="no-scrollbar tab-strip relative mx-auto flex min-w-0 items-center gap-0.5 overflow-x-auto sm:gap-1"
+        >
           {NAV.map((item) => {
             const isActive = active === item.id
             return (

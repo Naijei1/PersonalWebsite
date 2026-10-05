@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 
 export type Theme = 'light' | 'dark'
 
+/** Dark by default; the theme is only saved once a visitor picks one with the toggle. */
 export function useTheme() {
   const [theme, setTheme] = useState<Theme>(() =>
     document.documentElement.classList.contains('dark') ? 'dark' : 'light',
@@ -9,14 +10,23 @@ export function useTheme() {
 
   useEffect(() => {
     document.documentElement.classList.toggle('dark', theme === 'dark')
-    try {
-      localStorage.setItem('theme', theme)
-    } catch {
-      /* storage may be unavailable in private mode */
-    }
+    document
+      .querySelector('meta[name="theme-color"]')
+      ?.setAttribute('content', theme === 'dark' ? '#1f1f1f' : '#ffffff')
   }, [theme])
 
-  return { theme, toggle: () => setTheme((t) => (t === 'dark' ? 'light' : 'dark')) }
+  const toggle = () =>
+    setTheme((t) => {
+      const next = t === 'dark' ? 'light' : 'dark'
+      try {
+        localStorage.setItem('theme', next)
+      } catch {
+        /* storage may be unavailable in private mode */
+      }
+      return next
+    })
+
+  return { theme, toggle }
 }
 
 export function useMediaQuery(query: string) {
