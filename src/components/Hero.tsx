@@ -90,7 +90,7 @@ export default function Hero({ onLucky }: { onLucky: () => void }) {
               className="aspect-square w-full rounded-sm object-cover"
             />
             <figcaption className="absolute inset-x-0 bottom-3 text-center font-hand text-3xl text-ink dark:text-night-text">
-              building FTM Snake 🐍
+              hi, that’s me 👋
             </figcaption>
             {STICKERS.map((s) => (
               <span

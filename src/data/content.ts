@@ -11,7 +11,7 @@ export const profile = {
   photo: asset('naijei.webp'),
   location: 'Ithaca & Rochester, NY',
   email: 'nj277@cornell.edu',
-  now: ['Leading FTM Snake, a distributed snake game', 'TA for CS 2110', 'Tech lead @ Cornell Data Science'],
+  now: ['Leading FTM Snake', 'TA for CS 2110', 'Tech lead @ Cornell Data Science'],
 }
 
 export type Link = { label: string; href: string; handle: string }
@@ -127,7 +127,7 @@ export const experience: Experience[] = [
   },
 ]
 
-export type SceneId = 'groovy' | 'downloader' | 'cluster' | 'seeround' | 'bioprint'
+export type SceneId = 'groovy' | 'downloader' | 'gnarly' | 'cluster' | 'seeround' | 'bioprint'
 
 export type Featured = {
   id: SceneId
@@ -136,6 +136,7 @@ export type Featured = {
   award?: string
   summary: string
   idea: string
+  hideIdea?: boolean
   bullets: string[]
   tags: string[]
   accent: string
@@ -150,6 +151,7 @@ export const featured: Featured[] = [
     award: '1st Place Overall',
     summary: 'A hands-free AR drum trainer that turns songs into synced, four-lane percussion cues for smart glasses.',
     idea: 'Notes fall down four lanes and land on the drum pads right when you should hit them.',
+    hideIdea: true,
     bullets: [
       'Won 1st place overall among 150+ participants at Cornell Makeathon.',
       'Built a Flask audio pipeline that turns MP3s into timestamped beats (Librosa) and streams low-latency cues over WebSockets.',
@@ -179,6 +181,25 @@ export const featured: Featured[] = [
     links: [
       { label: 'Project page', href: asset('downloader/') },
       { label: 'Code', href: 'https://github.com/CornellDataScience/distributed-downloader' },
+    ],
+  },
+  {
+    id: 'gnarly',
+    name: 'Gnarly',
+    kicker: 'BigRed//Hacks 2026 · Cornell',
+    summary: 'An indoor navigation ecosystem. Scan it, connect it, walk it.',
+    idea: 'A LiDAR sweep maps each room, the rooms link across floors, then an AR path walks you to the door.',
+    bullets: [
+      'An iPhone app scans spaces with LiDAR, a website connects the scans across rooms and floors, and an AR navigator guides you to your destination.',
+      'No third-party mapping, no hardcoded routes, no external GPU: scanning and AR run on the phone, and Firebase shares the maps.',
+      'Wall-aware A* routing across zones and floors, plus LiDAR haptics that flag obstacles, even in the dark.',
+      'Built with Geneustace Wicaksono, Mukund Gaur, Grant Lin, and Maruf Aurnap.',
+    ],
+    tags: ['Swift', 'ARKit', 'RoomPlan', 'Unity', 'React', 'Firebase'],
+    accent: '#12B5CB',
+    links: [
+      { label: 'Watch demo', href: 'https://youtu.be/XkmW11bmEXg' },
+      { label: 'Code', href: 'https://github.com/mukundgaur/gnarly' },
     ],
   },
   {
@@ -247,14 +268,6 @@ export const moreProjects: MoreProject[] = [
     tags: ['Rust', 'macroquad', 'Distributed Systems'],
     href: 'https://github.com/CornellDataScience/FTM-Snake',
     color: '#34A853',
-  },
-  {
-    name: 'Gnarly',
-    blurb:
-      'Indoor AR navigation: an iPhone LiDAR mapper, a web editor that links rooms and floors, and live AR guidance.',
-    tags: ['Swift', 'ARKit', 'Unity', 'React', 'Firebase'],
-    href: 'https://github.com/mukundgaur/gnarly',
-    color: '#4285F4',
   },
   {
     name: 'Chinese Flashcards',
