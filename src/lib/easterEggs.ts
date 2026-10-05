@@ -24,37 +24,52 @@ export function fireEgg(egg: Egg) {
 
 let audio: AudioContext | null = null
 
+export type DrumKind = 'kick' | 'snare' | 'hat' | 'tom' | 'floor' | 'crash'
+
+const TONES: Partial<Record<DrumKind, [from: number, to: number, len: number]>> = {
+  kick: [150, 40, 0.3],
+  tom: [240, 120, 0.28],
+  floor: [150, 70, 0.4],
+}
+const NOISE: Partial<Record<DrumKind, [type: BiquadFilterType, freq: number, len: number, level: number]>> = {
+  snare: ['bandpass', 1800, 0.18, 0.5],
+  hat: ['highpass', 7000, 0.06, 0.25],
+  crash: ['highpass', 5000, 0.9, 0.3],
+}
+
 /** Tiny synthesized drum kit, so the easter egg needs no audio files. */
-export function playDrum(lane: number) {
+export function playDrum(kind: DrumKind) {
   audio ??= new AudioContext()
   const ctx = audio
   const t = ctx.currentTime
   const gain = ctx.createGain()
   gain.connect(ctx.destination)
-  if (lane === 0 || lane === 3) {
+  const tone = TONES[kind]
+  if (tone) {
+    const [from, to, len] = tone
     const osc = ctx.createOscillator()
-    osc.frequency.setValueAtTime(lane === 0 ? 150 : 220, t)
-    osc.frequency.exponentialRampToValueAtTime(lane === 0 ? 40 : 90, t + 0.25)
+    osc.frequency.setValueAtTime(from, t)
+    osc.frequency.exponentialRampToValueAtTime(to, t + len * 0.8)
     gain.gain.setValueAtTime(0.7, t)
-    gain.gain.exponentialRampToValueAtTime(0.001, t + 0.3)
+    gain.gain.exponentialRampToValueAtTime(0.001, t + len)
     osc.connect(gain)
     osc.start(t)
-    osc.stop(t + 0.3)
-  } else {
-    const len = lane === 1 ? 0.18 : 0.06
-    const buffer = ctx.createBuffer(1, ctx.sampleRate * len, ctx.sampleRate)
-    const data = buffer.getChannelData(0)
-    for (let i = 0; i < data.length; i++) data[i] = Math.random() * 2 - 1
-    const src = ctx.createBufferSource()
-    src.buffer = buffer
-    const filter = ctx.createBiquadFilter()
-    filter.type = lane === 1 ? 'bandpass' : 'highpass'
-    filter.frequency.value = lane === 1 ? 1800 : 7000
-    gain.gain.setValueAtTime(lane === 1 ? 0.5 : 0.25, t)
-    gain.gain.exponentialRampToValueAtTime(0.001, t + len)
-    src.connect(filter).connect(gain)
-    src.start(t)
+    osc.stop(t + len)
+    return
   }
+  const [type, freq, len, level] = NOISE[kind]!
+  const buffer = ctx.createBuffer(1, ctx.sampleRate * len, ctx.sampleRate)
+  const data = buffer.getChannelData(0)
+  for (let i = 0; i < data.length; i++) data[i] = Math.random() * 2 - 1
+  const src = ctx.createBufferSource()
+  src.buffer = buffer
+  const filter = ctx.createBiquadFilter()
+  filter.type = type
+  filter.frequency.value = freq
+  gain.gain.setValueAtTime(level, t)
+  gain.gain.exponentialRampToValueAtTime(0.001, t + len)
+  src.connect(filter).connect(gain)
+  src.start(t)
 }
 
 /** Global listeners for the Konami code and typed phrases; returns the egg currently playing on the page. */
