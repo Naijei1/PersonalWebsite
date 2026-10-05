@@ -1,160 +1,97 @@
-import { Github, Mail, Youtube, Instagram } from 'lucide-react'
+import { ArrowDown, Github, Linkedin, Mail, Sparkles } from 'lucide-react'
+import { featured, profile } from '../data/content'
+import Wordmark from './Wordmark'
 
-const socialLinks = [
-  {
-    icon: Github,
-    label: 'GitHub',
-    href: 'https://github.com/Naijei1',
-    username: 'Naijei1',
-  },
-  {
-    icon: Mail,
-    label: 'Email',
-    href: 'mailto:nj277@cornell.edu',
-    username: 'nj277@cornell.edu',
-  },
-  {
-    icon: Youtube,
-    label: 'YouTube',
-    href: 'https://www.youtube.com/@itznaijei6316',
-    username: '@ItzNaijei',
-  },
-  {
-    icon: Instagram,
-    label: 'Instagram',
-    href: 'https://www.instagram.com/naijeie/',
-    username: '@naijeie',
-  },
+const DOTS = [
+  { c: '#4285F4', s: 18, x: '12%', y: '22%', d: '0s' },
+  { c: '#EA4335', s: 12, x: '84%', y: '18%', d: '1.2s' },
+  { c: '#FBBC04', s: 22, x: '78%', y: '70%', d: '.6s' },
+  { c: '#34A853', s: 14, x: '18%', y: '74%', d: '1.8s' },
+  { c: '#4285F4', s: 8, x: '62%', y: '12%', d: '2.4s' },
+  { c: '#EA4335', s: 10, x: '30%', y: '88%', d: '.9s' },
 ]
 
-const badges = ['CS @ Cornell', 'GPA 3.8', 'Cornell DS Technical Chair', 'TA @ CS 2110']
+export function feelingLucky() {
+  const pick = featured[Math.floor(Math.random() * featured.length)]
+  const el = document.getElementById(`project-${pick.id}`)
+  if (!el) return
+  el.scrollIntoView({ behavior: 'smooth', block: 'center' })
+  el.dataset.lucky = 'true'
+  window.setTimeout(() => delete el.dataset.lucky, 2200)
+}
 
 export default function Hero() {
   return (
-    <section
-      id="about"
-      className="section-shell relative flex min-h-dvh flex-col items-center justify-center overflow-hidden pt-28 pb-16 sm:pt-32 sm:pb-20"
-    >
-      {/* Animated background blobs */}
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-indigo-600/10 rounded-full blur-3xl animate-float" />
-        <div
-          className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-purple-600/10 rounded-full blur-3xl animate-float"
-          style={{ animationDelay: '3s' }}
-        />
-        <div
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-pink-600/5 rounded-full blur-3xl animate-float"
-          style={{ animationDelay: '1.5s' }}
-        />
-        {/* Grid pattern */}
-        <div
-          className="absolute inset-0 opacity-[0.03]"
-          style={{
-            backgroundImage:
-              'linear-gradient(rgba(255,255,255,.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.1) 1px, transparent 1px)',
-            backgroundSize: '60px 60px',
-          }}
-        />
+    <section id="top" className="relative flex min-h-[100svh] items-center overflow-hidden pb-16 pt-24">
+      <div aria-hidden className="pointer-events-none absolute inset-0">
+        {DOTS.map((dot, i) => (
+          <span
+            key={i}
+            className="float-dot absolute rounded-full opacity-70 dark:opacity-50"
+            style={{ background: dot.c, width: dot.s, height: dot.s, left: dot.x, top: dot.y, animationDelay: dot.d }}
+          />
+        ))}
       </div>
 
-      <div className="relative z-10 w-full max-w-4xl text-center">
-        {/* Profile image */}
-        <div className="mb-7 flex justify-center animate-fade-in sm:mb-8">
-          <div className="relative">
-            <div className="h-24 w-24 rounded-full bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 p-0.5 shadow-2xl shadow-indigo-500/30 sm:h-32 sm:w-32">
-              <img
-                src={`${import.meta.env.BASE_URL}project-logos/naijei-owner.png`}
-                alt="Naijei Jiang"
-                className="w-full h-full rounded-full object-cover object-center"
-              />
-            </div>
-            <div className="absolute -bottom-1 -right-1 h-5 w-5 rounded-full border-2 border-gray-950 bg-green-500 sm:h-6 sm:w-6" />
-          </div>
+      <div className="shell relative flex flex-col items-center text-center">
+        <div className="animate-rise mb-7 rounded-full bg-[conic-gradient(#4285F4_0_25%,#EA4335_0_50%,#FBBC04_0_75%,#34A853_0)] p-[3px] shadow-lift">
+          <img
+            src={profile.photo}
+            alt="Portrait of Naijei Jiang"
+            width={128}
+            height={128}
+            className="h-28 w-28 rounded-full border-4 border-white object-cover dark:border-night sm:h-32 sm:w-32"
+          />
         </div>
 
-        {/* Name & headline */}
-        <div className="animate-slide-up" style={{ animationDelay: '0.1s' }}>
-          <p className="mb-3 text-xs font-mono uppercase tracking-[0.3em] text-indigo-400 sm:text-sm">
-            Hello, I'm
-          </p>
-          <h1 className="mb-4 text-4xl font-black leading-[1.05] sm:text-5xl md:text-6xl lg:text-7xl">
-            <span className="text-gradient">Naijei Jiang</span>
-          </h1>
-          <p className="mx-auto mb-7 max-w-2xl text-base font-light leading-relaxed text-gray-400 sm:mb-8 sm:text-xl md:text-2xl">
-            Software Engineer &amp; Distributed Systems Enthusiast
-          </p>
+        <p className="animate-rise eyebrow mb-2" style={{ animationDelay: '80ms' }}>
+          Hi, I’m
+        </p>
+        <div className="animate-rise" style={{ animationDelay: '140ms' }}>
+          <Wordmark text={profile.firstName} className="text-[clamp(4.5rem,16vw,10rem)] leading-[0.95]" />
         </div>
-
-        {/* Badges */}
-        <div
-          className="mb-8 flex flex-wrap justify-center gap-2 animate-slide-up sm:mb-10"
-          style={{ animationDelay: '0.2s' }}
-        >
-          {badges.map((badge) => (
-            <span
-              key={badge}
-              className="rounded-full border border-indigo-500/20 bg-indigo-500/10 px-3 py-1.5 text-[11px] font-medium text-indigo-300 sm:text-xs"
-            >
-              {badge}
-            </span>
-          ))}
-        </div>
-
-        {/* Short bio */}
         <p
-          className="mx-auto mb-10 max-w-2xl text-base leading-7 text-gray-400 animate-slide-up sm:mb-12 sm:text-lg sm:leading-relaxed"
-          style={{ animationDelay: '0.3s' }}
+          className="animate-rise mt-5 text-lg text-ink-soft dark:text-night-soft sm:text-xl"
+          style={{ animationDelay: '200ms' }}
         >
-          CS sophomore at Cornell building distributed systems, teaching Data Structures &amp;
-          Algorithms, and shipping real-world projects. Passionate about infrastructure,
-          education, and creative tech.
+          Jiang · CS @ Cornell ’28
         </p>
 
-        {/* CTA buttons */}
-        <div
-          className="mb-12 grid w-full max-w-md gap-3 animate-slide-up sm:mb-14 sm:max-w-none sm:grid-flow-col sm:auto-cols-max sm:justify-center sm:gap-4"
-          style={{ animationDelay: '0.4s' }}
+        <p
+          className="animate-rise mx-auto mt-6 max-w-2xl text-balance text-xl leading-relaxed sm:text-2xl"
+          style={{ animationDelay: '260ms' }}
         >
-          <a
-            href="#projects"
-            className="touch-target inline-flex items-center justify-center rounded-xl bg-indigo-600 px-6 py-3 text-base font-semibold text-white shadow-lg shadow-indigo-600/30 transition-all duration-200 hover:-translate-y-0.5 hover:bg-indigo-500 hover:shadow-indigo-500/40"
-          >
-            View Projects
+          {profile.tagline}
+        </p>
+
+        <div className="animate-rise mt-8 flex flex-wrap justify-center gap-3" style={{ animationDelay: '320ms' }}>
+          <a href="#projects" className="btn-primary">
+            See my projects <ArrowDown className="h-4 w-4" />
           </a>
-          <a
-            href="mailto:nj277@cornell.edu"
-            className="touch-target inline-flex items-center justify-center rounded-xl border border-gray-700 px-6 py-3 text-base font-semibold text-gray-300 transition-all duration-200 hover:-translate-y-0.5 hover:border-gray-500 hover:text-white"
-          >
-            Get In Touch
-          </a>
+          <button type="button" onClick={feelingLucky} className="btn-tonal" title="Jump to a random project">
+            <Sparkles className="h-4 w-4 text-g-yellow" /> I’m Feeling Lucky
+          </button>
         </div>
 
-        {/* Social links */}
-        <div
-          className="grid w-full gap-3 animate-slide-up sm:grid-cols-2 lg:grid-cols-4"
-          style={{ animationDelay: '0.5s' }}
-        >
-          {socialLinks.map(({ icon: Icon, label, href, username }) => (
+        <div className="animate-rise mt-8 flex items-center gap-2" style={{ animationDelay: '380ms' }}>
+          {[
+            { href: `mailto:${profile.email}`, label: 'Email', Icon: Mail },
+            { href: 'https://www.linkedin.com/in/naijei', label: 'LinkedIn', Icon: Linkedin },
+            { href: 'https://github.com/Naijei1', label: 'GitHub', Icon: Github },
+          ].map(({ href, label, Icon }) => (
             <a
               key={label}
               href={href}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group touch-target flex min-w-0 items-center gap-3 rounded-xl border border-gray-800 bg-gray-900 px-4 py-3 text-left transition-all duration-200 hover:border-indigo-500/50 hover:bg-gray-800"
+              target={href.startsWith('mailto') ? undefined : '_blank'}
+              rel="noreferrer"
+              aria-label={label}
+              title={label}
+              className="grid h-11 w-11 place-items-center rounded-full text-ink-soft transition hover:-translate-y-0.5 hover:bg-black/5 hover:text-ink dark:text-night-soft dark:hover:bg-white/10 dark:hover:text-night-text"
             >
-              <Icon className="h-4 w-4 flex-shrink-0 text-gray-500 transition-colors group-hover:text-indigo-400" />
-              <span className="min-w-0 truncate text-sm text-gray-400 transition-colors group-hover:text-gray-200">
-                {username}
-              </span>
+              <Icon className="h-5 w-5" />
             </a>
           ))}
         </div>
-      </div>
-
-      {/* Scroll indicator */}
-      <div className="absolute bottom-6 left-1/2 hidden -translate-x-1/2 flex-col items-center gap-2 text-gray-600 animate-bounce sm:flex">
-        <span className="text-xs font-mono tracking-widest uppercase">scroll</span>
-        <div className="w-px h-8 bg-gradient-to-b from-gray-600 to-transparent" />
       </div>
     </section>
   )
