@@ -188,8 +188,9 @@ export const featured: Featured[] = [
     name: 'GroovyAR',
     kicker: 'Cornell Makeathon · Feb 2026',
     award: '1st Place Overall',
-    summary: 'A hands-free AR drum trainer that turns songs into synced, four-lane percussion cues for smart glasses.',
-    idea: 'Notes fall down four lanes and land on the drum pads right when you should hit them.',
+    summary:
+      'An osu!-style AR rhythm game for a real drum set: red circles close in on each drum to show exactly when to hit it.',
+    idea: 'Red approach rings shrink onto each piece of the drum kit and flash when it’s time to hit.',
     hideIdea: true,
     bullets: [
       'Won 1st place overall among 150+ participants at Cornell Makeathon.',

@@ -14,7 +14,7 @@ import { useTheme } from './lib/hooks'
 const TOASTS: Record<Egg, string> = {
   roll: 'Do a barrel roll! 🌀',
   askew: 'Something feels a little… askew.',
-  drums: 'Drum mode: press D F J K on the GroovyAR scene 🥁',
+  drums: 'Drum mode: click the GroovyAR drums or press D F J K 🥁',
 }
 
 export default function App() {

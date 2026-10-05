@@ -36,7 +36,7 @@ export default function Showcase({ project }: { project: Featured }) {
     />
   ) : null
 
-  const hint = project.id === 'groovy' ? 'Press D F J K to drum' : 'Move your cursor to tilt'
+  const hint = project.id === 'groovy' ? 'Click a drum or press D F J K' : 'Move your cursor to tilt'
 
   return (
     <div
