@@ -5,7 +5,7 @@ export const profile = {
   firstName: 'Naijei',
   role: 'Backend & systems engineer',
   tagline:
-    'I build backend services and the systems underneath them: Kafka infrastructure at GEICO, a peer-to-peer downloader at Cornell, and the occasional AR drum kit.',
+    'Backend first, systems all the way down. I love building software that solves real problems, making it fast, reliable, and impactful.',
   intro:
     'Backend first, systems all the way down. I like APIs, data pipelines, schedulers, and networks, and making them fast and reliable.',
   photo: asset('naijei.webp'),
