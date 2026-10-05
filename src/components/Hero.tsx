@@ -3,10 +3,10 @@ import { profile } from '../data/content'
 import Wordmark from './Wordmark'
 
 const STICKERS = [
-  { text: '🧗 climber', className: '-right-4 top-6 rotate-[8deg] bg-[#E8F0FE] text-[#174EA6]' },
-  { text: '🥁 1st @ Makeathon', className: '-left-10 top-1/2 -rotate-[7deg] bg-[#FEF7E0] text-[#8C4A00]' },
-  { text: '🀄 学中文', className: '-right-6 bottom-20 rotate-[5deg] bg-[#FCE8E6] text-[#A50E0E]' },
-  { text: '🏃 runner', className: 'left-6 -bottom-4 -rotate-[4deg] bg-[#E6F4EA] text-[#0D652D]' },
+  { text: '🧗 rock climber', className: '-right-4 top-6 rotate-[8deg] bg-[#E8F0FE] text-[#174EA6]' },
+  { text: '🥁 Makeathon ’26 winner', className: '-left-12 top-1/2 -rotate-[7deg] bg-[#FEF7E0] text-[#8C4A00]' },
+  { text: '🀄 learning Chinese', className: '-right-8 bottom-20 rotate-[5deg] bg-[#FCE8E6] text-[#A50E0E]' },
+  { text: '🏆 Best Hardware Hack ’25', className: 'left-2 -bottom-9 -rotate-[4deg] bg-[#E6F4EA] text-[#0D652D]' },
 ]
 
 const SOCIALS = [
@@ -17,7 +17,10 @@ const SOCIALS = [
 
 export default function Hero({ onLucky }: { onLucky: () => void }) {
   return (
-    <section id="top" className="hero-grid relative isolate flex min-h-[100svh] items-center overflow-hidden pb-16 pt-24">
+    <section
+      id="top"
+      className="hero-grid relative isolate flex min-h-[100svh] items-center overflow-hidden pb-16 pt-24"
+    >
       <div className="shell grid items-center gap-14 lg:grid-cols-[1.2fr_1fr] lg:gap-10">
         <div className="order-2 lg:order-1">
           <p className="animate-rise chip mb-6 bg-white/70 dark:bg-white/5">
@@ -81,13 +84,13 @@ export default function Hero({ onLucky }: { onLucky: () => void }) {
             />
             <img
               src={profile.photo}
-              alt="Naijei Jiang, arms raised, outdoors"
-              width={460}
-              height={460}
+              alt="Naijei Jiang smiling by the water at sunset"
+              width={540}
+              height={540}
               className="aspect-square w-full rounded-sm object-cover"
             />
             <figcaption className="absolute inset-x-0 bottom-3 text-center font-hand text-3xl text-ink dark:text-night-text">
-              hi, that’s me 👋
+              building FTM Snake 🐍
             </figcaption>
             {STICKERS.map((s) => (
               <span

@@ -93,6 +93,11 @@ export default function Projects() {
                 <span className="flex items-center gap-2.5 text-lg font-medium">
                   <span className="h-2.5 w-2.5 rounded-full" style={{ background: p.color }} />
                   {p.name}
+                  {p.status && (
+                    <span className="rounded-full bg-g-green/15 px-2 py-0.5 text-[11px] font-medium uppercase tracking-wider text-[#137333] dark:text-[#81C995]">
+                      {p.status}
+                    </span>
+                  )}
                 </span>
                 <ArrowUpRight className="h-4 w-4 text-ink-faint transition group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-ink dark:group-hover:text-night-text" />
               </div>

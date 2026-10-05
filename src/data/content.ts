@@ -8,10 +8,10 @@ export const profile = {
     'I build backend services and the systems underneath them: Kafka infrastructure at GEICO, a peer-to-peer downloader at Cornell, and the occasional AR drum kit.',
   intro:
     'Backend first, systems all the way down. I like APIs, data pipelines, schedulers, and networks, and making them fast and reliable.',
-  photo: asset('project-logos/naijei-owner.png'),
+  photo: asset('naijei.webp'),
   location: 'Ithaca & Rochester, NY',
   email: 'nj277@cornell.edu',
-  now: ['Leading backend for a P2P downloader', 'TA for CS 2110', 'Learning Rust'],
+  now: ['Leading FTM Snake, a distributed snake game', 'TA for CS 2110', 'Tech lead @ Cornell Data Science'],
 }
 
 export type Link = { label: string; href: string; handle: string }
@@ -42,26 +42,27 @@ export type Experience = {
 export const experience: Experience[] = [
   {
     org: 'GEICO',
-    role: 'Software Engineering Intern',
-    period: '2026',
-    place: 'New York Metro',
+    role: 'Software Engineer Intern',
+    period: 'Jun 2026 – Aug 2026',
+    place: 'New York, NY',
     bullets: [
-      'Built Kafka schema infrastructure with Terraform.',
-      'Developed AI agent workflows for claims operations.',
+      'Automated versioned Kafka schema registration in Apicurio Registry with Terraform.',
+      'Built a claim-adjuster AI agent that books, looks up, and cancels rental reservations through service APIs.',
+      'Built an AI documentation skill tracing salvage-event schemas across Kafka topics for the Guidewire-to-microservices migration.',
     ],
     tags: ['Backend', 'Kafka', 'Terraform', 'AI Agents'],
   },
   {
     org: 'Cornell Data Science',
-    role: 'Technical Chair (Elected) · Data Engineering Tech Lead',
+    role: 'Technical Lead',
     period: 'Sep 2025 – Present',
     place: 'Ithaca, NY',
     current: true,
     bullets: [
-      'Leading a 7-person team building a peer-to-peer, chunked distributed downloader with integrity checks to cut origin-server load.',
-      'Designed a 6-node cluster for AI workloads with Slurm scheduling and NFS storage, plus a real-time CPU/GPU health dashboard.',
+      'Run AWS model-training infrastructure for 6 teams: compute budgets, IAM access, and parallel job scheduling.',
+      'Taught computer vision and distributed training to 30+ students in workshops and an INFO 1998 guest lecture.',
     ],
-    tags: ['Backend', 'Distributed Systems', 'gRPC', 'Slurm'],
+    tags: ['Backend', 'AWS', 'Distributed Training', 'Teaching'],
   },
   {
     org: 'Cornell Bowers CIS',
@@ -70,10 +71,10 @@ export const experience: Experience[] = [
     place: 'Ithaca, NY',
     current: true,
     bullets: [
-      'Run discussion sections for 34 students in a 300+ student Java course covering graphs, concurrency, and GUIs.',
-      'Mentor students on JUnit testing and asymptotic analysis.',
+      'Lead weekly sections for 34 students in a 300+ student Java course: data structures, graphs, concurrency, and GUIs.',
+      'Cut course-website load time from ~10 s to under 1 s by pre-rendering dynamic SVGs.',
     ],
-    tags: ['Java', 'Algorithms', 'Teaching'],
+    tags: ['Java', 'Algorithms', 'Teaching', 'Performance'],
   },
   {
     org: 'Astra',
@@ -147,14 +148,14 @@ export const featured: Featured[] = [
     name: 'GroovyAR',
     kicker: 'Cornell Makeathon · Feb 2026',
     award: '1st Place Overall',
-    summary: 'An augmented-reality drum trainer that turns any song into timed, 4-lane percussion cues.',
+    summary: 'A hands-free AR drum trainer that turns songs into synced, four-lane percussion cues for smart glasses.',
     idea: 'Notes fall down four lanes and land on the drum pads right when you should hit them.',
     bullets: [
-      'Preprocessed MP3s into timestamped beat events (librosa) and streamed cues over WebSockets.',
-      'Anchored 3D drum guides with ArUco marker pose estimation and tracked drumsticks from camera data alone (OpenCV).',
-      'Connected an Expo React Native app, a Flask backend, and a Raspberry Pi bridge end to end.',
+      'Won 1st place overall among 150+ participants at Cornell Makeathon.',
+      'Built a Flask audio pipeline that turns MP3s into timestamped beats (Librosa) and streams low-latency cues over WebSockets.',
+      'Anchored the cue overlay to the drum kit with ArUco markers in a React front end.',
     ],
-    tags: ['Python', 'OpenCV', 'Flask', 'React Native', 'WebSockets', 'Raspberry Pi'],
+    tags: ['Python', 'Flask', 'React', 'OpenCV', 'Librosa', 'Raspberry Pi'],
     accent: '#EA4335',
     links: [
       { label: 'Watch demo', href: 'https://youtu.be/zjiVDPzzH5k' },
@@ -164,15 +165,16 @@ export const featured: Featured[] = [
   {
     id: 'downloader',
     name: 'Distributed Downloader',
-    kicker: 'Cornell Data Science · Backend tech lead',
-    summary: 'A LAN-first peer-to-peer downloader for game and software installs, built by a 7-person team.',
-    idea: 'A file split into verified chunks streams in parallel from many peers, so no single server carries the load.',
+    kicker: 'Cornell Data Science · Team lead · Jan–May 2026',
+    summary:
+      'A peer-to-peer file distribution system testing whether multi-peer chunk transfers beat single-source downloads.',
+    idea: 'A file split into chunks streams in parallel from many peers, so no single server carries the load.',
     bullets: [
-      'A tracker coordinates live peers while clients pull chunks from multiple machines in parallel over gRPC.',
-      'Chunk-level integrity verification keeps transfers reliable over unstable peers.',
-      'Designed orchestration for concurrent multi-peer retrieval to raise throughput.',
+      'Led a 6-person team building it in Java with Spring Boot and gRPC.',
+      'Designed a central tracker with heartbeat liveness checks and stale-peer eviction for file discovery.',
+      'Measured 2.3× faster downloads from multiple peers versus one (~23 MB/s); profiled gRPC serialization as the next bottleneck.',
     ],
-    tags: ['Java', 'Spring Boot', 'gRPC', 'Protobuf', 'P2P'],
+    tags: ['Java', 'Spring Boot', 'gRPC', 'Protobuf', 'Maven'],
     accent: '#4285F4',
     links: [
       { label: 'Project page', href: asset('downloader/') },
@@ -181,15 +183,15 @@ export const featured: Featured[] = [
   },
   {
     id: 'cluster',
-    name: 'CDS Compute Cluster',
-    kicker: 'Cornell Data Science · Systems',
-    summary: 'Six networked nodes turned into shared compute for AI workloads, with a live health dashboard.',
+    name: 'HPC Compute Cluster',
+    kicker: 'Cornell Data Science · Sep–Dec 2025',
+    summary: 'A 6-node cluster built from refurbished computers to test a cheaper alternative to AWS for AI workloads.',
     idea: 'Jobs queue up and Slurm drops them onto whichever node is free, while every node reports its health.',
     bullets: [
-      'Configured Slurm workload scheduling and NFS shared storage for parallel training.',
-      'Built a real-time dashboard for CPU/GPU usage and node status to catch failures early.',
+      'Configured Slurm scheduling and NFS storage for parallel AI workloads.',
+      'Built a real-time CPU/GPU and node-health dashboard that surfaced 4 power-related outages.',
     ],
-    tags: ['Linux', 'Slurm', 'NFS', 'Docker', 'vLLM'],
+    tags: ['Slurm', 'NFS', 'Linux', 'Cloudflare', 'vLLM'],
     accent: '#34A853',
     links: [{ label: 'Code', href: 'https://github.com/CornellDataScience/computecluster' }],
   },
@@ -228,9 +230,24 @@ export const featured: Featured[] = [
   },
 ]
 
-export type MoreProject = { name: string; blurb: string; tags: string[]; href?: string; color: string }
+export type MoreProject = {
+  name: string
+  blurb: string
+  tags: string[]
+  href?: string
+  color: string
+  status?: string
+}
 
 export const moreProjects: MoreProject[] = [
+  {
+    name: 'FTM Snake',
+    status: 'In progress',
+    blurb: 'Leading a Cornell Data Science team building a distributed, multiplayer snake game in Rust.',
+    tags: ['Rust', 'macroquad', 'Distributed Systems'],
+    href: 'https://github.com/CornellDataScience/FTM-Snake',
+    color: '#34A853',
+  },
   {
     name: 'Gnarly',
     blurb:
@@ -263,22 +280,31 @@ export const moreProjects: MoreProject[] = [
 ]
 
 export const toolkit: { label: string; items: string[] }[] = [
-  { label: 'Backend', items: ['Spring Boot', 'gRPC', 'Kafka', 'Flask', 'Node.js', 'PostgreSQL'] },
-  { label: 'Languages', items: ['Java', 'Python', 'C', 'TypeScript', 'C#', 'OCaml', 'SQL'] },
-  { label: 'Systems & infra', items: ['AWS', 'Terraform', 'Docker', 'Linux', 'Slurm', 'NFS'] },
-  { label: 'Web, ML & XR', items: ['React', 'Next.js', 'OpenCV', 'scikit-learn', 'Unity', 'Blender'] },
+  { label: 'Backend', items: ['Spring Boot', 'gRPC', 'Protocol Buffers', 'REST APIs', 'Flask', 'Kafka'] },
+  { label: 'Languages', items: ['Python', 'Java', 'C', 'C#', 'JavaScript', 'TypeScript', 'OCaml', 'SQL'] },
+  { label: 'Systems & infra', items: ['AWS', 'Terraform', 'Docker', 'Linux', 'Slurm', 'Azure DevOps'] },
+  { label: 'Data, web & ML', items: ['PostgreSQL', 'MongoDB', 'React', 'OpenCV', 'Librosa'] },
 ]
 
 export type Hobby = { emoji: string; title: string; text: string; href?: string; linkLabel?: string }
 
 export const hobbies: Hobby[] = [
-  { emoji: '🧗', title: 'Rock climbing', text: 'Bouldering is debugging with your whole body.' },
-  { emoji: '🏃', title: 'Running', text: 'Long runs are where the best design ideas show up.' },
+  { emoji: '🧗', title: 'Rock climbing', text: 'Top of my interests list outside of computer science.' },
+  {
+    emoji: '🏃',
+    title: 'Running',
+    text: 'My Apple Watch logs every run. Hit “I’m Feeling Lucky” up top to see today’s stats.',
+  },
   {
     emoji: '🀄',
     title: 'Learning Chinese',
-    text: 'Studying daily with a flashcard app I built for myself.',
+    text: 'Working toward 77 new words a week with a spaced-repetition flashcard app I built.',
     href: 'https://github.com/Naijei1/FlashCardApp',
     linkLabel: 'See the app',
+  },
+  {
+    emoji: '🧑‍🏫',
+    title: 'Teaching',
+    text: 'TA for CS 2110, plus CDS workshops and an INFO 1998 guest lecture on computer vision and distributed training.',
   },
 ]
