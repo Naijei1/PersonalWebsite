@@ -8,7 +8,7 @@ A tiny Cloudflare Worker (free plan) that stores the latest Apple Watch snapshot
 | `POST /pause` | `Authorization: Bearer <WRITE_TOKEN>` | `{"paused": true}` hides all stats; `{"paused": false}` shows them again. |
 | `GET /snapshot` | public | Latest snapshot, `{"paused": true}`, or `{"empty": true}`. Cached for 60 s. |
 
-Accepted fields: `heartRate`, `steps`, `moveKcal`, `moveGoal`, `exerciseMin`, `exerciseGoal`, `standHours`, `standGoal`, `workoutType`, `workoutMinutes`, `workoutEnded` (ISO 8601). Everything else is dropped. Numbers are parsed leniently (`"72 count/min"`, `"8,412"`) and clamped.
+Accepted fields: `heartRate`, `steps`, `moveKcal`, `moveGoal`, `exerciseMin`, `exerciseGoal`, `standHours`, `standGoal`, `workoutType`, `workoutMinutes`, `workoutEnded` (ISO 8601). Everything else is dropped. Numbers are parsed leniently (`"72 count/min"`, `"8,412"`, `"2 hr"`) and clamped. `standHours` may also be raw Stand Hour sample values (`"Stood"`/`"Idle"`, as text or a list); the Worker counts the Stood ones.
 
 ## Deploy
 

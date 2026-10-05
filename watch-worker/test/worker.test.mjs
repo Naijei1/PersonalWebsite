@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict'
 import { test } from 'node:test'
-import worker, { sanitize } from '../src/index.js'
+import worker, { sanitize, standHours } from '../src/index.js'
 
 const TOKEN = 'test-token-1234567890'
 
@@ -117,4 +117,16 @@ test('sanitize clamps and drops rings without goals', () => {
   assert.equal(s.steps, undefined)
   assert.equal(s.rings.move, undefined)
   assert.equal(s.workout, undefined)
+})
+
+test('stand hours accept numbers with units and raw Stood/Idle samples', () => {
+  assert.equal(standHours(2), 2)
+  assert.equal(standHours('2 hr'), 2)
+  assert.equal(standHours('2 count'), 2)
+  assert.equal(standHours('Stood\nIdle\nStood'), 2)
+  assert.equal(standHours(['Stood', 'Idle', 'Stood']), 2)
+  assert.equal(standHours('Idle'), 0)
+  assert.equal(standHours(['a', 'b']), undefined)
+  assert.equal(standHours(undefined), undefined)
+  assert.deepEqual(sanitize({ standHours: 'Stood, Stood', standGoal: '6' }).rings.stand, { value: 2, goal: 6 })
 })
