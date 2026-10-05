@@ -33,7 +33,11 @@ export default function Projects() {
                   {project.name}
                 </h3>
                 <p className="mt-3 text-lg leading-relaxed">{project.summary}</p>
-                <p className="mt-3 text-[15px] italic text-ink-soft dark:text-night-soft">The scene: {project.idea}</p>
+                {!project.hideIdea && (
+                  <p className="mt-3 text-[15px] italic text-ink-soft dark:text-night-soft">
+                    The scene: {project.idea}
+                  </p>
+                )}
                 <ul className="mt-5 space-y-2 text-[15px] leading-relaxed text-ink-soft dark:text-night-soft">
                   {project.bullets.map((b) => (
                     <li key={b} className="flex gap-2.5">
