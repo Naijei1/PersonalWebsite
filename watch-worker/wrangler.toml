@@ -1,0 +1,16 @@
+name = "naijei-watch"
+main = "src/index.js"
+compatibility_date = "2026-09-01"
+
+[vars]
+# Comma-separated origins allowed to read /snapshot from a browser (localhost is always allowed).
+ALLOWED_ORIGINS = "https://naijei.com,https://www.naijei.com,https://naijei1.github.io"
+# Kill switch: set to "true" and redeploy to hide all stats, regardless of what the Shortcut sends.
+PAUSED = "false"
+
+# Replace with the id printed by `npx wrangler kv namespace create WATCH`.
+[[kv_namespaces]]
+binding = "WATCH"
+id = "REPLACE_WITH_KV_NAMESPACE_ID"
+
+# WRITE_TOKEN is a secret: `npx wrangler secret put WRITE_TOKEN` (never commit it).
