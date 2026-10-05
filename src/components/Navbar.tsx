@@ -1,118 +1,105 @@
-import { useState, useEffect } from 'react'
-import { Menu, X } from 'lucide-react'
+import { Moon, Sun } from 'lucide-react'
+import { useEffect, useRef, useState } from 'react'
+import { useActiveSection, type Theme } from '../lib/hooks'
 
-const navLinks = [
-  { href: '#about', label: 'About' },
-  { href: '#experience', label: 'Experience' },
-  { href: '#projects', label: 'Projects' },
-  { href: '#skills', label: 'Skills' },
-  { href: '#connect', label: 'Connect' },
+export const NAV = [
+  { id: 'about', label: 'About', color: 'bg-g-blue' },
+  { id: 'experience', label: 'Experience', color: 'bg-g-red' },
+  { id: 'projects', label: 'Projects', color: 'bg-g-yellow' },
+  { id: 'hobbies', label: 'Hobbies', color: 'bg-g-green' },
+  { id: 'contact', label: 'Contact', color: 'bg-g-blue' },
 ]
+const IDS = ['top', ...NAV.map((n) => n.id)]
 
-export default function Navbar() {
+export default function Navbar({ theme, onToggleTheme }: { theme: Theme; onToggleTheme: () => void }) {
+  const active = useActiveSection(IDS)
+  const tabs = useRef<HTMLUListElement>(null)
   const [scrolled, setScrolled] = useState(false)
-  const [menuOpen, setMenuOpen] = useState(false)
+  const [progress, setProgress] = useState(0)
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 20)
-    window.addEventListener('scroll', onScroll)
+    const onScroll = () => {
+      const max = document.documentElement.scrollHeight - window.innerHeight
+      setScrolled(window.scrollY > 8)
+      setProgress(max > 0 ? window.scrollY / max : 0)
+    }
+    onScroll()
+    window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
   useEffect(() => {
-    document.body.style.overflow = menuOpen ? 'hidden' : ''
-
-    const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') setMenuOpen(false)
-    }
-
-    window.addEventListener('keydown', onKeyDown)
-
-    return () => {
-      document.body.style.overflow = ''
-      window.removeEventListener('keydown', onKeyDown)
-    }
-  }, [menuOpen])
+    const strip = tabs.current
+    const tab = strip?.querySelector<HTMLElement>(`a[href="#${active}"]`)
+    if (!strip || !tab || strip.scrollWidth <= strip.clientWidth) return
+    strip.scrollTo({ left: tab.offsetLeft - (strip.clientWidth - tab.offsetWidth) / 2, behavior: 'smooth' })
+  }, [active])
 
   return (
-    <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+    <header
+      className={`fixed inset-x-0 top-0 z-50 transition-colors duration-300 ${
         scrolled
-          ? 'bg-gray-950/90 backdrop-blur-md border-b border-gray-800/50 shadow-lg shadow-black/20'
-          : 'bg-transparent'
+          ? 'bg-white/85 shadow-[0_1px_0_rgba(0,0,0,.06)] backdrop-blur-md dark:bg-night/85 dark:shadow-[0_1px_0_rgba(255,255,255,.06)]'
+          : ''
       }`}
+      style={{ paddingTop: 'env(safe-area-inset-top)' }}
     >
-      <div className="nav-safe-top">
-        <div className="page-shell mx-auto flex max-w-6xl items-center justify-between py-3 sm:py-4">
+      <div
+        aria-hidden
+        className="absolute left-0 top-0 h-[3px] origin-left bg-[linear-gradient(90deg,#4285F4_0_25%,#EA4335_25%_50%,#FBBC04_50%_75%,#34A853_75%)]"
+        style={{ width: '100%', transform: `scaleX(${progress})` }}
+      />
+      <nav className="shell flex h-16 items-center gap-3" aria-label="Main">
         <a
-          href="#about"
-          className="touch-target inline-flex items-center font-mono text-base font-semibold tracking-tight text-indigo-400 transition-colors hover:text-indigo-300 sm:text-lg"
-          onClick={() => setMenuOpen(false)}
+          href="#top"
+          className="flex shrink-0 items-center gap-2 rounded-full pr-2 font-medium"
+          aria-label="Back to top"
         >
-          NJ<span className="text-gray-500">.</span>
+          <span className="grid h-8 w-8 place-items-center rounded-full bg-[conic-gradient(#4285F4_0_25%,#EA4335_0_50%,#FBBC04_0_75%,#34A853_0)] p-[2px]">
+            <span className="grid h-full w-full place-items-center rounded-full bg-white text-sm font-bold text-g-blue dark:bg-night">
+              N
+            </span>
+          </span>
+          <span className="hidden sm:inline">Naijei Jiang</span>
         </a>
 
-        {/* Desktop nav */}
-        <div className="hidden md:flex items-center gap-8">
-          {navLinks.map((link) => (
-            <a
-              key={link.href}
-              href={link.href}
-              className="touch-target inline-flex items-center text-sm text-gray-400 hover:text-white transition-colors font-medium"
-            >
-              {link.label}
-            </a>
-          ))}
-          <a
-            href="mailto:nj277@cornell.edu"
-            className="touch-target inline-flex items-center rounded-lg border border-indigo-500/50 px-4 py-2 text-sm font-medium text-indigo-400 transition-all hover:border-indigo-400 hover:bg-indigo-500/10"
-          >
-            Contact Me
-          </a>
-        </div>
-
-        {/* Mobile hamburger */}
-        <button
-          className="touch-target inline-flex items-center justify-center rounded-xl border border-gray-800 bg-gray-900/70 text-gray-300 transition-colors hover:border-gray-700 hover:text-white md:hidden"
-          onClick={() => setMenuOpen(!menuOpen)}
-          aria-label="Toggle menu"
-          aria-expanded={menuOpen}
-          aria-controls="mobile-navigation"
-        >
-          {menuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-        </button>
-      </div>
-      </div>
-
-      {/* Mobile menu */}
-      {menuOpen && (
-        <div className="page-shell safe-bottom border-t border-gray-800/60 bg-gray-950/95 pb-5 backdrop-blur-md md:hidden">
-          <div
-            id="mobile-navigation"
-            className="max-h-[calc(100dvh-4.5rem-env(safe-area-inset-top))] overflow-y-auto pt-4"
-          >
-            <div className="flex flex-col gap-2">
-              {navLinks.map((link) => (
+        <ul ref={tabs} className="no-scrollbar tab-strip relative mx-auto flex min-w-0 items-center gap-0.5 overflow-x-auto sm:gap-1">
+          {NAV.map((item) => {
+            const isActive = active === item.id
+            return (
+              <li key={item.id}>
                 <a
-                  key={link.href}
-                  href={link.href}
-                  onClick={() => setMenuOpen(false)}
-                  className="touch-target flex items-center rounded-xl border border-transparent bg-gray-900/70 px-4 py-3 text-base font-medium text-gray-300 transition-colors hover:border-indigo-500/30 hover:text-white"
+                  href={`#${item.id}`}
+                  aria-current={isActive ? 'location' : undefined}
+                  className={`relative flex h-16 items-center whitespace-nowrap px-2.5 text-sm sm:px-3 transition-colors ${
+                    isActive
+                      ? 'text-ink dark:text-night-text'
+                      : 'text-ink-soft hover:text-ink dark:text-night-soft dark:hover:text-night-text'
+                  }`}
                 >
-                  {link.label}
+                  {item.label}
+                  <span
+                    aria-hidden
+                    className={`absolute inset-x-2.5 bottom-0 sm:inset-x-3 h-[3px] rounded-t-full ${item.color} transition-transform duration-300 ${
+                      isActive ? 'scale-x-100' : 'scale-x-0'
+                    }`}
+                  />
                 </a>
-              ))}
-              <a
-                href="mailto:nj277@cornell.edu"
-                onClick={() => setMenuOpen(false)}
-                className="touch-target mt-2 inline-flex items-center justify-center rounded-xl border border-indigo-500/50 bg-indigo-500/10 px-4 py-3 text-base font-semibold text-indigo-300 transition-all hover:border-indigo-400 hover:bg-indigo-500/15"
-              >
-                Contact Me
-              </a>
-            </div>
-          </div>
-        </div>
-      )}
-    </nav>
+              </li>
+            )
+          })}
+        </ul>
+
+        <button
+          type="button"
+          onClick={onToggleTheme}
+          className="grid h-10 w-10 shrink-0 place-items-center rounded-full text-ink-soft transition hover:bg-black/5 dark:text-night-soft dark:hover:bg-white/10"
+          aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+          title={theme === 'dark' ? 'Light mode' : 'Dark mode'}
+        >
+          {theme === 'dark' ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
+        </button>
+      </nav>
+    </header>
   )
 }

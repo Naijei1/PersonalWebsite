@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Distributed Downloader is an experimental peer-to-peer download system focused on chunked transfers, resilience, and speed.">
+    <title>Distributed Downloader</title>
+    <link rel="stylesheet" href="main.css">
+</head>
+<body>
+    <a class="skip-link" href="#main-content">Skip to content</a>
+
+    <main id="main-content" class="container">
+        <p class="home-link"><a href="../">&larr; Back to naijei.com</a></p>
+        <header class="hero" aria-labelledby="site-title">
+            <div class="hero-copy">
+                <span class="status">Work in progress</span>
+                <h1 id="site-title">Download faster with cooperative peers.</h1>
+                <p class="tagline">
+                    Distributed Downloader is a prototype system for splitting large files into
+                    verified chunks and retrieving them in parallel from multiple peers.
+                </p>
+                <div class="actions">
+                    <a class="btn btn-primary" href="https://github.com/CornellDataScience/distributed-downloader" target="_blank" rel="noopener">Explore on GitHub</a>
+                    <a class="btn btn-ghost" href="#how-it-works">How it works</a>
+                </div>
+            </div>
+            <div class="hero-stats" aria-label="Current project snapshot">
+                <div class="stat-card">
+                    <span class="stat-label">Architecture</span>
+                    <strong>Peer-to-peer</strong>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-label">Transfer model</span>
+                    <strong>Chunk + parallel</strong>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-label">Current stage</span>
+                    <strong>Early prototyping</strong>
+                </div>
+            </div>
+        </header>
+
+        <section class="about" aria-labelledby="about-heading">
+            <h2 id="about-heading">Why this project exists</h2>
+            <p>
+                Traditional downloads rely on one source and one connection path, which can become
+                a bottleneck. This project explores a cooperative model where nodes can share chunks
+                directly while preserving integrity and consistency.
+            </p>
+            <p class="note">
+                The implementation is still evolving. Current work focuses on chunk orchestration,
+                peer discovery, and resilient transfer behavior under unreliable network conditions.
+            </p>
+        </section>
+
+        <section id="how-it-works" class="concepts" aria-labelledby="concepts-heading">
+            <h2 id="concepts-heading">How it works</h2>
+            <div class="grid">
+                <article class="card">
+                    <h3>1) Split files into chunks</h3>
+                    <p>Each file is divided into smaller blocks so transfers can be scheduled, retried, and verified independently.</p>
+                </article>
+                <article class="card">
+                    <h3>2) Discover available peers</h3>
+                    <p>Peers advertise chunk availability to help receivers choose efficient transfer sources.</p>
+                </article>
+                <article class="card">
+                    <h3>3) Download in parallel</h3>
+                    <p>Multiple chunks are fetched concurrently to maximize throughput and reduce end-to-end latency.</p>
+                </article>
+                <article class="card">
+                    <h3>4) Verify and assemble</h3>
+                    <p>Checks validate integrity before chunks are stitched back into a complete file.</p>
+                </article>
+            </div>
+        </section>
+
+        <section class="roadmap" aria-labelledby="roadmap-heading">
+            <h2 id="roadmap-heading">What is next</h2>
+            <ul>
+                <li>Publish benchmark results for single-source vs distributed transfers</li>
+                <li>Document chunk exchange and verification protocol diagrams</li>
+                <li>Add notes on fault recovery and peer churn handling</li>
+            </ul>
+        </section>
+
+        <section class="cta" aria-labelledby="cta-heading">
+            <h2 id="cta-heading">Follow progress</h2>
+            <p>
+                Want implementation details, design notes, or future experiments?
+                Track updates directly in the repository.
+            </p>
+            <a class="btn btn-primary" href="https://github.com/CornellDataScience/distributed-downloader" target="_blank" rel="noopener">View repository updates</a>
+        </section>
+
+        <footer class="footer">
+            <a href="https://github.com/CornellDataScience/distributed-downloader" target="_blank" rel="noopener">
+                github.com/CornellDataScience/distributed-downloader
+            </a>
+        </footer>
+    </main>
+</body>
+</html>
