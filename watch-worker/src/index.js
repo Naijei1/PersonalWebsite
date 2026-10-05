@@ -47,6 +47,21 @@ function num(value, max) {
   return Math.round(Math.min(n, max))
 }
 
+/**
+ * Stand hours arrive as a number ("2", "2 hr", "2 count") or as the raw Stand Hour category samples,
+ * which Shortcuts renders as "Stood"/"Idle" text (a list, or one per line). Summing those samples'
+ * numeric values gives 0, because HealthKit encodes Stood as 0 and Idle as 1, so count "Stood" instead.
+ */
+export function standHours(value) {
+  const items = Array.isArray(value) ? value.map(String) : typeof value === 'string' ? [value] : null
+  if (items) {
+    const words = items.join('\n')
+    if (/\b(stood|idle)\b/i.test(words)) return Math.min(24, (words.match(/\bstood\b/gi) ?? []).length)
+    if (Array.isArray(value)) return undefined
+  }
+  return num(value, 24)
+}
+
 function text(value, max) {
   if (typeof value !== 'string') return undefined
   const s = value
@@ -62,10 +77,9 @@ function date(value) {
 }
 
 export function sanitize(body, now = new Date()) {
-  const ring = (value, goal, maxValue, maxGoal) => {
-    const v = num(value, maxValue)
+  const ring = (value, goal, maxGoal) => {
     const g = num(goal, maxGoal)
-    return v === undefined || !g ? undefined : { value: v, goal: g }
+    return value === undefined || !g ? undefined : { value, goal: g }
   }
   const workoutMinutes = num(body.workoutMinutes, 600)
   const workoutType = text(body.workoutType, 40)
@@ -74,9 +88,9 @@ export function sanitize(body, now = new Date()) {
     heartRate: num(body.heartRate, 240),
     steps: num(body.steps, 200000),
     rings: {
-      move: ring(body.moveKcal, body.moveGoal, 10000, 5000),
-      exercise: ring(body.exerciseMin, body.exerciseGoal, 1440, 240),
-      stand: ring(body.standHours, body.standGoal, 24, 24),
+      move: ring(num(body.moveKcal, 10000), body.moveGoal, 5000),
+      exercise: ring(num(body.exerciseMin, 1440), body.exerciseGoal, 240),
+      stand: ring(standHours(body.standHours), body.standGoal, 24),
     },
     workout:
       workoutType || workoutMinutes !== undefined
