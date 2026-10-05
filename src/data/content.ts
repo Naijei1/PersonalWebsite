@@ -143,25 +143,25 @@ export type Featured = {
   links: { label: string; href: string }[]
 }
 
+// Newest first, by each project's most recent date.
 export const featured: Featured[] = [
   {
-    id: 'groovy',
-    name: 'GroovyAR',
-    kicker: 'Cornell Makeathon · Feb 2026',
-    award: '1st Place Overall',
-    summary: 'A hands-free AR drum trainer that turns songs into synced, four-lane percussion cues for smart glasses.',
-    idea: 'Notes fall down four lanes and land on the drum pads right when you should hit them.',
-    hideIdea: true,
+    id: 'gnarly',
+    name: 'Gnarly',
+    kicker: 'BigRed//Hacks 2026 · Cornell',
+    summary: 'An indoor navigation ecosystem. Scan it, connect it, walk it.',
+    idea: 'A LiDAR sweep maps each room, the rooms link across floors, then an AR path walks you to the door.',
     bullets: [
-      'Won 1st place overall among 150+ participants at Cornell Makeathon.',
-      'Built a Flask audio pipeline that turns MP3s into timestamped beats (Librosa) and streams low-latency cues over WebSockets.',
-      'Anchored the cue overlay to the drum kit with ArUco markers in a React front end.',
+      'An iPhone app scans spaces with LiDAR, a website connects the scans across rooms and floors, and an AR navigator guides you to your destination.',
+      'No third-party mapping, no hardcoded routes, no external GPU: scanning and AR run on the phone, and Firebase shares the maps.',
+      'Wall-aware A* routing across zones and floors, plus LiDAR haptics that flag obstacles, even in the dark.',
+      'Built with Geneustace Wicaksono, Mukund Gaur, Grant Lin, and Maruf Aurnap.',
     ],
-    tags: ['Python', 'Flask', 'React', 'OpenCV', 'Librosa', 'Raspberry Pi'],
-    accent: '#EA4335',
+    tags: ['Swift', 'ARKit', 'RoomPlan', 'Unity', 'React', 'Firebase'],
+    accent: '#12B5CB',
     links: [
-      { label: 'Watch demo', href: 'https://youtu.be/zjiVDPzzH5k' },
-      { label: 'Code', href: 'https://github.com/Naijei1/GroovyAR' },
+      { label: 'Watch demo', href: 'https://youtu.be/XkmW11bmEXg' },
+      { label: 'Code', href: 'https://github.com/mukundgaur/gnarly' },
     ],
   },
   {
@@ -184,22 +184,23 @@ export const featured: Featured[] = [
     ],
   },
   {
-    id: 'gnarly',
-    name: 'Gnarly',
-    kicker: 'BigRed//Hacks 2026 · Cornell',
-    summary: 'An indoor navigation ecosystem. Scan it, connect it, walk it.',
-    idea: 'A LiDAR sweep maps each room, the rooms link across floors, then an AR path walks you to the door.',
+    id: 'groovy',
+    name: 'GroovyAR',
+    kicker: 'Cornell Makeathon · Feb 2026',
+    award: '1st Place Overall',
+    summary: 'A hands-free AR drum trainer that turns songs into synced, four-lane percussion cues for smart glasses.',
+    idea: 'Notes fall down four lanes and land on the drum pads right when you should hit them.',
+    hideIdea: true,
     bullets: [
-      'An iPhone app scans spaces with LiDAR, a website connects the scans across rooms and floors, and an AR navigator guides you to your destination.',
-      'No third-party mapping, no hardcoded routes, no external GPU: scanning and AR run on the phone, and Firebase shares the maps.',
-      'Wall-aware A* routing across zones and floors, plus LiDAR haptics that flag obstacles, even in the dark.',
-      'Built with Geneustace Wicaksono, Mukund Gaur, Grant Lin, and Maruf Aurnap.',
+      'Won 1st place overall among 150+ participants at Cornell Makeathon.',
+      'Built a Flask audio pipeline that turns MP3s into timestamped beats (Librosa) and streams low-latency cues over WebSockets.',
+      'Anchored the cue overlay to the drum kit with ArUco markers in a React front end.',
     ],
-    tags: ['Swift', 'ARKit', 'RoomPlan', 'Unity', 'React', 'Firebase'],
-    accent: '#12B5CB',
+    tags: ['Python', 'Flask', 'React', 'OpenCV', 'Librosa', 'Raspberry Pi'],
+    accent: '#EA4335',
     links: [
-      { label: 'Watch demo', href: 'https://youtu.be/XkmW11bmEXg' },
-      { label: 'Code', href: 'https://github.com/mukundgaur/gnarly' },
+      { label: 'Watch demo', href: 'https://youtu.be/zjiVDPzzH5k' },
+      { label: 'Code', href: 'https://github.com/Naijei1/GroovyAR' },
     ],
   },
   {
@@ -260,6 +261,7 @@ export type MoreProject = {
   status?: string
 }
 
+// In-progress work first, then newest first.
 export const moreProjects: MoreProject[] = [
   {
     name: 'FTM Snake',
