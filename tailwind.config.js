@@ -44,11 +44,18 @@ export default {
           '40%': { transform: 'translateY(-14px) rotate(-6deg)' },
           '70%': { transform: 'translateY(2px)' },
         },
-        fall: {
-          '0%': { transform: 'translateY(0) rotate(0)' },
-          '55%': { transform: 'translateY(var(--fall, 60vh)) rotate(var(--spin, 40deg))' },
-          '75%': { transform: 'translateY(var(--fall, 60vh)) rotate(var(--spin, 40deg))' },
-          '100%': { transform: 'translateY(0) rotate(0)' },
+        explode: {
+          '0%': { transform: 'translate(0, 0) rotate(0) scale(1)' },
+          '28%': { transform: 'translate(var(--dx), var(--dy)) rotate(var(--rot)) scale(1.25)' },
+          '62%': {
+            transform:
+              'translate(calc(var(--dx) * 1.12), calc(var(--dy) * 1.12)) rotate(calc(var(--rot) * 1.3)) scale(1.1)',
+          },
+          '100%': { transform: 'translate(0, 0) rotate(0) scale(1)' },
+        },
+        spark: {
+          '0%': { transform: 'translate(-50%, -50%) scale(1)', opacity: '1' },
+          '100%': { transform: 'translate(calc(-50% + var(--sx)), calc(-50% + var(--sy))) scale(0)', opacity: '0' },
         },
         roll: {
           from: { transform: 'rotate(0deg)' },
@@ -58,7 +65,8 @@ export default {
       animation: {
         rise: 'rise .7s cubic-bezier(.2,.8,.2,1) both',
         hop: 'hop .6s cubic-bezier(.3,1.4,.5,1)',
-        fall: 'fall 2.6s cubic-bezier(.5,0,.5,1) both',
+        explode: 'explode 2.4s cubic-bezier(.2,.9,.3,1) both',
+        spark: 'spark .9s cubic-bezier(.1,.8,.3,1) both',
         roll: 'roll 1.2s cubic-bezier(.45,.05,.35,1)',
       },
     },
