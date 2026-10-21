@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState, type CSSProperties } from 'react'
 import { moreProjects, type MoreProject } from '../data/content'
 
 export default function MoreProjects() {
@@ -40,9 +40,9 @@ function MoreCard({ project, index }: { project: MoreProject; index: number }) {
       onPointerDown={() => setHot(true)}
       onFocus={() => setHot(true)}
       onBlur={() => setHot(false)}
-      className={`surface group flex h-full flex-col overflow-hidden ${visible && hot ? 'mini-play' : ''}`}
+      className={`surface group flex h-full flex-col overflow-hidden transition-colors duration-200 hover:bg-[#F1F3F4] hover:shadow-lift dark:hover:bg-[#3C4043] ${visible && hot ? 'mini-play' : ''}`}
     >
-      <div className="h-28 sm:h-32" style={{ background: `${project.color}14` }}>
+      <div className="mini-scene h-28 sm:h-32" style={{ '--tint': project.color } as CSSProperties}>
         <Scene index={index} color={project.color} />
       </div>
       <div className="flex flex-1 flex-col p-5">
@@ -95,16 +95,15 @@ function Scene({ index, color }: { index: number; color: string }) {
   }
   if (index === 2) {
     return (
-      <div className="flex h-full items-end justify-center gap-3 px-8 pb-7">
-        {[28, 48, 36, 64, 52].map((h, i) => (
+      <div className="flex h-full items-end justify-center gap-4 px-8 pb-6">
+        {[36, 64, 48, 92, 72].map((h, i) => (
           <span
             key={i}
-            className="mini-bar w-3.5 rounded-sm"
+            className="mini-bar w-4 rounded-sm"
             style={{
-              height: h,
+              ['--bar' as string]: `${h}px`,
               background: color,
-              opacity: 0.45 + i * 0.1,
-              animationDelay: `${i * 120}ms`,
+              animationDelay: `${i * 160}ms`,
             }}
           />
         ))}

@@ -140,6 +140,17 @@
 }
 
 /* More-project scenes stay still until the card is hovered, focused, or tapped. */
+.mini-scene {
+  background: color-mix(in srgb, var(--tint) 8%, transparent);
+  transition: background-color 200ms ease;
+}
+
+.group:hover .mini-scene,
+.group:focus-within .mini-scene,
+.mini-play .mini-scene {
+  background: color-mix(in srgb, var(--tint) 34%, transparent);
+}
+
 .mini-table,
 .mini-flip,
 .mini-bar,
@@ -147,26 +158,35 @@
   animation-play-state: paused;
 }
 
+.group:hover .mini-table,
+.group:focus-within .mini-table,
 .mini-play .mini-table {
   animation: mini-join 1.5s ease-in-out infinite;
   animation-play-state: running;
 }
 
+.group:hover .mini-flip,
+.group:focus-within .mini-flip,
 .mini-play .mini-flip {
   animation: mini-flip 1.4s ease-in-out infinite;
   animation-play-state: running;
 }
 
 .mini-bar {
+  height: var(--bar);
   transform-origin: bottom center;
   transform: scaleY(1);
 }
 
+.group:hover .mini-bar,
+.group:focus-within .mini-bar,
 .mini-play .mini-bar {
-  animation: mini-bars 0.9s ease-in-out infinite;
+  animation: mini-bars 1.3s ease-in-out infinite;
   animation-play-state: running;
 }
 
+.group:hover .mini-car,
+.group:focus-within .mini-car,
 .mini-play .mini-car {
   animation: mini-drive 1.8s ease-in-out infinite;
   animation-play-state: running;
@@ -199,7 +219,7 @@
 @keyframes mini-bars {
   0%,
   100% {
-    transform: scaleY(0.25);
+    transform: scaleY(0.12);
   }
   50% {
     transform: scaleY(1);
