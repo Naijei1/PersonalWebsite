@@ -95,22 +95,20 @@ function Scene({ index, color }: { index: number; color: string }) {
   }
   if (index === 2) {
     return (
-      <svg viewBox="0 0 200 96" className="mini-bars h-full w-full">
+      <div className="flex h-full items-end justify-center gap-3 px-8 pb-7">
         {[28, 48, 36, 64, 52].map((h, i) => (
-          <rect
+          <span
             key={i}
-            className="mini-bar"
-            x={36 + i * 28}
-            y={80 - h}
-            width="16"
-            height={h}
-            rx="4"
-            fill={color}
-            opacity={0.4 + i * 0.1}
-            style={{ animationDelay: `${i * 90}ms`, transformOrigin: `${44 + i * 28}px 80px` }}
+            className="mini-bar w-3.5 rounded-sm"
+            style={{
+              height: h,
+              background: color,
+              opacity: 0.45 + i * 0.1,
+              animationDelay: `${i * 120}ms`,
+            }}
           />
         ))}
-      </svg>
+      </div>
     )
   }
   return (

@@ -157,8 +157,13 @@
   animation-play-state: running;
 }
 
+.mini-bar {
+  transform-origin: bottom center;
+  transform: scaleY(1);
+}
+
 .mini-play .mini-bar {
-  animation: mini-bars 1.2s ease-in-out infinite;
+  animation: mini-bars 0.9s ease-in-out infinite;
   animation-play-state: running;
 }
 
@@ -194,7 +199,7 @@
 @keyframes mini-bars {
   0%,
   100% {
-    transform: scaleY(0.45);
+    transform: scaleY(0.25);
   }
   50% {
     transform: scaleY(1);
