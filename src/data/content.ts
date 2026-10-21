@@ -259,15 +259,18 @@ export const featured: Featured[] = [
     name: 'VR Bioprinting',
     kicker: 'C-DIME × RIT · Research',
     summary:
-      'An interactive VR bioprinting simulator for education research with the Rochester Institute of Technology.',
-    idea: 'A print head lays down tissue layer by layer, the same process students practice in VR.',
+      'A VR lesson that teaches students how bioprinting works, built to study how effective virtual reality can be for education.',
+    idea: 'A student in a headset watches a nozzle lay tissue down layer by layer, one lesson step at a time.',
     bullets: [
-      'Led development of virtual interactions and 3D assets so students could explore bioprinting hands-on.',
-      'Prototype tested by 20+ users for an education-effectiveness study.',
+      'Led the virtual interactions and 3D assets so students could learn bioprinting by doing it in VR.',
+      'Prototype tested by 20+ users in an education-effectiveness study with the Rochester Institute of Technology.',
     ],
     tags: ['Unity', 'C#', 'Blender', 'VR'],
     accent: '#A142F4',
-    links: [{ label: 'Code', href: 'https://github.com/Naijei1/VR-Bioprinting-Research-Project' }],
+    links: [
+      { label: 'Watch demo', href: 'https://youtu.be/Wy8FC9hs878' },
+      { label: 'Code', href: 'https://github.com/Naijei1/VR-Bioprinting-Research-Project' },
+    ],
   },
 ]
 
