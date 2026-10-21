@@ -18,11 +18,11 @@ import { CELL, COLS, ROWS, SNAKE_MAX, STEP, catchUp, createSim, type Cell, type 
  * play → leader crashes → snakes pause → a peer boots and takes the crown → play resumes.
  */
 const LOOP = 13
-const CRASH = 5
-const PAUSE = 6.35
-const BOOT = 8.05
-const RESUME = 9.45
-const RECOVER_END = 11.3
+const CRASH = 4.4
+const PAUSE = 6.5
+const BOOT = 8.15
+const RESUME = 9.7
+const RECOVER_END = 11.4
 const SERVERS = 3
 const SLOTS = [-0.2, 0, 0.2]
 const SPARKS = 7
@@ -230,8 +230,8 @@ function Arena() {
         <meshBasicMaterial color="#202124" transparent opacity={0} depthWrite={false} />
       </mesh>
       {pausedMap && (
-        <mesh ref={label} position={[0, 0.95, 0.85]} rotation={[-0.65, 0, 0]} visible={false}>
-          <planeGeometry args={[1.85, 0.58]} />
+        <mesh ref={label} position={[0, 0.72, 0.15]} rotation={[-0.55, 0, 0]} visible={false}>
+          <planeGeometry args={[1.7, 0.53]} />
           <meshBasicMaterial map={pausedMap} transparent opacity={0} depthWrite={false} toneMapped={false} />
         </mesh>
       )}
@@ -246,9 +246,10 @@ function ScreenPin({ children }: { children: ReactNode }) {
     if (!group) return
     group.position.copy(camera.position)
     group.quaternion.copy(camera.quaternion)
-    group.translateX(0.36)
-    group.translateY(0.31)
-    group.translateZ(-1.7)
+    group.translateX(0.55)
+    group.translateY(0.4)
+    group.translateZ(-1.72)
+    group.scale.setScalar(0.48)
   })
   return <group ref={ref}>{children}</group>
 }
@@ -283,10 +284,10 @@ function ClusterHud() {
       const recoverU = recovering ? smooth((phase - RESUME) / (RECOVER_END - RESUME)) : 0
 
       if (crashing) {
-        const flick = 0.35 + Math.abs(Math.sin(t * 46 + i)) * 0.85
+        const flick = 0.65 + Math.abs(Math.sin(t * 46 + i)) * 0.9
         body.color.copy(RED)
         body.emissive.copy(RED)
-        body.emissiveIntensity = flick * (1 - crashU * 0.25)
+        body.emissiveIntensity = flick
       } else if (dead) {
         body.color.copy(DEAD)
         body.emissive.set('#000000')
@@ -392,10 +393,10 @@ function ClusterHud() {
       const dist = 0.03 + crashU * 0.2
       spark.position.set(
         SLOTS[leader] + Math.cos(ang) * dist,
-        0.02 + crashU * 0.22 - crashU * crashU * 0.16,
-        Math.sin(ang) * dist * 0.55,
+        0.06 + crashU * 0.26 - crashU * crashU * 0.1,
+        0.1 + Math.sin(ang) * dist,
       )
-      spark.scale.setScalar((1 - crashU) * 0.55 + 0.25)
+      spark.scale.setScalar((1 - crashU) * 0.85 + 0.45)
       mat.opacity = 1 - crashU
     }
   })
@@ -466,7 +467,7 @@ function ClusterHud() {
       </group>
       {Array.from({ length: SPARKS }, (_, i) => (
         <mesh key={i} ref={(m) => (sparks.current[i] = m)} scale={0.001}>
-          <boxGeometry args={[0.035, 0.035, 0.035]} />
+          <boxGeometry args={[0.055, 0.055, 0.055]} />
           <meshBasicMaterial color={i % 2 ? '#EA4335' : '#FBBC04'} transparent opacity={0} />
         </mesh>
       ))}
