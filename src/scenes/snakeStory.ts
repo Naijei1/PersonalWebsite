@@ -82,7 +82,7 @@ export function storyAt(t: number): StoryFrame {
     next,
     source,
     pulse,
-    restored: fadeWindow(phase, BOOT + 0.2, RESUME + 1.3),
+    restored: fadeWindow(phase, BOOT, RECOVER_END + 1.1),
     roles,
     labels,
   }

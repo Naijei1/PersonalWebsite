@@ -172,9 +172,19 @@ function Building() {
       phone.current.visible = scanning
       sweep.current.position.set(room.x, 0.03, room.z)
       sweep.current.rotation.z = -sweepAngle
-      // Stay facing the camera. The screen is the +Z face; a negative X tilt tips it up toward the viewer.
-      phone.current.position.set(room.x, 0.96, room.z + 0.12)
-      phone.current.rotation.set(-0.72, 0, 0)
+      // Orbit and yaw with the sweep. The screen stays on local +Z, so it reads correctly
+      // whenever that face points at the camera and shows the back (lens) the rest of the turn.
+      phone.current.position.set(
+        room.x + Math.sin(sweepAngle) * 0.28,
+        0.98,
+        room.z + Math.cos(sweepAngle) * 0.16,
+      )
+      // Yaw with the sweep. Pitch is steep because the camera looks down: a shallower tilt
+      // turns the screen edge-on for half the orbit.
+      phone.current.rotation.order = 'YXZ'
+      phone.current.rotation.y = sweepAngle
+      phone.current.rotation.x = -1.4
+      phone.current.rotation.z = 0
     }
 
     const connect = clamp01((t - SCAN_END) / (CONNECT_END - SCAN_END))
@@ -275,14 +285,14 @@ function Building() {
       </mesh>
       <group ref={phone}>
         <mesh>
-          <boxGeometry args={[0.32, 0.54, 0.036]} />
+          <boxGeometry args={[0.34, 0.56, 0.05]} />
           <meshStandardMaterial color="#202124" roughness={0.35} />
         </mesh>
-        <mesh position={[0, 0.01, 0.02]}>
+        <mesh position={[0, 0.01, 0.028]}>
           <planeGeometry args={[0.26, 0.44]} />
           <meshStandardMaterial map={SCREEN_TEX} emissive="#8AB4F8" emissiveIntensity={0.18} />
         </mesh>
-        <mesh position={[0.09, 0.18, -0.024]} rotation={[Math.PI / 2, 0, 0]}>
+        <mesh position={[0.09, 0.18, -0.032]} rotation={[Math.PI / 2, 0, 0]}>
           <cylinderGeometry args={[0.032, 0.032, 0.014, 12]} />
           <meshStandardMaterial color="#4285F4" emissive="#4285F4" emissiveIntensity={0.85} />
         </mesh>

@@ -260,7 +260,7 @@ export const featured: Featured[] = [
     kicker: 'C-DIME × RIT · Research',
     summary:
       'A VR lesson that teaches students how bioprinting works, built to study how effective virtual reality can be for education.',
-    idea: 'A student in a headset watches a nozzle lay tissue down layer by layer, one lesson step at a time.',
+    idea: 'A floating headset looks into a wireframe room where a nozzle lays a tissue scaffold down layer by layer.',
     bullets: [
       'Led the virtual interactions and 3D assets so students could learn bioprinting by doing it in VR.',
       'Prototype tested by 20+ users in an education-effectiveness study with the Rochester Institute of Technology.',

@@ -1,28 +1,13 @@
 import { useEffect, useRef } from 'react'
-import { snakeTime, storyAt, type NodeRole } from '../scenes/snakeStory'
-
-type Paint = {
-  fill: string
-  stroke: string
-  ink: string
-}
-
-function paintOf(role: NodeRole): Paint {
-  if (role === 'main') return { fill: '#E6F4EA', stroke: '#34A853', ink: '#137333' }
-  if (role === 'crash') return { fill: '#EA4335', stroke: '#C5221F', ink: '#FFFFFF' }
-  if (role === 'dead') return { fill: '#3C4043', stroke: '#202124', ink: '#FFFFFF' }
-  if (role === 'boot') return { fill: '#34A853', stroke: '#137333', ink: '#FFFFFF' }
-  if (role === 'recover') return { fill: '#E6F4EA', stroke: '#81C995', ink: '#137333' }
-  return { fill: '#FFFFFF', stroke: '#DADCE0', ink: '#3C4043' }
-}
+import { CRASH, RESUME, snakeTime, storyAt, type NodeRole } from '../scenes/snakeStory'
 
 const CYCLE = 1.7
 const STATE_END = 0.4
 const FLASH_END = 0.5
 const ACK_END = 0.9
-const SPAN = 62
+const SPAN = 70
+const LOG0 = 12
 
-/** One round trip on the lane between node `link` and the node below it. */
 function linkPacket(t: number, link: number, source: number, pulse: number) {
   const mainAbove = source <= link
   const u = ((t / CYCLE + link * 0.5) % 1 + 1) % 1
@@ -55,7 +40,18 @@ function linkPacket(t: number, link: number, source: number, pulse: number) {
   }
 }
 
-/** Corner inset. Main sends a labeled state packet; each backup answers only after it arrives. */
+function nodeStyle(role: NodeRole, elect: boolean) {
+  if (role === 'crash') return { background: '#EA4335', borderColor: '#EA4335', shadow: 'none' }
+  if (role === 'dead') return { background: '#3C4043', borderColor: '#5F6368', shadow: 'none' }
+  if (role === 'boot' || elect) {
+    return { background: '#81C995', borderColor: '#81C995', shadow: '0 0 0 3px rgba(129,201,149,0.35)' }
+  }
+  if (role === 'main') return { background: '#81C995', borderColor: '#81C995', shadow: '0 0 0 2px rgba(129,201,149,0.28)' }
+  if (role === 'recover') return { background: 'transparent', borderColor: '#81C995', shadow: 'none' }
+  return { background: 'transparent', borderColor: 'rgba(232,234,237,0.45)', shadow: 'none' }
+}
+
+/** Small primary-backup inset. A log entry travels out, the backup applies it, then the ACK returns. */
 export default function SnakeNodes() {
   const root = useRef<HTMLDivElement>(null)
 
@@ -63,24 +59,47 @@ export default function SnakeNodes() {
     const el = root.current
     if (!el) return
     const boxes = [0, 1, 2].map((i) => el.querySelector<HTMLElement>(`[data-box="${i}"]`))
-    const names = [0, 1, 2].map((i) => el.querySelector<HTMLElement>(`[data-name="${i}"]`))
+    const logs = [0, 1, 2].map((i) => el.querySelector<HTMLElement>(`[data-log="${i}"]`))
+    const lines = [0, 1].map((i) => el.querySelector<HTMLElement>(`[data-line="${i}"]`))
+    const beats = [0, 1].map((i) => el.querySelector<HTMLElement>(`[data-beat="${i}"]`))
     const restored = el.querySelector<HTMLElement>('[data-restored]')
     const states = [0, 1].map((link) => el.querySelector<HTMLElement>(`[data-packet="state-${link}"]`))
     const acks = [0, 1].map((link) => el.querySelector<HTMLElement>(`[data-packet="ack-${link}"]`))
 
     let raf = 0
     const seen = [false, false]
+    const applied = [false, false]
     let source = -1
+    let roundKey = ''
+    let closed = ''
+    let commit = LOG0
+
     const tick = () => {
       const t = snakeTime.live ? snakeTime.t : 0
       const frame = storyAt(t)
+      const phase = frame.phase
+      const outage = phase >= CRASH && phase < RESUME
       if (frame.source !== source) {
         seen[0] = false
         seen[1] = false
+        applied[0] = false
+        applied[1] = false
         source = frame.source
+        roundKey = ''
       }
-      const flashes = [0, 0, 0]
 
+      const local = phase >= RESUME ? phase - RESUME : phase
+      const round = Math.floor(local / CYCLE)
+      const key = `${frame.source}:${outage ? 'down' : round}`
+      if (key !== roundKey) {
+        roundKey = key
+        applied[0] = false
+        applied[1] = false
+        seen[0] = false
+        seen[1] = false
+      }
+
+      const flashes = [0, 0, 0]
       ;[0, 1].forEach((link) => {
         const trip = linkPacket(t, link, frame.source, frame.pulse)
         if (trip.u < 0.08) seen[link] = false
@@ -88,34 +107,61 @@ export default function SnakeNodes() {
         if (!seen[link]) {
           trip.ackOp = 0
           trip.flash = 0
+        } else if (!outage) {
+          applied[link] = true
         }
         flashes[trip.dest] = Math.max(flashes[trip.dest], trip.flash)
         const state = states[link]
         const ack = acks[link]
         if (state) {
           state.style.top = `${trip.stateTop}%`
-          state.style.opacity = String(trip.stateOp)
+          state.style.opacity = String(trip.stateOp * 0.95)
         }
         if (ack) {
           ack.style.top = `${trip.ackTop}%`
-          ack.style.opacity = String(trip.ackOp)
+          ack.style.opacity = String(trip.ackOp * 0.95)
         }
+        const beat = beats[link]
+        if (beat) {
+          const healthy = frame.pulse > 0.45
+          beat.style.opacity = healthy ? String(0.25 + 0.55 * Math.abs(Math.sin(t * 5 + link))) : '0'
+        }
+        const line = lines[link]
+        if (line) line.style.opacity = frame.pulse > 0.2 ? '1' : String(Math.max(0.2, frame.pulse))
       })
 
+      const roundId = `${frame.source}:${round}`
+      if (!outage && applied[0] && applied[1] && closed !== roundId) {
+        commit += 1
+        closed = roundId
+      }
+      const entry = !outage && closed !== roundId ? commit + 1 : commit
+      const shown = [commit, commit, commit]
+      if (!outage) {
+        shown[frame.source] = entry
+        ;[0, 1].forEach((link) => {
+          const dest = frame.source <= link ? link + 1 : link
+          if (applied[link]) shown[dest] = entry
+        })
+      }
+
       boxes.forEach((box, i) => {
-        const look = paintOf(frame.roles[i])
+        const elect = outage && i === frame.next && phase >= CRASH + 1.2
+        const look = nodeStyle(frame.roles[i], elect)
         if (box) {
-          box.style.background = look.fill
-          box.style.borderColor = look.stroke
-          box.style.color = look.ink
-          box.style.opacity = '1'
-          box.style.boxShadow = flashes[i] > 0.04 ? `0 0 0 2px rgba(52, 168, 83, ${flashes[i].toFixed(3)})` : 'none'
+          box.style.background = look.background
+          box.style.borderColor = look.borderColor
+          box.style.boxShadow = flashes[i] > 0.04 ? `0 0 0 3px rgba(129,201,149,${flashes[i].toFixed(2)})` : look.shadow
         }
-        const name = names[i]
-        if (name) name.textContent = frame.labels[i]
+        const log = logs[i]
+        if (!log) return
+        log.textContent = `log ${shown[i]}`
+        log.style.opacity = frame.roles[i] === 'dead' ? '0.45' : '1'
       })
 
       if (restored) restored.style.opacity = String(frame.restored)
+      const commitLine = el.querySelector<HTMLElement>('[data-commit]')
+      if (commitLine) commitLine.textContent = `@ log ${commit}`
       raf = requestAnimationFrame(tick)
     }
     raf = requestAnimationFrame(tick)
@@ -123,55 +169,44 @@ export default function SnakeNodes() {
   }, [])
 
   return (
-    <div
-      ref={root}
-      className="pointer-events-none absolute right-1 top-1 z-10 w-1/5 sm:right-1.5 sm:top-1.5 sm:w-[23%]"
-    >
-      <div className="rounded-md border border-black/10 bg-white px-0.5 py-0.5 shadow-card sm:rounded-lg sm:px-1">
-        <div className="ml-0.5 border-l-2 border-[#34A853]/70 pl-0.5">
-          <Node index={0} label="Main" />
-          <Lane link={0} />
-          <Node index={1} label="Backup 1" />
-          <Lane link={1} />
-          <Node index={2} label="Backup 2" />
-        </div>
+    <div ref={root} className="pointer-events-none absolute right-1.5 top-1.5 z-10 w-[34%] max-w-[168px] sm:right-2 sm:top-2 sm:w-[26%] sm:max-w-[180px]">
+      <div className="rounded-xl border border-white/10 bg-[#1A1B1E]/92 px-2 py-1.5">
+        <Node index={0} />
+        <Lane link={0} />
+        <Node index={1} />
+        <Lane link={1} />
+        <Node index={2} />
         <p
           data-restored
-          className="h-3 text-center text-[8px] font-semibold leading-3 text-[#137333] opacity-0 sm:h-3.5 sm:text-[10px] sm:leading-4"
+          className="mt-1 border-t border-white/10 pt-1 text-center font-mono text-[9px] leading-tight text-[#81C995] opacity-0 sm:text-[10px]"
         >
-          State restored
+          state restored
+          <span data-commit className="block">
+            @ log 12
+          </span>
         </p>
       </div>
     </div>
   )
 }
 
-function Node({ index, label }: { index: number; label: string }) {
+function Node({ index }: { index: number }) {
   return (
-    <div
-      data-box={index}
-      className="truncate rounded border border-[#DADCE0] bg-white px-0.5 text-center text-[8px] font-semibold leading-tight text-[#3C4043] sm:text-[11px] sm:leading-4"
-    >
-      <span data-name={index}>{label}</span>
+    <div className="flex items-center gap-1">
+      <span data-box={index} className="h-2 w-2 shrink-0 rounded-full border border-white/40 sm:h-2.5 sm:w-2.5" />
+      <span data-log={index} className="font-mono text-[8px] leading-none tracking-tight text-[#E8EAED] sm:text-[9px]">
+        log 12
+      </span>
     </div>
   )
 }
 
 function Lane({ link }: { link: number }) {
   return (
-    <div className="relative h-4 sm:h-5">
-      <span
-        data-packet={`state-${link}`}
-        className="absolute left-0 rounded-sm bg-[#137333] px-0.5 text-[8px] font-bold leading-none text-white opacity-0 sm:text-[11px]"
-      >
-        state
-      </span>
-      <span
-        data-packet={`ack-${link}`}
-        className="absolute right-0 rounded-sm bg-[#174EA6] px-0.5 text-[8px] font-bold leading-none text-white opacity-0 sm:text-[11px]"
-      >
-        ACK
-      </span>
+    <div data-line={link} className="relative ml-[3px] h-3.5 border-l border-white/20 sm:ml-1 sm:h-4">
+      <span data-packet={`state-${link}`} className="absolute -left-[3px] h-1.5 w-1.5 rounded-full bg-[#81C995] opacity-0" />
+      <span data-packet={`ack-${link}`} className="absolute -left-[3px] h-1.5 w-1.5 rounded-full bg-[#8AB4F8] opacity-0" />
+      <span data-beat={link} className="absolute left-1 top-1/2 h-1 w-1 -translate-y-1/2 rounded-full bg-white/70 opacity-0" />
     </div>
   )
 }

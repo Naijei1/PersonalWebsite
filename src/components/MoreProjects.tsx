@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState, type CSSProperties } from 'react'
 import { moreProjects, type MoreProject } from '../data/content'
+import { useMediaQuery } from '../lib/hooks'
 
 export default function MoreProjects() {
   return (
@@ -18,6 +19,7 @@ function MoreCard({ project, index }: { project: MoreProject; index: number }) {
   const ref = useRef<HTMLAnchorElement>(null)
   const [visible, setVisible] = useState(false)
   const [hot, setHot] = useState(false)
+  const touch = useMediaQuery('(hover: none)')
 
   useEffect(() => {
     const el = ref.current
@@ -82,11 +84,17 @@ function MoreCard({ project, index }: { project: MoreProject; index: number }) {
       raf = requestAnimationFrame(tick)
     }
 
+    const watch = new MutationObserver(() => {
+      if (el.classList.contains('mini-play')) start()
+    })
+    watch.observe(el, { attributes: true, attributeFilter: ['class'] })
     el.addEventListener('pointerenter', start)
     el.addEventListener('pointerdown', start)
     el.addEventListener('focus', start)
+    if (el.classList.contains('mini-play')) start()
     return () => {
       cancelAnimationFrame(raf)
+      watch.disconnect()
       el.removeEventListener('pointerenter', start)
       el.removeEventListener('pointerdown', start)
       el.removeEventListener('focus', start)
@@ -106,7 +114,7 @@ function MoreCard({ project, index }: { project: MoreProject; index: number }) {
       onPointerDown={() => setHot(true)}
       onFocus={() => setHot(true)}
       onBlur={() => setHot(false)}
-      className={`surface group flex h-full flex-col overflow-hidden transition-colors duration-200 hover:bg-[#F1F3F4] hover:shadow-lift dark:hover:bg-[#3C4043] ${visible && hot ? 'mini-play' : ''}`}
+      className={`surface group flex h-full flex-col overflow-hidden transition-colors duration-200 hover:bg-[#F1F3F4] hover:shadow-lift dark:hover:bg-[#3C4043] ${visible && (hot || touch) ? 'mini-play' : ''}`}
     >
       <div className="mini-scene h-28 sm:h-32" style={{ '--tint': project.color } as CSSProperties}>
         <Scene index={index} color={project.color} />
