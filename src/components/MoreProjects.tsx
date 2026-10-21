@@ -27,6 +27,72 @@ function MoreCard({ project, index }: { project: MoreProject; index: number }) {
     return () => observer.disconnect()
   }, [])
 
+  useEffect(() => {
+    const el = ref.current
+    if (!el || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+    let raf = 0
+    let running = false
+    let settling = false
+    let settleFrom: number[] = []
+    let settleStart = 0
+
+    const nodes = () => [...el.querySelectorAll<HTMLElement>('.mini-bar')]
+    const active = () => el.matches(':hover, :focus-within') || el.classList.contains('mini-play')
+
+    const tick = (now: number) => {
+      const bars = nodes()
+      if (active()) {
+        settling = false
+        bars.forEach((bar, i) => {
+          const phase = (now / 1200 + i * 0.2) % 1
+          const scale = 0.81 + 0.19 * Math.cos(phase * Math.PI * 2)
+          bar.style.transform = `scaleY(${scale.toFixed(4)})`
+        })
+        raf = requestAnimationFrame(tick)
+        return
+      }
+      if (!settling) {
+        settling = true
+        settleStart = now
+        settleFrom = bars.map((bar) => {
+          const match = bar.style.transform.match(/scaleY\(([\d.]+)\)/)
+          return match ? Number(match[1]) : 1
+        })
+      }
+      const u = Math.min(1, (now - settleStart) / 280)
+      const eased = 1 - (1 - u) * (1 - u)
+      bars.forEach((bar, i) => {
+        const scale = (settleFrom[i] ?? 1) + (1 - (settleFrom[i] ?? 1)) * eased
+        bar.style.transform = `scaleY(${scale.toFixed(4)})`
+      })
+      if (u < 1) {
+        raf = requestAnimationFrame(tick)
+        return
+      }
+      bars.forEach((bar) => {
+        bar.style.transform = ''
+      })
+      running = false
+    }
+
+    const start = () => {
+      if (running) return
+      running = true
+      settling = false
+      raf = requestAnimationFrame(tick)
+    }
+
+    el.addEventListener('pointerenter', start)
+    el.addEventListener('pointerdown', start)
+    el.addEventListener('focus', start)
+    return () => {
+      cancelAnimationFrame(raf)
+      el.removeEventListener('pointerenter', start)
+      el.removeEventListener('pointerdown', start)
+      el.removeEventListener('focus', start)
+    }
+  }, [])
+
   return (
     <a
       ref={ref}
@@ -103,7 +169,6 @@ function Scene({ index, color }: { index: number; color: string }) {
             style={{
               ['--bar' as string]: `${h}px`,
               background: color,
-              animationDelay: `${i * 160}ms`,
             }}
           />
         ))}

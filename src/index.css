@@ -153,7 +153,6 @@
 
 .mini-table,
 .mini-flip,
-.mini-bar,
 .mini-car {
   animation-play-state: paused;
 }
@@ -175,14 +174,6 @@
 .mini-bar {
   height: var(--bar);
   transform-origin: bottom center;
-  transform: scaleY(1);
-}
-
-.group:hover .mini-bar,
-.group:focus-within .mini-bar,
-.mini-play .mini-bar {
-  animation: mini-bars 1.3s ease-in-out infinite;
-  animation-play-state: running;
 }
 
 .group:hover .mini-car,
@@ -213,16 +204,6 @@
   }
   100% {
     transform: rotateY(360deg);
-  }
-}
-
-@keyframes mini-bars {
-  0%,
-  100% {
-    transform: scaleY(0.12);
-  }
-  50% {
-    transform: scaleY(1);
   }
 }
 
