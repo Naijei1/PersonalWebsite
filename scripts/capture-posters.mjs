@@ -8,7 +8,7 @@ const BASE = process.env.SITE_URL ?? 'http://localhost:4173/'
 const ALL = ['groovy', 'downloader', 'gnarly', 'cluster', 'seeround', 'bioprint', 'snake']
 // Scenes that build up over time are captured at a later, more complete moment.
 // Snake's crash starts at 5s, so the poster is taken during ordinary play.
-const WAIT_MS = { gnarly: 11000, snake: 2800, bioprint: 4800 }
+const WAIT_MS = { gnarly: 1600, snake: 2800, bioprint: 4800 }
 const IDS = process.argv.length > 2 ? process.argv.slice(2) : ALL
 
 await mkdir(new URL('../public/showcase/', import.meta.url), { recursive: true })
