@@ -172,19 +172,19 @@ function Building() {
       phone.current.visible = scanning
       sweep.current.position.set(room.x, 0.03, room.z)
       sweep.current.rotation.z = -sweepAngle
-      // Orbit and yaw with the sweep. The screen stays on local +Z, so it reads correctly
-      // whenever that face points at the camera and shows the back (lens) the rest of the turn.
+      // Orbit across the room with the sweep. The screen stays on local +Z, pitched toward the camera.
+      // Sit above the walls, on the camera side of the room, and rock with the sweep.
+      // A full yaw turns the screen edge-on; a swing of about ±40° keeps "Scan" readable.
       phone.current.position.set(
         room.x + Math.sin(sweepAngle) * 0.28,
-        0.98,
-        room.z + Math.cos(sweepAngle) * 0.16,
+        1.38,
+        room.z + 0.62,
       )
-      // Yaw with the sweep. Pitch is steep because the camera looks down: a shallower tilt
-      // turns the screen edge-on for half the orbit.
+      phone.current.scale.setScalar(2.05)
       phone.current.rotation.order = 'YXZ'
-      phone.current.rotation.y = sweepAngle
-      phone.current.rotation.x = -1.4
-      phone.current.rotation.z = 0
+      phone.current.rotation.y = Math.sin(sweepAngle) * 0.7
+      phone.current.rotation.x = -0.58
+      phone.current.rotation.z = Math.sin(sweepAngle * 2) * 0.06
     }
 
     const connect = clamp01((t - SCAN_END) / (CONNECT_END - SCAN_END))

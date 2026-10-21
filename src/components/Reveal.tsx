@@ -1,5 +1,5 @@
 import { useEffect, useState, type ReactNode } from 'react'
-import { useInView } from '../lib/hooks'
+import { useInView, useMediaQuery, useReducedMotion } from '../lib/hooks'
 
 export default function Reveal({
   children,
@@ -10,20 +10,23 @@ export default function Reveal({
   delay?: number
   className?: string
 }) {
-  const [ref, inView] = useInView<HTMLDivElement>('0px 0px -10% 0px')
-  const [shown, setShown] = useState(false)
+  // A phone scroll moves through a section before a fade can finish, which reads as an empty gap
+  // and then a jump. Touch and reduced-motion show the content in place.
+  const immediate = useReducedMotion() || useMediaQuery('(hover: none)')
+  const [ref, inView] = useInView<HTMLDivElement>('160px 0px 160px 0px')
+  const [shown, setShown] = useState(immediate)
 
   useEffect(() => {
-    if (inView) setShown(true)
-  }, [inView])
+    if (immediate || inView) setShown(true)
+  }, [immediate, inView])
+
+  if (immediate) return <div className={className}>{children}</div>
 
   return (
     <div
       ref={ref}
-      className={`transition-all duration-700 ease-[cubic-bezier(.2,.8,.2,1)] ${
-        shown ? 'translate-y-0 opacity-100' : 'translate-y-6 opacity-0'
-      } ${className}`}
-      style={{ transitionDelay: `${delay}ms` }}
+      className={`transition-opacity duration-500 ease-out ${shown ? 'opacity-100' : 'opacity-0'} ${className}`}
+      style={{ transitionDelay: shown ? `${delay}ms` : '0ms' }}
     >
       {children}
     </div>
