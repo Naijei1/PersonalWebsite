@@ -2,6 +2,7 @@ import { Box, MousePointer2 } from 'lucide-react'
 import { Component, lazy, Suspense, useEffect, useState, type ReactNode } from 'react'
 import { asset, type Featured } from '../data/content'
 import { useCan3D, useInView, useMediaQuery } from '../lib/hooks'
+import SnakeNodes from './SnakeNodes'
 
 const Scene = lazy(() => import('../scenes'))
 
@@ -47,6 +48,8 @@ export default function Showcase({ project }: { project: Featured }) {
         background: `radial-gradient(120% 90% at 50% 15%, ${project.accent}22, ${project.accent}08 60%, transparent)`,
       }}
     >
+      {project.id === 'snake' && mounted && <SnakeNodes />}
+
       {mounted ? (
         <SceneBoundary fallback={poster}>
           <Suspense fallback={poster}>

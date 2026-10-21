@@ -32,14 +32,11 @@ export default function SceneCanvas({
   camera,
   target = [0, 0, 0],
   children,
-  hud,
 }: {
   active: boolean
   camera: Vec3
   target?: Vec3
   children: ReactNode
-  /** Screen-fixed overlay. Kept outside the tilt rig so it stays in the corner. */
-  hud?: ReactNode
 }) {
   const narrow = useMediaQuery('(max-width: 767px)')
   return (
@@ -54,7 +51,6 @@ export default function SceneCanvas({
       <directionalLight position={[4, 8, 6]} intensity={1.8} />
       <directionalLight position={[-5, 3, -4]} intensity={0.5} />
       <Rig target={target}>{children}</Rig>
-      {hud}
     </Canvas>
   )
 }
