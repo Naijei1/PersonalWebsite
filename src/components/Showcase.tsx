@@ -1,7 +1,7 @@
 import { Box, MousePointer2 } from 'lucide-react'
 import { Component, lazy, Suspense, useEffect, useState, type ReactNode } from 'react'
 import { asset, type Featured } from '../data/content'
-import { useCan3D, useInView } from '../lib/hooks'
+import { useCan3D, useInView, useMediaQuery } from '../lib/hooks'
 
 const Scene = lazy(() => import('../scenes'))
 
@@ -17,7 +17,8 @@ class SceneBoundary extends Component<{ fallback: ReactNode; children: ReactNode
 
 export default function Showcase({ project }: { project: Featured }) {
   const can3D = useCan3D()
-  const [ref, near] = useInView<HTMLDivElement>('300px 0px')
+  const phone = useMediaQuery('(max-width: 767px)')
+  const [ref, near] = useInView<HTMLDivElement>(phone ? '0px' : '300px 0px')
   const [mounted, setMounted] = useState(false)
   const [posterOk, setPosterOk] = useState(true)
 

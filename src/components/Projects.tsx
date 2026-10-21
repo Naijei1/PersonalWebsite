@@ -24,6 +24,11 @@ export default function Projects() {
                       <Trophy className="h-3.5 w-3.5" /> {project.award}
                     </span>
                   )}
+                  {project.status && (
+                    <span className="rounded-full bg-g-green/15 px-2.5 py-1 text-xs font-medium uppercase tracking-wider text-[#137333] dark:text-[#81C995]">
+                      {project.status}
+                    </span>
+                  )}
                 </div>
                 <h3 className="text-3xl font-medium tracking-tight sm:text-4xl">
                   <span

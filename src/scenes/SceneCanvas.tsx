@@ -1,6 +1,7 @@
 import { Canvas, useFrame, useThree } from '@react-three/fiber'
 import { useEffect, useRef, type ReactNode } from 'react'
 import type { Group } from 'three'
+import { useMediaQuery } from '../lib/hooks'
 
 type Vec3 = [number, number, number]
 
@@ -31,24 +32,29 @@ export default function SceneCanvas({
   camera,
   target = [0, 0, 0],
   children,
+  hud,
 }: {
   active: boolean
   camera: Vec3
   target?: Vec3
   children: ReactNode
+  /** Screen-fixed overlay. Kept outside the tilt rig so it stays in the corner. */
+  hud?: ReactNode
 }) {
+  const narrow = useMediaQuery('(max-width: 767px)')
   return (
     <Canvas
       frameloop={active ? 'always' : 'demand'}
-      dpr={[1, 1.75]}
+      dpr={narrow ? [1, 1.25] : [1, 1.75]}
       camera={{ position: camera, fov: 38 }}
-      gl={{ antialias: true, alpha: true, powerPreference: 'low-power', preserveDrawingBuffer: POSTER_MODE }}
+      gl={{ antialias: !narrow, alpha: true, powerPreference: 'low-power', preserveDrawingBuffer: POSTER_MODE }}
       style={{ touchAction: 'pan-y' }}
     >
       <hemisphereLight args={['#ffffff', '#c7d2e0', 1.4]} />
       <directionalLight position={[4, 8, 6]} intensity={1.8} />
       <directionalLight position={[-5, 3, -4]} intensity={0.5} />
       <Rig target={target}>{children}</Rig>
+      {hud}
     </Canvas>
   )
 }

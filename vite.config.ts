@@ -6,7 +6,7 @@ export default defineConfig({
   base: './',
   build: {
     outDir: 'dist',
-    // The lazily loaded Three.js chunk is ~830 kB raw (~225 kB gzip) and only loads on desktop.
+    // The lazily loaded Three.js chunk is large (~225 kB gzip) and only loads when a showcase is on screen.
     chunkSizeWarningLimit: 900,
   },
 })

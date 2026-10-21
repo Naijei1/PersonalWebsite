@@ -6,6 +6,7 @@ import DownloaderScene from './DownloaderScene'
 import GnarlyScene from './GnarlyScene'
 import GroovyScene from './GroovyScene'
 import SeeroundScene from './SeeroundScene'
+import SnakeScene from './SnakeScene'
 
 const scenes: Record<SceneId, ComponentType<{ active: boolean }>> = {
   groovy: GroovyScene,
@@ -14,6 +15,7 @@ const scenes: Record<SceneId, ComponentType<{ active: boolean }>> = {
   cluster: ClusterScene,
   seeround: SeeroundScene,
   bioprint: BioprintScene,
+  snake: SnakeScene,
 }
 
 export default function Scene({ id, active }: { id: SceneId; active: boolean }) {

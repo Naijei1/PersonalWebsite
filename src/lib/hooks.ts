@@ -53,14 +53,16 @@ function hasWebGL() {
 
 const webgl = typeof document !== 'undefined' && hasWebGL()
 
-/** 3D showcases run only on wide screens with WebGL and motion allowed; `?3d=1` forces them on for testing. */
+/**
+ * 3D showcases run wherever WebGL is available and the visitor allows motion.
+ * Phones use a lower pixel ratio inside SceneCanvas. `?3d=1` forces the scenes on; `?3d=0` keeps the poster.
+ */
 export function useCan3D() {
   const reduced = useReducedMotion()
-  const wide = useMediaQuery('(min-width: 768px)')
   const forced = new URLSearchParams(window.location.search).get('3d')
   if (forced === '1') return webgl
   if (forced === '0') return false
-  return webgl && wide && !reduced
+  return webgl && !reduced
 }
 
 export function useInView<T extends Element>(rootMargin = '0px') {
