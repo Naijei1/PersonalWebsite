@@ -161,7 +161,7 @@ function Arena() {
   })
 
   return (
-    <group>
+    <group position={[-1.05, 0, 0.95]} scale={0.72}>
       <mesh position={[0, -0.07, 0]}>
         <boxGeometry args={[5.05, 0.08, 5.05]} />
         <meshStandardMaterial color="#DADCE0" roughness={0.85} />

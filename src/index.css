@@ -139,6 +139,78 @@
   }
 }
 
+/* More-project scenes stay still until the card is hovered, focused, or tapped. */
+.mini-table,
+.mini-flip,
+.mini-bar,
+.mini-car {
+  animation-play-state: paused;
+}
+
+.mini-play .mini-table {
+  animation: mini-join 1.5s ease-in-out infinite;
+  animation-play-state: running;
+}
+
+.mini-play .mini-flip {
+  animation: mini-flip 1.4s ease-in-out infinite;
+  animation-play-state: running;
+}
+
+.mini-play .mini-bar {
+  animation: mini-bars 1.2s ease-in-out infinite;
+  animation-play-state: running;
+}
+
+.mini-play .mini-car {
+  animation: mini-drive 1.8s ease-in-out infinite;
+  animation-play-state: running;
+}
+
+@keyframes mini-join {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(18px);
+  }
+}
+
+@keyframes mini-flip {
+  0%,
+  18% {
+    transform: rotateY(0deg);
+  }
+  48%,
+  68% {
+    transform: rotateY(180deg);
+  }
+  100% {
+    transform: rotateY(360deg);
+  }
+}
+
+@keyframes mini-bars {
+  0%,
+  100% {
+    transform: scaleY(0.45);
+  }
+  50% {
+    transform: scaleY(1);
+  }
+}
+
+@keyframes mini-drive {
+  0% {
+    transform: translateX(0);
+  }
+  75%,
+  100% {
+    transform: translateX(96px);
+  }
+}
+
 .askew {
   transform: rotate(1.5deg);
   transition: transform 0.6s ease;
