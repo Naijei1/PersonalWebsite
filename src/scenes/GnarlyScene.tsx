@@ -1,16 +1,19 @@
-import ConceptA from './gnarly/ConceptA'
-import ConceptB from './gnarly/ConceptB'
-import ConceptC from './gnarly/ConceptC'
+import ConceptD from './gnarly/ConceptD'
+import ConceptE from './gnarly/ConceptE'
+import ConceptF from './gnarly/ConceptF'
+import Original from './gnarly/Original'
 
-/** Preview switch. `?gnarly=b` or `?gnarly=c`; anything else, including no param, is A. */
-export function gnarlyVariant(): 'a' | 'b' | 'c' {
+/** Preview switch. `?gnarly=d|e|f`; anything else, including no param, is the scene from main. */
+export function gnarlyVariant(): 'original' | 'd' | 'e' | 'f' {
   const value = new URLSearchParams(window.location.search).get('gnarly')?.toLowerCase()
-  return value === 'b' || value === 'c' ? value : 'a'
+  if (value === 'd' || value === 'e' || value === 'f') return value
+  return 'original'
 }
 
 export default function GnarlyScene({ active }: { active: boolean }) {
   const variant = gnarlyVariant()
-  if (variant === 'b') return <ConceptB active={active} />
-  if (variant === 'c') return <ConceptC active={active} />
-  return <ConceptA active={active} />
+  if (variant === 'd') return <ConceptD active={active} />
+  if (variant === 'e') return <ConceptE active={active} />
+  if (variant === 'f') return <ConceptF active={active} />
+  return <Original active={active} />
 }
