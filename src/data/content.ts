@@ -260,7 +260,7 @@ export const featured: Featured[] = [
   {
     id: 'bioprint',
     name: 'VR Bioprinting',
-    kicker: 'C-DIME × RIT · Research',
+    kicker: 'C-DIME × RIT · Research · Aug 2023 – Aug 2024',
     summary:
       'A VR lesson that teaches students how bioprinting works, built to study how effective virtual reality can be for education.',
     idea: 'A floating headset looks into a wireframe room where a nozzle lays a tissue scaffold down layer by layer.',
