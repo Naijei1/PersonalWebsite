@@ -1,5 +1,6 @@
 import { ArrowUpRight, Play, Trophy } from 'lucide-react'
-import { featured, moreProjects } from '../data/content'
+import { featured } from '../data/content'
+import MoreProjects from './MoreProjects'
 import Reveal, { Section } from './Reveal'
 import Showcase from './Showcase'
 
@@ -22,6 +23,11 @@ export default function Projects() {
                   {project.award && (
                     <span className="inline-flex items-center gap-1 rounded-full bg-g-yellow/15 px-2.5 py-1 text-xs font-medium text-[#B06000] dark:text-g-yellow">
                       <Trophy className="h-3.5 w-3.5" /> {project.award}
+                    </span>
+                  )}
+                  {project.status && (
+                    <span className="rounded-full bg-g-green/15 px-2.5 py-1 text-xs font-medium uppercase tracking-wider text-[#137333] dark:text-[#81C995]">
+                      {project.status}
                     </span>
                   )}
                 </div>
@@ -81,35 +87,10 @@ export default function Projects() {
         ))}
       </div>
 
-      <Reveal>
-        <h3 className="mb-6 mt-20 text-2xl font-medium">More projects</h3>
-      </Reveal>
-      <div className="grid gap-4 sm:grid-cols-2">
-        {moreProjects.map((p, i) => (
-          <Reveal key={p.name} delay={i * 60}>
-            <a
-              href={p.href}
-              target="_blank"
-              rel="noreferrer"
-              className="surface group flex h-full flex-col p-5 transition hover:-translate-y-1 hover:shadow-lift"
-            >
-              <div className="flex items-center justify-between">
-                <span className="flex items-center gap-2.5 text-lg font-medium">
-                  <span className="h-2.5 w-2.5 rounded-full" style={{ background: p.color }} />
-                  {p.name}
-                  {p.status && (
-                    <span className="rounded-full bg-g-green/15 px-2 py-0.5 text-[11px] font-medium uppercase tracking-wider text-[#137333] dark:text-[#81C995]">
-                      {p.status}
-                    </span>
-                  )}
-                </span>
-                <ArrowUpRight className="h-4 w-4 text-ink-faint transition group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-ink dark:group-hover:text-night-text" />
-              </div>
-              <p className="mt-2 flex-1 text-[15px] leading-relaxed text-ink-soft dark:text-night-soft">{p.blurb}</p>
-              <p className="mt-4 font-mono text-xs text-ink-faint dark:text-night-soft">{p.tags.join(' · ')}</p>
-            </a>
-          </Reveal>
-        ))}
+      <div id="more-projects" className="mt-20">
+        <Reveal>
+          <MoreProjects />
+        </Reveal>
       </div>
     </Section>
   )

@@ -45,7 +45,12 @@ export const useReducedMotion = () => useMediaQuery('(prefers-reduced-motion: re
 function hasWebGL() {
   try {
     const canvas = document.createElement('canvas')
-    return Boolean(canvas.getContext('webgl2') || canvas.getContext('webgl'))
+    const gl = canvas.getContext('webgl2') || canvas.getContext('webgl')
+    if (!gl) return false
+    // Drop the probe context. iOS Safari only allows a handful, and a leaked probe plus the
+    // showcases is enough to make every canvas stop drawing.
+    gl.getExtension('WEBGL_lose_context')?.loseContext()
+    return true
   } catch {
     return false
   }
@@ -53,14 +58,16 @@ function hasWebGL() {
 
 const webgl = typeof document !== 'undefined' && hasWebGL()
 
-/** 3D showcases run only on wide screens with WebGL and motion allowed; `?3d=1` forces them on for testing. */
+/**
+ * 3D showcases run wherever WebGL is available and the visitor allows motion.
+ * Phones use a lower pixel ratio inside SceneCanvas. `?3d=1` forces the scenes on; `?3d=0` keeps the poster.
+ */
 export function useCan3D() {
   const reduced = useReducedMotion()
-  const wide = useMediaQuery('(min-width: 768px)')
   const forced = new URLSearchParams(window.location.search).get('3d')
   if (forced === '1') return webgl
   if (forced === '0') return false
-  return webgl && wide && !reduced
+  return webgl && !reduced
 }
 
 export function useInView<T extends Element>(rootMargin = '0px') {
@@ -69,7 +76,10 @@ export function useInView<T extends Element>(rootMargin = '0px') {
   useEffect(() => {
     const el = ref.current
     if (!el) return
-    const io = new IntersectionObserver(([entry]) => setInView(entry.isIntersecting), { rootMargin })
+    const io = new IntersectionObserver(([entry]) => setInView(entry.isIntersecting), {
+      rootMargin,
+      threshold: 0.05,
+    })
     io.observe(el)
     return () => io.disconnect()
   }, [rootMargin])

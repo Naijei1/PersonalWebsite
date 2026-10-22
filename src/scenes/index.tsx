@@ -1,22 +1,13 @@
 import type { ComponentType } from 'react'
 import type { SceneId } from '../data/content'
-import BioprintScene from './BioprintScene'
-import ClusterScene from './ClusterScene'
-import DownloaderScene from './DownloaderScene'
-import GnarlyScene from './GnarlyScene'
-import GroovyScene from './GroovyScene'
-import SeeroundScene from './SeeroundScene'
 
-const scenes: Record<SceneId, ComponentType<{ active: boolean }>> = {
-  groovy: GroovyScene,
-  downloader: DownloaderScene,
-  gnarly: GnarlyScene,
-  cluster: ClusterScene,
-  seeround: SeeroundScene,
-  bioprint: BioprintScene,
-}
-
-export default function Scene({ id, active }: { id: SceneId; active: boolean }) {
-  const Component = scenes[id]
-  return <Component active={active} />
+/** Each loader is dynamic so Three.js stays out of the initial bundle until a card is on screen. */
+export const sceneLoaders: Record<SceneId, () => Promise<{ default: ComponentType<{ active: boolean }> }>> = {
+  groovy: () => import('./GroovyScene'),
+  downloader: () => import('./DownloaderScene'),
+  gnarly: () => import('./GnarlyScene'),
+  cluster: () => import('./ClusterScene'),
+  seeround: () => import('./SeeroundScene'),
+  bioprint: () => import('./BioprintScene'),
+  snake: () => import('./SnakeScene'),
 }

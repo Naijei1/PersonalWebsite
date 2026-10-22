@@ -27,6 +27,7 @@ export const links: Link[] = [
 export const education = {
   school: 'Cornell University',
   degree: 'B.S. Computer Science',
+  expected: 'Expected May 2028',
 }
 
 export type Experience = {
@@ -60,6 +61,7 @@ export const experience: Experience[] = [
     current: true,
     bullets: [
       'Run AWS model-training infrastructure for 6 teams: compute budgets, IAM access, and parallel job scheduling.',
+      'Leading a team of 6 (co-lead Monisha Bommu) building a fault-tolerant multiplayer Snake.',
       'Taught computer vision and distributed training to 30+ students in workshops and an INFO 1998 guest lecture.',
     ],
     tags: ['Backend', 'AWS', 'Distributed Training', 'Teaching'],
@@ -93,7 +95,7 @@ export const experience: Experience[] = [
     period: 'Jul 2025 – Aug 2025',
     place: 'Ithaca, NY',
     bullets: [
-      'Explored functional programming, RISC-V architecture, and low-level systems programming with Docker-based workflows.',
+      'Wrote functional programs in OCaml, studied the RISC-V architecture, and practiced low-level systems programming with Docker-based workflows.',
     ],
     tags: ['RISC-V', 'OCaml', 'Docker'],
   },
@@ -127,7 +129,7 @@ export const experience: Experience[] = [
   },
 ]
 
-export type SceneId = 'groovy' | 'downloader' | 'gnarly' | 'cluster' | 'seeround' | 'bioprint'
+export type SceneId = 'snake' | 'groovy' | 'downloader' | 'gnarly' | 'cluster' | 'seeround' | 'bioprint'
 
 export type Featured = {
   id: SceneId
@@ -137,6 +139,7 @@ export type Featured = {
   summary: string
   idea: string
   hideIdea?: boolean
+  status?: string
   bullets: string[]
   tags: string[]
   accent: string
@@ -145,6 +148,24 @@ export type Featured = {
 
 // Newest first, by each project's most recent date.
 export const featured: Featured[] = [
+  {
+    id: 'snake',
+    name: 'FTM Snake',
+    kicker: 'Cornell Data Science · Team lead · Sep 2026 – Present',
+    status: 'In progress',
+    summary:
+      'Authoritative Rust server + TS/WebSocket clients for 4+ LAN players with heartbeat-based failover.',
+    idea: 'Four voxel snakes chase an apple until the leader server crashes and another machine takes over.',
+    bullets: [
+      'Leading a Cornell Data Science team of 6 with co-lead Monisha Bommu.',
+      'Phase 0 is a local 2-player game in Rust and Macroquad: WASD and arrow keys, apples, growth, collisions, scores, and a timer.',
+      'Phase 1 is a LAN game. An authoritative Rust server runs a fixed loop, and a TypeScript and HTML Canvas client talks over WebSockets so 4 or more players can join from separate devices. Heartbeats and timeouts keep a disconnected player’s snake moving, and the match continues.',
+      'Phase 2, Faulty Snake, is fault tolerance, still being designed. Extended goals include ML bots that take over for disconnected players, and custom modes.',
+    ],
+    tags: ['Rust', 'Macroquad', 'TypeScript', 'WebSockets'],
+    accent: '#34A853',
+    links: [{ label: 'Code', href: 'https://github.com/CornellDataScience/FTM-Snake' }],
+  },
   {
     id: 'gnarly',
     name: 'Gnarly',
@@ -239,17 +260,20 @@ export const featured: Featured[] = [
   {
     id: 'bioprint',
     name: 'VR Bioprinting',
-    kicker: 'C-DIME × RIT · Research',
+    kicker: 'C-DIME × RIT · Research · Aug 2023 – Aug 2024',
     summary:
-      'An interactive VR bioprinting simulator for education research with the Rochester Institute of Technology.',
-    idea: 'A print head lays down tissue layer by layer, the same process students practice in VR.',
+      'A VR lesson that teaches students how bioprinting works, built to study how effective virtual reality can be for education.',
+    idea: 'A floating headset looks into a wireframe room where a nozzle lays a tissue scaffold down layer by layer.',
     bullets: [
-      'Led development of virtual interactions and 3D assets so students could explore bioprinting hands-on.',
-      'Prototype tested by 20+ users for an education-effectiveness study.',
+      'Led the virtual interactions and 3D assets so students could learn bioprinting by doing it in VR.',
+      'Prototype tested by 20+ users in an education-effectiveness study with the Rochester Institute of Technology.',
     ],
     tags: ['Unity', 'C#', 'Blender', 'VR'],
     accent: '#A142F4',
-    links: [{ label: 'Code', href: 'https://github.com/Naijei1/VR-Bioprinting-Research-Project' }],
+    links: [
+      { label: 'Watch demo', href: 'https://youtu.be/Wy8FC9hs878' },
+      { label: 'Code', href: 'https://github.com/Naijei1/VR-Bioprinting-Research-Project' },
+    ],
   },
 ]
 
@@ -265,12 +289,12 @@ export type MoreProject = {
 // In-progress work first, then newest first.
 export const moreProjects: MoreProject[] = [
   {
-    name: 'FTM Snake',
-    status: 'In progress',
-    blurb: 'Leading a Cornell Data Science team building a distributed, multiplayer snake game in Rust.',
-    tags: ['Rust', 'macroquad', 'Distributed Systems'],
-    href: 'https://github.com/CornellDataScience/FTM-Snake',
-    color: '#34A853',
+    name: 'SELECT * FROM suspects',
+    blurb:
+      'An interactive data-engineering SQL workshop. Players solve a mystery by running SQL in the browser, then compete in a live team tournament with a leaderboard. The tournament questions need JOINs.',
+    tags: ['SQL.js', 'Python', 'SQLite'],
+    href: 'https://sql.naijei.com',
+    color: '#4285F4',
   },
   {
     name: 'Chinese Flashcards',
@@ -282,7 +306,7 @@ export const moreProjects: MoreProject[] = [
   {
     name: 'ML Final Web',
     blurb: 'A Streamlit app that predicts diabetes risk from health metrics with a scikit-learn model.',
-    tags: ['Python', 'scikit-learn', 'Streamlit'],
+    tags: ['Python', 'Scikit-learn', 'Streamlit'],
     href: 'https://info1998-final.streamlit.app/',
     color: '#34A853',
   },
@@ -314,7 +338,7 @@ export const hobbies: Hobby[] = [
   {
     emoji: '🀄',
     title: 'Learning Chinese',
-    text: 'Working toward 77 new words a week with a spaced-repetition flashcard app I built.',
+    text: 'Learning new words every week with a spaced-repetition flashcard app I built.',
     href: 'https://github.com/Naijei1/FlashCardApp',
     linkLabel: 'See the app',
   },
