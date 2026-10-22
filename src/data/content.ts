@@ -159,7 +159,7 @@ export const featured: Featured[] = [
     hideIdea: true,
     bullets: [
       'Leading a team of 6 with co-lead Monisha Bommu.',
-      'Fault tolerance is still being designed.',
+      'Phase 0 (local 2-player) done; Phase 1 (4+ player LAN) in progress; Phase 2 TBD.',
     ],
     tags: ['Rust', 'Macroquad', 'TypeScript', 'WebSockets'],
     accent: '#34A853',
