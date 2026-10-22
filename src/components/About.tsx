@@ -4,7 +4,7 @@ import Reveal, { Section } from './Reveal'
 
 const FACTS = [
   { Icon: Server, label: 'Focus', value: 'Backend & distributed systems' },
-  { Icon: GraduationCap, label: 'Studies', value: `CS @ ${education.school}, ’28` },
+  { Icon: GraduationCap, label: 'Studies', value: `CS @ ${education.school}, ${education.expected}` },
   { Icon: MapPin, label: 'Based in', value: profile.location },
   { Icon: Sparkles, label: 'Learning', value: 'Rust' },
 ]
