@@ -156,11 +156,10 @@ export const featured: Featured[] = [
     summary:
       'Authoritative Rust server + TS/WebSocket clients for 4+ LAN players with heartbeat-based failover.',
     idea: 'Four voxel snakes chase an apple until the leader server crashes and another machine takes over.',
+    hideIdea: true,
     bullets: [
-      'Leading a Cornell Data Science team of 6 with co-lead Monisha Bommu.',
-      'Phase 0 is a local 2-player game in Rust and Macroquad: WASD and arrow keys, apples, growth, collisions, scores, and a timer.',
-      'Phase 1 is a LAN game. An authoritative Rust server runs a fixed loop, and a TypeScript and HTML Canvas client talks over WebSockets so 4 or more players can join from separate devices. Heartbeats and timeouts keep a disconnected player’s snake moving, and the match continues.',
-      'Phase 2, Faulty Snake, is fault tolerance, still being designed. Extended goals include ML bots that take over for disconnected players, and custom modes.',
+      'Leading a team of 6 with co-lead Monisha Bommu.',
+      'Phase 0 (local 2-player) done; Phase 1 (4+ player LAN) in progress; Phase 2 TBD.',
     ],
     tags: ['Rust', 'Macroquad', 'TypeScript', 'WebSockets'],
     accent: '#34A853',
@@ -261,12 +260,11 @@ export const featured: Featured[] = [
     id: 'bioprint',
     name: 'VR Bioprinting',
     kicker: 'C-DIME × RIT · Research · Aug 2023 – Aug 2024',
-    summary:
-      'A VR lesson that teaches students how bioprinting works, built to study how effective virtual reality can be for education.',
+    summary: 'A VR game that teaches students how bioprinting works, built by a team of 4 I led.',
     idea: 'A floating headset looks into a wireframe room where a nozzle lays a tissue scaffold down layer by layer.',
     bullets: [
-      'Led the virtual interactions and 3D assets so students could learn bioprinting by doing it in VR.',
-      'Prototype tested by 20+ users in an education-effectiveness study with the Rochester Institute of Technology.',
+      'Led a team of 4 building the game’s virtual interactions and 3D assets so students learn bioprinting by doing it.',
+      'Prototype tested by 20+ users with the Rochester Institute of Technology.',
     ],
     tags: ['Unity', 'C#', 'Blender', 'VR'],
     accent: '#A142F4',
