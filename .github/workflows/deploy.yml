@@ -5,6 +5,20 @@ on:
     branches:
       - main
   workflow_dispatch:
+  # A push on Naijei1/paxos-playground can redeploy this site by POSTing
+  # event_type "paxos-playground" to
+  # /repos/Naijei1/PersonalWebsite/dispatches.
+  # That call needs a token stored in paxos-playground, not here:
+  # a classic PAT with public_repo, or a fine-grained PAT with
+  # Contents: Read and write on PersonalWebsite. This repo's GITHUB_TOKEN
+  # cannot send that event from the other repository. No secret is added
+  # in this workflow.
+  # schedule and repository_dispatch run only after this file is on main.
+  repository_dispatch:
+    types: [paxos-playground]
+  # No-token fallback: rebuild from paxos-playground main once a day.
+  schedule:
+    - cron: "17 6 * * *"
 
 permissions:
   contents: read
@@ -33,6 +47,27 @@ jobs:
 
       - name: Build
         run: npm run build
+
+      - name: Checkout Paxos playground
+        uses: actions/checkout@v4
+        with:
+          repository: Naijei1/paxos-playground
+          ref: main
+          path: paxos-playground
+
+      - name: Setup Node for Paxos playground
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: paxos-playground/package-lock.json
+
+      - name: Build Paxos playground
+        working-directory: paxos-playground
+        run: npm ci && npm run build
+
+      - name: Mount Paxos at /paxos
+        run: bash scripts/mount-paxos.sh paxos-playground/dist dist/paxos
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
