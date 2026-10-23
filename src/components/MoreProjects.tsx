@@ -33,78 +33,6 @@ function MoreCard({ project }: { project: MoreProject }) {
     return () => observer.disconnect()
   }, [])
 
-  useEffect(() => {
-    const el = ref.current
-    if (!el || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
-    let raf = 0
-    let running = false
-    let settling = false
-    let settleFrom: number[] = []
-    let settleStart = 0
-
-    const nodes = () => [...el.querySelectorAll<HTMLElement>('.mini-bar')]
-    const active = () => el.matches(':hover, :focus-within') || el.classList.contains('mini-play')
-
-    const tick = (now: number) => {
-      const bars = nodes()
-      if (active()) {
-        settling = false
-        bars.forEach((bar, i) => {
-          const phase = (now / 1200 + i * 0.2) % 1
-          const scale = 0.81 + 0.19 * Math.cos(phase * Math.PI * 2)
-          bar.style.transform = `scaleY(${scale.toFixed(4)})`
-        })
-        raf = requestAnimationFrame(tick)
-        return
-      }
-      if (!settling) {
-        settling = true
-        settleStart = now
-        settleFrom = bars.map((bar) => {
-          const match = bar.style.transform.match(/scaleY\(([\d.]+)\)/)
-          return match ? Number(match[1]) : 1
-        })
-      }
-      const u = Math.min(1, (now - settleStart) / 280)
-      const eased = 1 - (1 - u) * (1 - u)
-      bars.forEach((bar, i) => {
-        const scale = (settleFrom[i] ?? 1) + (1 - (settleFrom[i] ?? 1)) * eased
-        bar.style.transform = `scaleY(${scale.toFixed(4)})`
-      })
-      if (u < 1) {
-        raf = requestAnimationFrame(tick)
-        return
-      }
-      bars.forEach((bar) => {
-        bar.style.transform = ''
-      })
-      running = false
-    }
-
-    const start = () => {
-      if (running) return
-      running = true
-      settling = false
-      raf = requestAnimationFrame(tick)
-    }
-
-    const watch = new MutationObserver(() => {
-      if (el.classList.contains('mini-play')) start()
-    })
-    watch.observe(el, { attributes: true, attributeFilter: ['class'] })
-    el.addEventListener('pointerenter', start)
-    el.addEventListener('pointerdown', start)
-    el.addEventListener('focus', start)
-    if (el.classList.contains('mini-play')) start()
-    return () => {
-      cancelAnimationFrame(raf)
-      watch.disconnect()
-      el.removeEventListener('pointerenter', start)
-      el.removeEventListener('pointerdown', start)
-      el.removeEventListener('focus', start)
-    }
-  }, [])
-
   const external = (href: string) => href.startsWith('http')
   const showButtons = Boolean(project.liveDemo || project.codeHref)
   const cardClass = `surface group flex h-full flex-col overflow-hidden transition-colors duration-200 hover:bg-[#F1F3F4] hover:shadow-lift dark:hover:bg-[#3C4043] ${visible && (hot || touch) ? 'mini-play' : ''}`
@@ -231,22 +159,6 @@ function Scene({ scene, color }: { scene: MoreProject['scene']; color: string })
             </div>
           </div>
         </div>
-      </div>
-    )
-  }
-  if (scene === 'bars') {
-    return (
-      <div className="flex h-full items-end justify-center gap-4 px-8 pb-6">
-        {[36, 64, 48, 92, 72].map((h, i) => (
-          <span
-            key={i}
-            className="mini-bar w-4 rounded-sm"
-            style={{
-              ['--bar' as string]: `${h}px`,
-              background: color,
-            }}
-          />
-        ))}
       </div>
     )
   }

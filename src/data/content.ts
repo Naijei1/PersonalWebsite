@@ -275,7 +275,7 @@ export const featured: Featured[] = [
   },
 ]
 
-export type MoreScene = 'paxos' | 'sql' | 'cards' | 'bars' | 'road'
+export type MoreScene = 'paxos' | 'sql' | 'cards' | 'road'
 
 export type MoreProject = {
   name: string
@@ -318,14 +318,6 @@ export const moreProjects: MoreProject[] = [
     href: 'https://github.com/Naijei1/FlashCardApp',
     color: '#EA4335',
     scene: 'cards',
-  },
-  {
-    name: 'ML Final Web',
-    blurb: 'A Streamlit app that predicts diabetes risk from health metrics with a scikit-learn model.',
-    tags: ['Python', 'Scikit-learn', 'Streamlit'],
-    href: 'https://info1998-final.streamlit.app/',
-    color: '#34A853',
-    scene: 'bars',
   },
   {
     name: 'Cruisin VR',

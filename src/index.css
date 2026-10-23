@@ -172,11 +172,6 @@
   animation-play-state: running;
 }
 
-.mini-bar {
-  height: var(--bar);
-  transform-origin: bottom center;
-}
-
 .group:hover .mini-car,
 .group:focus-within .mini-car,
 .mini-play .mini-car {
