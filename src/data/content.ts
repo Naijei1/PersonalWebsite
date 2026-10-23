@@ -282,6 +282,8 @@ export type MoreProject = {
   blurb: string
   tags: string[]
   href?: string
+  /** Show a Live demo button even when there is no code link. */
+  liveDemo?: boolean
   codeHref?: string
   color: string
   status?: string
@@ -305,6 +307,7 @@ export const moreProjects: MoreProject[] = [
       'An interactive data-engineering SQL workshop. Players solve a mystery by running SQL in the browser, then compete in a live team tournament with a leaderboard. The tournament questions need JOINs.',
     tags: ['SQL.js', 'Python', 'SQLite'],
     href: 'https://sql.naijei.com',
+    liveDemo: true,
     color: '#4285F4',
     scene: 'sql',
   },

@@ -106,6 +106,7 @@ function MoreCard({ project }: { project: MoreProject }) {
   }, [])
 
   const external = (href: string) => href.startsWith('http')
+  const showButtons = Boolean(project.liveDemo || project.codeHref)
   const cardClass = `surface group flex h-full flex-col overflow-hidden transition-colors duration-200 hover:bg-[#F1F3F4] hover:shadow-lift dark:hover:bg-[#3C4043] ${visible && (hot || touch) ? 'mini-play' : ''}`
   const pointer = {
     onPointerEnter: (event: PointerEvent) => {
@@ -121,7 +122,7 @@ function MoreCard({ project }: { project: MoreProject }) {
       <div className="mini-scene h-28 sm:h-32" style={{ '--tint': project.color } as CSSProperties}>
         <Scene scene={project.scene} color={project.color} />
       </div>
-      <div className={`flex flex-1 flex-col p-5 ${project.codeHref ? 'pb-3' : ''}`}>
+      <div className={`flex flex-1 flex-col p-5 ${showButtons ? 'pb-3' : ''}`}>
         <span className="flex items-center gap-2 text-lg font-medium">
           <span className="h-2.5 w-2.5 rounded-full" style={{ background: project.color }} />
           {project.name}
@@ -137,7 +138,7 @@ function MoreCard({ project }: { project: MoreProject }) {
     </>
   )
 
-  if (!project.codeHref) {
+  if (!showButtons) {
     return (
       <a
         ref={setRef}
@@ -152,24 +153,27 @@ function MoreCard({ project }: { project: MoreProject }) {
     )
   }
 
+  const linkProps = (href: string) =>
+    external(href) ? { target: '_blank' as const, rel: 'noreferrer' } : {}
+
   return (
-    <div
-      ref={setRef}
-      {...pointer}
-      className={cardClass}
-    >
-      <a href={project.href} className="flex flex-1 flex-col">
+    <div ref={setRef} {...pointer} className={cardClass}>
+      <a href={project.href} className="flex flex-1 flex-col" {...(project.href ? linkProps(project.href) : {})}>
         {body}
       </a>
-      <div className="flex flex-wrap gap-2 px-5 pb-5">
-        <a href={project.href} className="btn-primary px-4 text-sm">
-          Live demo
-          <ArrowUpRight className="h-4 w-4" />
-        </a>
-        <a href={project.codeHref} target="_blank" rel="noreferrer" className="btn-tonal px-4 text-sm">
-          Code
-          <ArrowUpRight className="h-4 w-4" />
-        </a>
+      <div className="mt-auto flex flex-wrap gap-2 px-5 pb-5">
+        {project.href && (
+          <a href={project.href} className="btn-primary px-4 text-sm" {...linkProps(project.href)}>
+            Live demo
+            <ArrowUpRight className="h-4 w-4" />
+          </a>
+        )}
+        {project.codeHref && (
+          <a href={project.codeHref} target="_blank" rel="noreferrer" className="btn-tonal px-4 text-sm">
+            Code
+            <ArrowUpRight className="h-4 w-4" />
+          </a>
+        )}
       </div>
     </div>
   )
