@@ -127,6 +127,25 @@ function paxosLerp(from: readonly [number, number], to: readonly [number, number
   return paxosPoint(from[0] + (to[0] - from[0]) * t, from[1] + (to[1] - from[1]) * t)
 }
 
+function paxosArrow(from: readonly [number, number], to: readonly [number, number]) {
+  const dx = to[0] - from[0]
+  const dy = to[1] - from[1]
+  const len = Math.hypot(dx, dy) || 1
+  const ux = dx / len
+  const uy = dy / len
+  const px = -uy
+  const py = ux
+  const head = 9
+  const wing = 2.6
+  const bx = to[0] - ux * head
+  const by = to[1] - uy * head
+  const n = (value: number) => value.toFixed(2)
+  return {
+    shaft: `M${n(from[0])} ${n(from[1])} L${n(bx)} ${n(by)}`,
+    head: `M${n(to[0])} ${n(to[1])} L${n(bx + px * wing)} ${n(by + py * wing)} L${n(bx - px * wing)} ${n(by - py * wing)} Z`,
+  }
+}
+
 function PaxosTimelines({ color }: { color: string }) {
   return (
     <svg viewBox={`0 0 ${paxosBox.w} ${paxosBox.h}`} className="mini-paxos h-full w-full" style={{ color }} aria-hidden>
@@ -161,8 +180,11 @@ function PaxosTimelines({ color }: { color: string }) {
         const mid = paxosLerp(message.from, message.to, 0.1)
         const end = paxosLerp(message.from, message.to, 1)
         const soft = paxosLerp(message.from, message.to, 0.92)
+        const arrow = paxosArrow(message.from, message.to)
         return (
           <g key={message.id}>
+            <path className={`pa-shaft ${message.id}`} pathLength={100} d={arrow.shaft} />
+            <path className={`pa-head ${message.id}`} d={arrow.head} />
             <circle
               className="pa-pulse"
               cx={message.to[0]}

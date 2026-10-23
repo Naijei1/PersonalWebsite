@@ -183,6 +183,27 @@
   stroke-opacity: 0.72;
 }
 
+.mini-paxos .pa-shaft,
+.mini-paxos .pa-head {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.25;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
+  opacity: 1;
+}
+
+.mini-paxos .pa-shaft {
+  stroke-dasharray: 100;
+  stroke-dashoffset: 0;
+}
+
+.mini-paxos .pa-head {
+  fill: currentColor;
+  stroke: none;
+}
+
 .mini-paxos .pa-dot,
 .mini-paxos .pa-pulse {
   opacity: 0;
@@ -232,6 +253,16 @@ html:not(.dark) .mini-paxos .pa-t2 {
   fill: #0c7380;
 }
 
+html:not(.dark) .mini-paxos .pa-shaft,
+html:not(.dark) .mini-paxos .pa-head {
+  stroke: #0c7380;
+}
+
+html:not(.dark) .mini-paxos .pa-head {
+  fill: #0c7380;
+  stroke: none;
+}
+
 .group:hover .mini-paxos .pa-dot,
 .group:focus-within .mini-paxos .pa-dot,
 .mini-play .mini-paxos .pa-dot,
@@ -267,6 +298,46 @@ html:not(.dark) .mini-paxos .pa-t2 {
 .mini-play .mini-paxos .pa-pulse {
   animation-name: pa-pulse;
 }
+
+.group:hover .mini-paxos .pa-shaft,
+.group:focus-within .mini-paxos .pa-shaft,
+.mini-play .mini-paxos .pa-shaft,
+.group:hover .mini-paxos .pa-head,
+.group:focus-within .mini-paxos .pa-head,
+.mini-play .mini-paxos .pa-head {
+  animation-duration: 5s;
+  animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  animation-iteration-count: infinite;
+  animation-fill-mode: both;
+}
+
+.group:hover .mini-paxos .pa-shaft.ab,
+.group:focus-within .mini-paxos .pa-shaft.ab,
+.mini-play .mini-paxos .pa-shaft.ab { animation-name: pa-shaft-ab; }
+.group:hover .mini-paxos .pa-head.ab,
+.group:focus-within .mini-paxos .pa-head.ab,
+.mini-play .mini-paxos .pa-head.ab { animation-name: pa-head-ab; }
+
+.group:hover .mini-paxos .pa-shaft.ac,
+.group:focus-within .mini-paxos .pa-shaft.ac,
+.mini-play .mini-paxos .pa-shaft.ac { animation-name: pa-shaft-ac; }
+.group:hover .mini-paxos .pa-head.ac,
+.group:focus-within .mini-paxos .pa-head.ac,
+.mini-play .mini-paxos .pa-head.ac { animation-name: pa-head-ac; }
+
+.group:hover .mini-paxos .pa-shaft.ba,
+.group:focus-within .mini-paxos .pa-shaft.ba,
+.mini-play .mini-paxos .pa-shaft.ba { animation-name: pa-shaft-ba; }
+.group:hover .mini-paxos .pa-head.ba,
+.group:focus-within .mini-paxos .pa-head.ba,
+.mini-play .mini-paxos .pa-head.ba { animation-name: pa-head-ba; }
+
+.group:hover .mini-paxos .pa-shaft.ca,
+.group:focus-within .mini-paxos .pa-shaft.ca,
+.mini-play .mini-paxos .pa-shaft.ca { animation-name: pa-shaft-ca; }
+.group:hover .mini-paxos .pa-head.ca,
+.group:focus-within .mini-paxos .pa-head.ca,
+.mini-play .mini-paxos .pa-head.ca { animation-name: pa-head-ca; }
 
 @keyframes mini-join {
   0%,
@@ -337,6 +408,54 @@ html:not(.dark) .mini-paxos .pa-t2 {
   100% { opacity: 0; transform: scale(2.15); }
 }
 
+@keyframes pa-shaft-ab {
+  0%, 4% { stroke-dashoffset: 100; opacity: 0; }
+  9% { stroke-dashoffset: 90; opacity: 1; }
+  20%, 88% { stroke-dashoffset: 0; opacity: 1; }
+  96%, 100% { stroke-dashoffset: 0; opacity: 0; }
+}
+@keyframes pa-head-ab {
+  0%, 16% { opacity: 0; }
+  20%, 88% { opacity: 1; }
+  96%, 100% { opacity: 0; }
+}
+
+@keyframes pa-shaft-ac {
+  0%, 8% { stroke-dashoffset: 100; opacity: 0; }
+  14% { stroke-dashoffset: 90; opacity: 1; }
+  25%, 88% { stroke-dashoffset: 0; opacity: 1; }
+  96%, 100% { stroke-dashoffset: 0; opacity: 0; }
+}
+@keyframes pa-head-ac {
+  0%, 21% { opacity: 0; }
+  25%, 88% { opacity: 1; }
+  96%, 100% { opacity: 0; }
+}
+
+@keyframes pa-shaft-ba {
+  0%, 32% { stroke-dashoffset: 100; opacity: 0; }
+  37% { stroke-dashoffset: 90; opacity: 1; }
+  48%, 88% { stroke-dashoffset: 0; opacity: 1; }
+  96%, 100% { stroke-dashoffset: 0; opacity: 0; }
+}
+@keyframes pa-head-ba {
+  0%, 44% { opacity: 0; }
+  48%, 88% { opacity: 1; }
+  96%, 100% { opacity: 0; }
+}
+
+@keyframes pa-shaft-ca {
+  0%, 38% { stroke-dashoffset: 100; opacity: 0; }
+  43% { stroke-dashoffset: 90; opacity: 1; }
+  54%, 88% { stroke-dashoffset: 0; opacity: 1; }
+  96%, 100% { stroke-dashoffset: 0; opacity: 0; }
+}
+@keyframes pa-head-ca {
+  0%, 50% { opacity: 0; }
+  54%, 88% { opacity: 1; }
+  96%, 100% { opacity: 0; }
+}
+
 .askew {
   transform: rotate(1.5deg);
   transition: transform 0.6s ease;
@@ -349,6 +468,13 @@ html:not(.dark) .mini-paxos .pa-t2 {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+  }
+
+  .mini-paxos .pa-shaft,
+  .mini-paxos .pa-head {
+    animation: none !important;
+    opacity: 1 !important;
+    stroke-dashoffset: 0 !important;
   }
 }
 
