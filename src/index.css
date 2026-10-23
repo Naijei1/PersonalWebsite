@@ -153,8 +153,7 @@
 
 .mini-table,
 .mini-flip,
-.mini-car,
-.mini-packet {
+.mini-car {
   animation-play-state: paused;
 }
 
@@ -179,17 +178,57 @@
   animation-play-state: running;
 }
 
-.mini-packet {
-  left: 16%;
-  top: 38%;
+.mini-paxos .pa-arrow {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-dasharray: 200;
 }
 
-.group:hover .mini-packet,
-.group:focus-within .mini-packet,
-.mini-play .mini-packet {
-  animation: mini-packet 2.2s ease-in-out infinite;
-  animation-play-state: running;
+.mini-paxos .pa-dot {
+  opacity: 0;
 }
+
+.group:hover .mini-paxos-a .pa-1,
+.group:focus-within .mini-paxos-a .pa-1,
+.mini-play .mini-paxos-a .pa-1,
+.group:hover .mini-paxos-a .pa-d1,
+.group:focus-within .mini-paxos-a .pa-d1,
+.mini-play .mini-paxos-a .pa-d1 {
+  animation-name: pa-ride-1;
+  animation-duration: 4.8s;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+}
+
+.group:hover .mini-paxos-a .pa-2,
+.group:focus-within .mini-paxos-a .pa-2,
+.mini-play .mini-paxos-a .pa-2,
+.group:hover .mini-paxos-a .pa-d2,
+.group:focus-within .mini-paxos-a .pa-d2,
+.mini-play .mini-paxos-a .pa-d2 {
+  animation-name: pa-ride-2;
+  animation-duration: 4.8s;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+}
+
+.group:hover .mini-paxos-a .pa-3,
+.group:focus-within .mini-paxos-a .pa-3,
+.mini-play .mini-paxos-a .pa-3,
+.group:hover .mini-paxos-a .pa-d3,
+.group:focus-within .mini-paxos-a .pa-d3,
+.mini-play .mini-paxos-a .pa-d3 {
+  animation-name: pa-ride-3;
+  animation-duration: 4.8s;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+}
+
+.pa-d1 { offset-path: path('M26 22 L78 48'); }
+.pa-d2 { offset-path: path('M92 48 L148 74'); }
+.pa-d3 { offset-path: path('M196 74 L160 48'); }
 
 @keyframes mini-join {
   0%,
@@ -225,15 +264,34 @@
   }
 }
 
-@keyframes mini-packet {
+@keyframes pa-ride-1 {
   0%,
-  12% {
-    left: 16%;
-  }
-  88%,
-  100% {
-    left: 80%;
-  }
+  6% { stroke-dashoffset: 72; offset-distance: 0%; opacity: 0; }
+  14% { opacity: 1; }
+  28%,
+  78% { stroke-dashoffset: 0; offset-distance: 100%; opacity: 1; }
+  92%,
+  100% { stroke-dashoffset: 72; offset-distance: 0%; opacity: 0; }
+}
+
+@keyframes pa-ride-2 {
+  0%,
+  30% { stroke-dashoffset: 72; offset-distance: 0%; opacity: 0; }
+  38% { opacity: 1; }
+  54%,
+  78% { stroke-dashoffset: 0; offset-distance: 100%; opacity: 1; }
+  92%,
+  100% { stroke-dashoffset: 72; offset-distance: 0%; opacity: 0; }
+}
+
+@keyframes pa-ride-3 {
+  0%,
+  52% { stroke-dashoffset: 80; offset-distance: 0%; opacity: 0; }
+  60% { opacity: 1; }
+  76%,
+  84% { stroke-dashoffset: 0; offset-distance: 100%; opacity: 1; }
+  96%,
+  100% { stroke-dashoffset: 80; offset-distance: 0%; opacity: 0; }
 }
 
 .askew {

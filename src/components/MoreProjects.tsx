@@ -107,31 +107,41 @@ function MoreCard({ project }: { project: MoreProject }) {
   )
 }
 
+function ArrowHead({ id, color }: { id: string; color: string }) {
+  return (
+    <marker id={id} markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto">
+      <path d="M0 0 L7 3.5 L0 7 Z" fill={color} />
+    </marker>
+  )
+}
+
+function PaxosTimelines({ color }: { color: string }) {
+  const rows = [22, 48, 74]
+  return (
+    <svg viewBox="0 0 220 96" className="mini-paxos mini-paxos-a h-full w-full" style={{ color }} aria-hidden>
+      <defs>
+        <ArrowHead id="paxos-a-head" color={color} />
+      </defs>
+      {['A', 'B', 'C'].map((name, i) => (
+        <g key={name}>
+          <text x="2" y={rows[i] + 4} fill={color} fontSize="11" fontWeight="600">
+            {name}
+          </text>
+          <line x1="18" y1={rows[i]} x2="214" y2={rows[i]} stroke={color} strokeOpacity="0.4" />
+        </g>
+      ))}
+      <path className="pa-arrow pa-1" d="M26 22 L78 48" markerEnd="url(#paxos-a-head)" />
+      <path className="pa-arrow pa-2" d="M92 48 L148 74" markerEnd="url(#paxos-a-head)" />
+      <path className="pa-arrow pa-3" d="M196 74 L160 48" markerEnd="url(#paxos-a-head)" />
+      <circle className="pa-dot pa-d1" r="3.2" fill="#fff" stroke={color} strokeWidth="1.6" />
+      <circle className="pa-dot pa-d2" r="3.2" fill="#fff" stroke={color} strokeWidth="1.6" />
+      <circle className="pa-dot pa-d3" r="3.2" fill="#fff" stroke={color} strokeWidth="1.6" />
+    </svg>
+  )
+}
+
 function Scene({ scene, color }: { scene: MoreProject['scene']; color: string }) {
-  if (scene === 'paxos') {
-    const spots = [16, 32, 48, 64, 80]
-    return (
-      <div className="relative h-full">
-        <span
-          className="absolute top-[38%] right-[20%] left-[16%] h-0 -translate-y-1/2 border-t border-dashed opacity-70"
-          style={{ borderColor: color }}
-        />
-        {['A', 'B', 'C', 'D', 'E'].map((letter, i) => (
-          <span
-            key={letter}
-            className="absolute top-[58%] z-10 flex h-8 w-8 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full text-[11px] font-medium text-white"
-            style={{ left: `${spots[i]}%`, background: color }}
-          >
-            {letter}
-          </span>
-        ))}
-        <span
-          className="mini-packet absolute top-[38%] z-20 h-2.5 w-2.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-white"
-          style={{ border: `2px solid ${color}` }}
-        />
-      </div>
-    )
-  }
+  if (scene === 'paxos') return <PaxosTimelines color={color} />
   if (scene === 'sql') {
     return (
       <svg viewBox="0 0 200 96" className="mini-sql h-full w-full">
