@@ -275,24 +275,41 @@ export const featured: Featured[] = [
   },
 ]
 
+export type MoreScene = 'paxos' | 'sql' | 'cards' | 'road'
+
 export type MoreProject = {
   name: string
   blurb: string
   tags: string[]
   href?: string
+  /** Show a Live demo button even when there is no code link. */
+  liveDemo?: boolean
+  codeHref?: string
   color: string
   status?: string
+  scene: MoreScene
 }
 
 // In-progress work first, then newest first.
 export const moreProjects: MoreProject[] = [
+  {
+    name: 'Paxos playground',
+    blurb: 'An interactive single-decree Paxos playground where you deliver, delay, or drop messages.',
+    tags: ['React', 'TypeScript', 'Vite'],
+    href: '/paxos/',
+    codeHref: 'https://github.com/Naijei1/paxos-playground',
+    color: '#12B5CB',
+    scene: 'paxos',
+  },
   {
     name: 'SELECT * FROM suspects',
     blurb:
       'An interactive data-engineering SQL workshop. Players solve a mystery by running SQL in the browser, then compete in a live team tournament with a leaderboard. The tournament questions need JOINs.',
     tags: ['SQL.js', 'Python', 'SQLite'],
     href: 'https://sql.naijei.com',
+    liveDemo: true,
     color: '#4285F4',
+    scene: 'sql',
   },
   {
     name: 'Chinese Flashcards',
@@ -300,13 +317,7 @@ export const moreProjects: MoreProject[] = [
     tags: ['Next.js', 'TypeScript', 'DynamoDB'],
     href: 'https://github.com/Naijei1/FlashCardApp',
     color: '#EA4335',
-  },
-  {
-    name: 'ML Final Web',
-    blurb: 'A Streamlit app that predicts diabetes risk from health metrics with a scikit-learn model.',
-    tags: ['Python', 'Scikit-learn', 'Streamlit'],
-    href: 'https://info1998-final.streamlit.app/',
-    color: '#34A853',
+    scene: 'cards',
   },
   {
     name: 'Cruisin VR',
@@ -314,6 +325,7 @@ export const moreProjects: MoreProject[] = [
     tags: ['Unity', 'C#', 'VR'],
     href: 'https://github.com/Naijei1/Cruisin-VR',
     color: '#FBBC04',
+    scene: 'road',
   },
 ]
 
