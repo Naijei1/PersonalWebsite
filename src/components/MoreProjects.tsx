@@ -1,4 +1,5 @@
-import { useEffect, useRef, useState, type CSSProperties } from 'react'
+import { ArrowUpRight } from 'lucide-react'
+import { useEffect, useRef, useState, type CSSProperties, type PointerEvent } from 'react'
 import { moreProjects, type MoreProject } from '../data/content'
 import { useMediaQuery } from '../lib/hooks'
 
@@ -7,16 +8,19 @@ export default function MoreProjects() {
     <>
       <h3 className="mb-6 text-2xl font-medium">More projects</h3>
       <div className="grid gap-4 sm:grid-cols-2">
-        {moreProjects.map((project, index) => (
-          <MoreCard key={project.name} project={project} index={index} />
+        {moreProjects.map((project) => (
+          <MoreCard key={project.name} project={project} />
         ))}
       </div>
     </>
   )
 }
 
-function MoreCard({ project, index }: { project: MoreProject; index: number }) {
-  const ref = useRef<HTMLAnchorElement>(null)
+function MoreCard({ project }: { project: MoreProject }) {
+  const ref = useRef<HTMLElement | null>(null)
+  const setRef = (node: HTMLElement | null) => {
+    ref.current = node
+  }
   const [visible, setVisible] = useState(false)
   const [hot, setHot] = useState(false)
   const touch = useMediaQuery('(hover: none)')
@@ -101,25 +105,23 @@ function MoreCard({ project, index }: { project: MoreProject; index: number }) {
     }
   }, [])
 
-  return (
-    <a
-      ref={ref}
-      href={project.href}
-      target="_blank"
-      rel="noreferrer"
-      onPointerEnter={(event) => {
-        if (event.pointerType !== 'touch') setHot(true)
-      }}
-      onPointerLeave={() => setHot(false)}
-      onPointerDown={() => setHot(true)}
-      onFocus={() => setHot(true)}
-      onBlur={() => setHot(false)}
-      className={`surface group flex h-full flex-col overflow-hidden transition-colors duration-200 hover:bg-[#F1F3F4] hover:shadow-lift dark:hover:bg-[#3C4043] ${visible && (hot || touch) ? 'mini-play' : ''}`}
-    >
+  const external = (href: string) => href.startsWith('http')
+  const cardClass = `surface group flex h-full flex-col overflow-hidden transition-colors duration-200 hover:bg-[#F1F3F4] hover:shadow-lift dark:hover:bg-[#3C4043] ${visible && (hot || touch) ? 'mini-play' : ''}`
+  const pointer = {
+    onPointerEnter: (event: PointerEvent) => {
+      if (event.pointerType !== 'touch') setHot(true)
+    },
+    onPointerLeave: () => setHot(false),
+    onPointerDown: () => setHot(true),
+    onFocus: () => setHot(true),
+    onBlur: () => setHot(false),
+  }
+  const body = (
+    <>
       <div className="mini-scene h-28 sm:h-32" style={{ '--tint': project.color } as CSSProperties}>
-        <Scene index={index} color={project.color} />
+        <Scene scene={project.scene} color={project.color} />
       </div>
-      <div className="flex flex-1 flex-col p-5">
+      <div className={`flex flex-1 flex-col p-5 ${project.codeHref ? 'pb-3' : ''}`}>
         <span className="flex items-center gap-2 text-lg font-medium">
           <span className="h-2.5 w-2.5 rounded-full" style={{ background: project.color }} />
           {project.name}
@@ -132,12 +134,73 @@ function MoreCard({ project, index }: { project: MoreProject; index: number }) {
         <p className="mt-2 line-clamp-3 flex-1 text-[15px] leading-relaxed text-ink-soft dark:text-night-soft">{project.blurb}</p>
         <p className="mt-4 font-mono text-xs text-ink-faint dark:text-night-soft">{project.tags.join(' · ')}</p>
       </div>
-    </a>
+    </>
+  )
+
+  if (!project.codeHref) {
+    return (
+      <a
+        ref={setRef}
+        href={project.href}
+        target={project.href && external(project.href) ? '_blank' : undefined}
+        rel={project.href && external(project.href) ? 'noreferrer' : undefined}
+        {...pointer}
+        className={cardClass}
+      >
+        {body}
+      </a>
+    )
+  }
+
+  return (
+    <div
+      ref={setRef}
+      {...pointer}
+      className={cardClass}
+    >
+      <a href={project.href} className="flex flex-1 flex-col">
+        {body}
+      </a>
+      <div className="flex flex-wrap gap-2 px-5 pb-5">
+        <a href={project.href} className="btn-primary px-4 text-sm">
+          Live demo
+          <ArrowUpRight className="h-4 w-4" />
+        </a>
+        <a href={project.codeHref} target="_blank" rel="noreferrer" className="btn-tonal px-4 text-sm">
+          Code
+          <ArrowUpRight className="h-4 w-4" />
+        </a>
+      </div>
+    </div>
   )
 }
 
-function Scene({ index, color }: { index: number; color: string }) {
-  if (index === 0) {
+function Scene({ scene, color }: { scene: MoreProject['scene']; color: string }) {
+  if (scene === 'paxos') {
+    const spots = [16, 32, 48, 64, 80]
+    return (
+      <div className="relative h-full">
+        <span
+          className="absolute top-[38%] right-[20%] left-[16%] h-0 -translate-y-1/2 border-t border-dashed opacity-70"
+          style={{ borderColor: color }}
+        />
+        {['A', 'B', 'C', 'D', 'E'].map((letter, i) => (
+          <span
+            key={letter}
+            className="absolute top-[58%] z-10 flex h-8 w-8 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full text-[11px] font-medium text-white"
+            style={{ left: `${spots[i]}%`, background: color }}
+          >
+            {letter}
+          </span>
+        ))}
+        <span
+          className="mini-packet absolute top-[38%] z-20 h-2.5 w-2.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-white"
+          style={{ border: `2px solid ${color}` }}
+        />
+      </div>
+    )
+  }
+  if (scene === 'sql') {
     return (
       <svg viewBox="0 0 200 96" className="mini-sql h-full w-full">
         {[0, 1, 2].map((i) => (
@@ -151,7 +214,7 @@ function Scene({ index, color }: { index: number; color: string }) {
       </svg>
     )
   }
-  if (index === 1) {
+  if (scene === 'cards') {
     return (
       <div className="mini-cards flex h-full items-center justify-center">
         <div className="relative h-16 w-24 [perspective:500px]">
@@ -167,7 +230,7 @@ function Scene({ index, color }: { index: number; color: string }) {
       </div>
     )
   }
-  if (index === 2) {
+  if (scene === 'bars') {
     return (
       <div className="flex h-full items-end justify-center gap-4 px-8 pb-6">
         {[36, 64, 48, 92, 72].map((h, i) => (

@@ -153,7 +153,8 @@
 
 .mini-table,
 .mini-flip,
-.mini-car {
+.mini-car,
+.mini-packet {
   animation-play-state: paused;
 }
 
@@ -180,6 +181,18 @@
 .group:focus-within .mini-car,
 .mini-play .mini-car {
   animation: mini-drive 1.8s ease-in-out infinite;
+  animation-play-state: running;
+}
+
+.mini-packet {
+  left: 16%;
+  top: 38%;
+}
+
+.group:hover .mini-packet,
+.group:focus-within .mini-packet,
+.mini-play .mini-packet {
+  animation: mini-packet 2.2s ease-in-out infinite;
   animation-play-state: running;
 }
 
@@ -214,6 +227,17 @@
   75%,
   100% {
     transform: translateX(96px);
+  }
+}
+
+@keyframes mini-packet {
+  0%,
+  12% {
+    left: 16%;
+  }
+  88%,
+  100% {
+    left: 80%;
   }
 }
 

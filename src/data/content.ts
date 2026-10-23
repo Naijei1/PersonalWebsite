@@ -275,17 +275,30 @@ export const featured: Featured[] = [
   },
 ]
 
+export type MoreScene = 'paxos' | 'sql' | 'cards' | 'bars' | 'road'
+
 export type MoreProject = {
   name: string
   blurb: string
   tags: string[]
   href?: string
+  codeHref?: string
   color: string
   status?: string
+  scene: MoreScene
 }
 
 // In-progress work first, then newest first.
 export const moreProjects: MoreProject[] = [
+  {
+    name: 'Paxos playground',
+    blurb: 'An interactive single-decree Paxos playground where you deliver, delay, or drop messages.',
+    tags: ['React', 'TypeScript', 'Vite'],
+    href: '/paxos/',
+    codeHref: 'https://github.com/Naijei1/paxos-playground',
+    color: '#12B5CB',
+    scene: 'paxos',
+  },
   {
     name: 'SELECT * FROM suspects',
     blurb:
@@ -293,6 +306,7 @@ export const moreProjects: MoreProject[] = [
     tags: ['SQL.js', 'Python', 'SQLite'],
     href: 'https://sql.naijei.com',
     color: '#4285F4',
+    scene: 'sql',
   },
   {
     name: 'Chinese Flashcards',
@@ -300,6 +314,7 @@ export const moreProjects: MoreProject[] = [
     tags: ['Next.js', 'TypeScript', 'DynamoDB'],
     href: 'https://github.com/Naijei1/FlashCardApp',
     color: '#EA4335',
+    scene: 'cards',
   },
   {
     name: 'ML Final Web',
@@ -307,6 +322,7 @@ export const moreProjects: MoreProject[] = [
     tags: ['Python', 'Scikit-learn', 'Streamlit'],
     href: 'https://info1998-final.streamlit.app/',
     color: '#34A853',
+    scene: 'bars',
   },
   {
     name: 'Cruisin VR',
@@ -314,6 +330,7 @@ export const moreProjects: MoreProject[] = [
     tags: ['Unity', 'C#', 'VR'],
     href: 'https://github.com/Naijei1/Cruisin-VR',
     color: '#FBBC04',
+    scene: 'road',
   },
 ]
 
