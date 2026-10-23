@@ -108,24 +108,13 @@ function MoreCard({ project }: { project: MoreProject }) {
 }
 
 const paxosBox = { w: 440, h: 100 }
-const paxosRows = [28, 50, 72]
+const paxosRows = [28, 50, 72] as const
 const paxosMessages = [
-  { id: 'ab', from: [56, 28], to: [150, 50], delay: 0 },
-  { id: 'ac', from: [74, 28], to: [182, 72], delay: 0.26 },
-  { id: 'ba', from: [216, 50], to: [304, 28], delay: 1.42 },
-  { id: 'ca', from: [240, 72], to: [352, 28], delay: 1.72 },
+  { id: 'ab', from: [78, paxosRows[0]], to: [156, paxosRows[1]], delay: 0 },
+  { id: 'ac', from: [48, paxosRows[0]], to: [186, paxosRows[2]], delay: 0.26 },
+  { id: 'ba', from: [216, paxosRows[1]], to: [304, paxosRows[0]], delay: 1.42 },
+  { id: 'ca', from: [240, paxosRows[2]], to: [352, paxosRows[0]], delay: 1.72 },
 ] as const
-
-function paxosPoint(x: number, y: number) {
-  return {
-    x: `${((x / paxosBox.w) * 100).toFixed(3)}%`,
-    y: `${((y / paxosBox.h) * 100).toFixed(3)}%`,
-  }
-}
-
-function paxosLerp(from: readonly [number, number], to: readonly [number, number], t: number) {
-  return paxosPoint(from[0] + (to[0] - from[0]) * t, from[1] + (to[1] - from[1]) * t)
-}
 
 function paxosArrow(from: readonly [number, number], to: readonly [number, number]) {
   const dx = to[0] - from[0]
@@ -135,20 +124,34 @@ function paxosArrow(from: readonly [number, number], to: readonly [number, numbe
   const uy = dy / len
   const px = -uy
   const py = ux
-  const head = 9
-  const wing = 2.6
-  const bx = to[0] - ux * head
-  const by = to[1] - uy * head
-  const n = (value: number) => value.toFixed(2)
+  const head = 8
+  const wing = 2.7
+  const n = (value: number) => Number(value.toFixed(2))
+  const bx = n(to[0] - ux * head)
+  const by = n(to[1] - uy * head)
   return {
-    shaft: `M${n(from[0])} ${n(from[1])} L${n(bx)} ${n(by)}`,
-    head: `M${n(to[0])} ${n(to[1])} L${n(bx + px * wing)} ${n(by + py * wing)} L${n(bx - px * wing)} ${n(by - py * wing)} Z`,
+    x1: from[0],
+    y1: from[1],
+    bx,
+    by,
+    tipX: to[0],
+    tipY: to[1],
+    leftX: n(bx + px * wing),
+    leftY: n(by + py * wing),
+    rightX: n(bx - px * wing),
+    rightY: n(by - py * wing),
   }
 }
 
 function PaxosTimelines({ color }: { color: string }) {
   return (
-    <svg viewBox={`0 0 ${paxosBox.w} ${paxosBox.h}`} className="mini-paxos h-full w-full" style={{ color }} aria-hidden>
+    <svg
+      viewBox={`0 0 ${paxosBox.w} ${paxosBox.h}`}
+      preserveAspectRatio="xMidYMid meet"
+      className="mini-paxos h-full w-full"
+      style={{ color }}
+      aria-hidden
+    >
       {['A', 'B', 'C'].map((name, i) => (
         <g key={name}>
           <text
@@ -164,6 +167,7 @@ function PaxosTimelines({ color }: { color: string }) {
             {name}
           </text>
           <line
+            className="pa-track"
             x1="30"
             y1={paxosRows[i]}
             x2="424"
@@ -176,42 +180,37 @@ function PaxosTimelines({ color }: { color: string }) {
         </g>
       ))}
       {paxosMessages.map((message) => {
-        const start = paxosLerp(message.from, message.to, 0)
-        const mid = paxosLerp(message.from, message.to, 0.1)
-        const end = paxosLerp(message.from, message.to, 1)
-        const soft = paxosLerp(message.from, message.to, 0.92)
         const arrow = paxosArrow(message.from, message.to)
+        const motion = {
+          '--x1': `${arrow.x1}px`,
+          '--y1': `${arrow.y1}px`,
+          '--tx': `${arrow.tipX}px`,
+          '--ty': `${arrow.tipY}px`,
+          '--len': `${Math.hypot(arrow.tipX - arrow.x1, arrow.tipY - arrow.y1).toFixed(2)}px`,
+        } as CSSProperties
         return (
-          <g key={message.id}>
-            <path className={`pa-shaft ${message.id}`} pathLength={100} d={arrow.shaft} />
-            <path className={`pa-head ${message.id}`} d={arrow.head} />
-            <circle
-              className="pa-pulse"
-              cx={message.to[0]}
-              cy={message.to[1]}
-              r="3.2"
-              style={{ animationDelay: `${message.delay}s` }}
+          <g key={message.id} style={motion}>
+            <polygon
+              className={`pa-head ${message.id}`}
+              points={`${arrow.tipX},${arrow.tipY} ${arrow.leftX},${arrow.leftY} ${arrow.rightX},${arrow.rightY}`}
             />
-            {(['pa-lead', 'pa-t1', 'pa-t2'] as const).map((cls, i) => (
+            <line
+              className={`pa-shaft ${message.id}`}
+              x1={arrow.x1}
+              y1={arrow.y1}
+              x2={arrow.tipX}
+              y2={arrow.tipY}
+              strokeDasharray={Math.hypot(arrow.tipX - arrow.x1, arrow.tipY - arrow.y1)}
+            />
+            <circle className={`pa-pulse ${message.id}`} cx={arrow.tipX} cy={arrow.tipY} r="3.2" />
+            {(['pa-t2', 'pa-t1', 'pa-lead'] as const).map((cls, i) => (
               <circle
                 key={cls}
-                className={`pa-dot ${cls}`}
-                cx="0"
-                cy="0"
-                r={cls === 'pa-lead' ? 3.2 : cls === 'pa-t1' ? 2.15 : 1.45}
-                style={
-                  {
-                    animationDelay: `${message.delay + i * 0.07}s`,
-                    '--sx': start.x,
-                    '--sy': start.y,
-                    '--mx': mid.x,
-                    '--my': mid.y,
-                    '--ex': end.x,
-                    '--ey': end.y,
-                    '--tx': soft.x,
-                    '--ty': soft.y,
-                  } as CSSProperties
-                }
+                className={`pa-dot ${cls} ${message.id}`}
+                cx={arrow.x1}
+                cy={arrow.y1}
+                r={cls === 'pa-lead' ? 2.5 : cls === 'pa-t1' ? 1.8 : 1.25}
+                style={{ animationDelay: `${(2 - i) * 0.07}s` }}
               />
             ))}
           </g>
