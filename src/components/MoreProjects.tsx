@@ -107,31 +107,121 @@ function MoreCard({ project }: { project: MoreProject }) {
   )
 }
 
-function Scene({ scene, color }: { scene: MoreProject['scene']; color: string }) {
-  if (scene === 'paxos') {
-    const spots = [16, 32, 48, 64, 80]
-    return (
-      <div className="relative h-full">
-        <span
-          className="absolute top-[38%] right-[20%] left-[16%] h-0 -translate-y-1/2 border-t border-dashed opacity-70"
-          style={{ borderColor: color }}
-        />
-        {['A', 'B', 'C', 'D', 'E'].map((letter, i) => (
-          <span
-            key={letter}
-            className="absolute top-[58%] z-10 flex h-8 w-8 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full text-[11px] font-medium text-white"
-            style={{ left: `${spots[i]}%`, background: color }}
-          >
-            {letter}
-          </span>
-        ))}
-        <span
-          className="mini-packet absolute top-[38%] z-20 h-2.5 w-2.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-white"
-          style={{ border: `2px solid ${color}` }}
-        />
-      </div>
-    )
+const paxosBox = { w: 440, h: 100 }
+const paxosRows = [28, 50, 72] as const
+const paxosMessages = [
+  { id: 'ab', from: [78, paxosRows[0]], to: [156, paxosRows[1]], delay: 0 },
+  { id: 'ac', from: [48, paxosRows[0]], to: [186, paxosRows[2]], delay: 0.26 },
+  { id: 'ba', from: [216, paxosRows[1]], to: [304, paxosRows[0]], delay: 1.42 },
+  { id: 'ca', from: [240, paxosRows[2]], to: [352, paxosRows[0]], delay: 1.72 },
+] as const
+
+function paxosArrow(from: readonly [number, number], to: readonly [number, number]) {
+  const dx = to[0] - from[0]
+  const dy = to[1] - from[1]
+  const len = Math.hypot(dx, dy) || 1
+  const ux = dx / len
+  const uy = dy / len
+  const px = -uy
+  const py = ux
+  const head = 8
+  const wing = 2.7
+  const n = (value: number) => Number(value.toFixed(2))
+  const bx = n(to[0] - ux * head)
+  const by = n(to[1] - uy * head)
+  return {
+    x1: from[0],
+    y1: from[1],
+    bx,
+    by,
+    tipX: to[0],
+    tipY: to[1],
+    leftX: n(bx + px * wing),
+    leftY: n(by + py * wing),
+    rightX: n(bx - px * wing),
+    rightY: n(by - py * wing),
   }
+}
+
+function PaxosTimelines({ color }: { color: string }) {
+  return (
+    <svg
+      viewBox={`0 0 ${paxosBox.w} ${paxosBox.h}`}
+      preserveAspectRatio="xMidYMid meet"
+      className="mini-paxos h-full w-full"
+      style={{ color }}
+      aria-hidden
+    >
+      {['A', 'B', 'C'].map((name, i) => (
+        <g key={name}>
+          <text
+            x="16"
+            y={paxosRows[i]}
+            fill={color}
+            fontSize="11"
+            fontWeight="600"
+            fontFamily="Google Sans, Roboto, system-ui, sans-serif"
+            textAnchor="middle"
+            dominantBaseline="central"
+          >
+            {name}
+          </text>
+          <line
+            className="pa-track"
+            x1="30"
+            y1={paxosRows[i]}
+            x2="424"
+            y2={paxosRows[i]}
+            stroke={color}
+            strokeWidth="1.5"
+            strokeLinecap="round"
+            vectorEffect="non-scaling-stroke"
+          />
+        </g>
+      ))}
+      {paxosMessages.map((message) => {
+        const arrow = paxosArrow(message.from, message.to)
+        const motion = {
+          '--x1': `${arrow.x1}px`,
+          '--y1': `${arrow.y1}px`,
+          '--tx': `${arrow.tipX}px`,
+          '--ty': `${arrow.tipY}px`,
+          '--len': `${Math.hypot(arrow.tipX - arrow.x1, arrow.tipY - arrow.y1).toFixed(2)}px`,
+        } as CSSProperties
+        return (
+          <g key={message.id} style={motion}>
+            <polygon
+              className={`pa-head ${message.id}`}
+              points={`${arrow.tipX},${arrow.tipY} ${arrow.leftX},${arrow.leftY} ${arrow.rightX},${arrow.rightY}`}
+            />
+            <line
+              className={`pa-shaft ${message.id}`}
+              x1={arrow.x1}
+              y1={arrow.y1}
+              x2={arrow.tipX}
+              y2={arrow.tipY}
+              strokeDasharray={Math.hypot(arrow.tipX - arrow.x1, arrow.tipY - arrow.y1)}
+            />
+            <circle className={`pa-pulse ${message.id}`} cx={arrow.tipX} cy={arrow.tipY} r="3.2" />
+            {(['pa-t2', 'pa-t1', 'pa-lead'] as const).map((cls, i) => (
+              <circle
+                key={cls}
+                className={`pa-dot ${cls} ${message.id}`}
+                cx={arrow.x1}
+                cy={arrow.y1}
+                r={cls === 'pa-lead' ? 2.5 : cls === 'pa-t1' ? 1.8 : 1.25}
+                style={{ animationDelay: `${(2 - i) * 0.07}s` }}
+              />
+            ))}
+          </g>
+        )
+      })}
+    </svg>
+  )
+}
+
+function Scene({ scene, color }: { scene: MoreProject['scene']; color: string }) {
+  if (scene === 'paxos') return <PaxosTimelines color={color} />
   if (scene === 'sql') {
     return (
       <svg viewBox="0 0 200 96" className="mini-sql h-full w-full">

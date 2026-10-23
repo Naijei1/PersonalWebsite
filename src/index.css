@@ -153,8 +153,7 @@
 
 .mini-table,
 .mini-flip,
-.mini-car,
-.mini-packet {
+.mini-car {
   animation-play-state: paused;
 }
 
@@ -179,17 +178,154 @@
   animation-play-state: running;
 }
 
-.mini-packet {
-  left: 16%;
-  top: 38%;
+.mini-paxos .pa-track {
+  stroke: currentColor;
+  stroke-opacity: 0.72;
 }
 
-.group:hover .mini-packet,
-.group:focus-within .mini-packet,
-.mini-play .mini-packet {
-  animation: mini-packet 2.2s ease-in-out infinite;
-  animation-play-state: running;
+.mini-paxos .pa-shaft {
+  fill: none;
+  stroke: #f9ab00;
+  stroke-width: 1.6px;
+  stroke-linecap: square;
+  stroke-opacity: 1;
+  opacity: 1;
 }
+
+.mini-paxos .pa-head {
+  fill: #f9ab00;
+  stroke: none;
+  opacity: 1;
+}
+
+.mini-paxos .pa-dot,
+.mini-paxos .pa-pulse {
+  opacity: 0;
+}
+
+.mini-paxos .pa-lead {
+  fill: #fff;
+  stroke: #f9ab00;
+  stroke-width: 0.7;
+}
+
+.mini-paxos .pa-t1 {
+  fill: #f9ab00;
+  fill-opacity: 0.55;
+  stroke: none;
+}
+
+.mini-paxos .pa-t2 {
+  fill: #f9ab00;
+  fill-opacity: 0.3;
+  stroke: none;
+}
+
+.mini-paxos .pa-pulse {
+  fill: none;
+  stroke: #f9ab00;
+  stroke-width: 0.8;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+html:not(.dark) .mini-paxos .pa-track {
+  stroke-opacity: 0.85;
+}
+
+html:not(.dark) .mini-paxos text {
+  fill: #0b6570;
+}
+
+html:not(.dark) .mini-paxos .pa-shaft,
+html:not(.dark) .mini-paxos .pa-lead,
+html:not(.dark) .mini-paxos .pa-pulse {
+  stroke: #c26401;
+}
+
+html:not(.dark) .mini-paxos .pa-head,
+html:not(.dark) .mini-paxos .pa-t1,
+html:not(.dark) .mini-paxos .pa-t2 {
+  fill: #c26401;
+}
+
+.group:hover .mini-paxos .pa-dot,
+.group:focus-within .mini-paxos .pa-dot,
+.mini-play .mini-paxos .pa-dot,
+.group:hover .mini-paxos .pa-pulse,
+.group:focus-within .mini-paxos .pa-pulse,
+.mini-play .mini-paxos .pa-pulse {
+  animation-duration: 5s;
+  animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  animation-iteration-count: infinite;
+  animation-fill-mode: both;
+}
+
+.group:hover .mini-paxos .pa-dot.ab,
+.group:focus-within .mini-paxos .pa-dot.ab,
+.mini-play .mini-paxos .pa-dot.ab { animation-name: pa-dot-ab; }
+.group:hover .mini-paxos .pa-dot.ac,
+.group:focus-within .mini-paxos .pa-dot.ac,
+.mini-play .mini-paxos .pa-dot.ac { animation-name: pa-dot-ac; }
+.group:hover .mini-paxos .pa-dot.ba,
+.group:focus-within .mini-paxos .pa-dot.ba,
+.mini-play .mini-paxos .pa-dot.ba { animation-name: pa-dot-ba; }
+.group:hover .mini-paxos .pa-dot.ca,
+.group:focus-within .mini-paxos .pa-dot.ca,
+.mini-play .mini-paxos .pa-dot.ca { animation-name: pa-dot-ca; }
+
+.group:hover .mini-paxos .pa-pulse.ab,
+.group:focus-within .mini-paxos .pa-pulse.ab,
+.mini-play .mini-paxos .pa-pulse.ab { animation-name: pa-pulse-ab; }
+.group:hover .mini-paxos .pa-pulse.ac,
+.group:focus-within .mini-paxos .pa-pulse.ac,
+.mini-play .mini-paxos .pa-pulse.ac { animation-name: pa-pulse-ac; }
+.group:hover .mini-paxos .pa-pulse.ba,
+.group:focus-within .mini-paxos .pa-pulse.ba,
+.mini-play .mini-paxos .pa-pulse.ba { animation-name: pa-pulse-ba; }
+.group:hover .mini-paxos .pa-pulse.ca,
+.group:focus-within .mini-paxos .pa-pulse.ca,
+.mini-play .mini-paxos .pa-pulse.ca { animation-name: pa-pulse-ca; }
+
+.group:hover .mini-paxos .pa-shaft,
+.group:focus-within .mini-paxos .pa-shaft,
+.mini-play .mini-paxos .pa-shaft,
+.group:hover .mini-paxos .pa-head,
+.group:focus-within .mini-paxos .pa-head,
+.mini-play .mini-paxos .pa-head {
+  animation-duration: 5s;
+  animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  animation-iteration-count: infinite;
+  animation-fill-mode: both;
+}
+
+.group:hover .mini-paxos .pa-shaft.ab,
+.group:focus-within .mini-paxos .pa-shaft.ab,
+.mini-play .mini-paxos .pa-shaft.ab { animation-name: pa-shaft-ab; }
+.group:hover .mini-paxos .pa-head.ab,
+.group:focus-within .mini-paxos .pa-head.ab,
+.mini-play .mini-paxos .pa-head.ab { animation-name: pa-head-ab; }
+
+.group:hover .mini-paxos .pa-shaft.ac,
+.group:focus-within .mini-paxos .pa-shaft.ac,
+.mini-play .mini-paxos .pa-shaft.ac { animation-name: pa-shaft-ac; }
+.group:hover .mini-paxos .pa-head.ac,
+.group:focus-within .mini-paxos .pa-head.ac,
+.mini-play .mini-paxos .pa-head.ac { animation-name: pa-head-ac; }
+
+.group:hover .mini-paxos .pa-shaft.ba,
+.group:focus-within .mini-paxos .pa-shaft.ba,
+.mini-play .mini-paxos .pa-shaft.ba { animation-name: pa-shaft-ba; }
+.group:hover .mini-paxos .pa-head.ba,
+.group:focus-within .mini-paxos .pa-head.ba,
+.mini-play .mini-paxos .pa-head.ba { animation-name: pa-head-ba; }
+
+.group:hover .mini-paxos .pa-shaft.ca,
+.group:focus-within .mini-paxos .pa-shaft.ca,
+.mini-play .mini-paxos .pa-shaft.ca { animation-name: pa-shaft-ca; }
+.group:hover .mini-paxos .pa-head.ca,
+.group:focus-within .mini-paxos .pa-head.ca,
+.mini-play .mini-paxos .pa-head.ca { animation-name: pa-head-ca; }
 
 @keyframes mini-join {
   0%,
@@ -225,15 +361,93 @@
   }
 }
 
-@keyframes mini-packet {
-  0%,
-  12% {
-    left: 16%;
-  }
-  88%,
-  100% {
-    left: 80%;
-  }
+@keyframes pa-pulse-ab {
+  0%, 16% { opacity: 0; transform: scale(0.65); }
+  20% { opacity: 0.85; transform: scale(1); }
+  28%, 100% { opacity: 0; transform: scale(2.15); }
+}
+@keyframes pa-pulse-ac {
+  0%, 21% { opacity: 0; transform: scale(0.65); }
+  25% { opacity: 0.85; transform: scale(1); }
+  33%, 100% { opacity: 0; transform: scale(2.15); }
+}
+@keyframes pa-pulse-ba {
+  0%, 44% { opacity: 0; transform: scale(0.65); }
+  48% { opacity: 0.85; transform: scale(1); }
+  56%, 100% { opacity: 0; transform: scale(2.15); }
+}
+@keyframes pa-pulse-ca {
+  0%, 50% { opacity: 0; transform: scale(0.65); }
+  54% { opacity: 0.85; transform: scale(1); }
+  62%, 100% { opacity: 0; transform: scale(2.15); }
+}
+
+@keyframes pa-shaft-ab {
+  0%, 4% { stroke-dashoffset: var(--len); opacity: 0; }
+  20%, 88% { stroke-dashoffset: 0; opacity: 1; }
+  96%, 100% { stroke-dashoffset: 0; opacity: 0; }
+}
+@keyframes pa-dot-ab {
+  0%, 4% { cx: var(--x1); cy: var(--y1); opacity: 0; }
+  9% { opacity: 1; }
+  20% { cx: var(--tx); cy: var(--ty); opacity: 1; }
+  26%, 100% { cx: var(--tx); cy: var(--ty); opacity: 0; }
+}
+@keyframes pa-head-ab {
+  0%, 16% { opacity: 0; }
+  20%, 88% { opacity: 1; }
+  96%, 100% { opacity: 0; }
+}
+
+@keyframes pa-shaft-ac {
+  0%, 8% { stroke-dashoffset: var(--len); opacity: 0; }
+  25%, 88% { stroke-dashoffset: 0; opacity: 1; }
+  96%, 100% { stroke-dashoffset: 0; opacity: 0; }
+}
+@keyframes pa-dot-ac {
+  0%, 8% { cx: var(--x1); cy: var(--y1); opacity: 0; }
+  13% { opacity: 1; }
+  25% { cx: var(--tx); cy: var(--ty); opacity: 1; }
+  31%, 100% { cx: var(--tx); cy: var(--ty); opacity: 0; }
+}
+@keyframes pa-head-ac {
+  0%, 21% { opacity: 0; }
+  25%, 88% { opacity: 1; }
+  96%, 100% { opacity: 0; }
+}
+
+@keyframes pa-shaft-ba {
+  0%, 32% { stroke-dashoffset: var(--len); opacity: 0; }
+  48%, 88% { stroke-dashoffset: 0; opacity: 1; }
+  96%, 100% { stroke-dashoffset: 0; opacity: 0; }
+}
+@keyframes pa-dot-ba {
+  0%, 32% { cx: var(--x1); cy: var(--y1); opacity: 0; }
+  37% { opacity: 1; }
+  48% { cx: var(--tx); cy: var(--ty); opacity: 1; }
+  54%, 100% { cx: var(--tx); cy: var(--ty); opacity: 0; }
+}
+@keyframes pa-head-ba {
+  0%, 44% { opacity: 0; }
+  48%, 88% { opacity: 1; }
+  96%, 100% { opacity: 0; }
+}
+
+@keyframes pa-shaft-ca {
+  0%, 38% { stroke-dashoffset: var(--len); opacity: 0; }
+  54%, 88% { stroke-dashoffset: 0; opacity: 1; }
+  96%, 100% { stroke-dashoffset: 0; opacity: 0; }
+}
+@keyframes pa-dot-ca {
+  0%, 38% { cx: var(--x1); cy: var(--y1); opacity: 0; }
+  43% { opacity: 1; }
+  54% { cx: var(--tx); cy: var(--ty); opacity: 1; }
+  60%, 100% { cx: var(--tx); cy: var(--ty); opacity: 0; }
+}
+@keyframes pa-head-ca {
+  0%, 50% { opacity: 0; }
+  54%, 88% { opacity: 1; }
+  96%, 100% { opacity: 0; }
 }
 
 .askew {
@@ -248,6 +462,18 @@
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+  }
+
+  .mini-paxos .pa-shaft,
+  .mini-paxos .pa-head {
+    animation: none !important;
+    opacity: 1 !important;
+  }
+
+  .mini-paxos .pa-dot,
+  .mini-paxos .pa-pulse {
+    animation: none !important;
+    opacity: 0 !important;
   }
 }
 

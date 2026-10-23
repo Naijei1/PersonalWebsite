@@ -30,7 +30,7 @@ export default function Contact() {
         <div className="surface flex flex-col items-start gap-6 p-6 sm:p-10 md:flex-row md:items-center md:justify-between">
           <div>
             <p className="text-lg text-ink-soft dark:text-night-soft">
-              Recruiting, collaborating, or just want to say hi? My inbox is open.
+              Recruiting, collaborating, or just want to say hi? Send a message!
             </p>
             <a
               href={`mailto:${profile.email}`}
