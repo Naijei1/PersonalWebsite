@@ -107,35 +107,94 @@ function MoreCard({ project }: { project: MoreProject }) {
   )
 }
 
-function ArrowHead({ id, color }: { id: string; color: string }) {
-  return (
-    <marker id={id} markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto">
-      <path d="M0 0 L7 3.5 L0 7 Z" fill={color} />
-    </marker>
-  )
+const paxosBox = { w: 440, h: 100 }
+const paxosRows = [28, 50, 72]
+const paxosMessages = [
+  { id: 'ab', from: [56, 28], to: [150, 50], delay: 0 },
+  { id: 'ac', from: [74, 28], to: [182, 72], delay: 0.26 },
+  { id: 'ba', from: [216, 50], to: [304, 28], delay: 1.42 },
+  { id: 'ca', from: [240, 72], to: [352, 28], delay: 1.72 },
+] as const
+
+function paxosPoint(x: number, y: number) {
+  return {
+    x: `${((x / paxosBox.w) * 100).toFixed(3)}%`,
+    y: `${((y / paxosBox.h) * 100).toFixed(3)}%`,
+  }
+}
+
+function paxosLerp(from: readonly [number, number], to: readonly [number, number], t: number) {
+  return paxosPoint(from[0] + (to[0] - from[0]) * t, from[1] + (to[1] - from[1]) * t)
 }
 
 function PaxosTimelines({ color }: { color: string }) {
-  const rows = [22, 48, 74]
   return (
-    <svg viewBox="0 0 220 96" className="mini-paxos mini-paxos-a h-full w-full" style={{ color }} aria-hidden>
-      <defs>
-        <ArrowHead id="paxos-a-head" color={color} />
-      </defs>
+    <svg viewBox={`0 0 ${paxosBox.w} ${paxosBox.h}`} className="mini-paxos h-full w-full" style={{ color }} aria-hidden>
       {['A', 'B', 'C'].map((name, i) => (
         <g key={name}>
-          <text x="2" y={rows[i] + 4} fill={color} fontSize="11" fontWeight="600">
+          <text
+            x="16"
+            y={paxosRows[i]}
+            fill={color}
+            fontSize="11"
+            fontWeight="600"
+            fontFamily="Google Sans, Roboto, system-ui, sans-serif"
+            textAnchor="middle"
+            dominantBaseline="central"
+          >
             {name}
           </text>
-          <line x1="18" y1={rows[i]} x2="214" y2={rows[i]} stroke={color} strokeOpacity="0.4" />
+          <line
+            x1="30"
+            y1={paxosRows[i]}
+            x2="424"
+            y2={paxosRows[i]}
+            stroke={color}
+            strokeWidth="1.5"
+            strokeLinecap="round"
+            vectorEffect="non-scaling-stroke"
+          />
         </g>
       ))}
-      <path className="pa-arrow pa-1" d="M26 22 L78 48" markerEnd="url(#paxos-a-head)" />
-      <path className="pa-arrow pa-2" d="M92 48 L148 74" markerEnd="url(#paxos-a-head)" />
-      <path className="pa-arrow pa-3" d="M196 74 L160 48" markerEnd="url(#paxos-a-head)" />
-      <circle className="pa-dot pa-d1" r="3.2" fill="#fff" stroke={color} strokeWidth="1.6" />
-      <circle className="pa-dot pa-d2" r="3.2" fill="#fff" stroke={color} strokeWidth="1.6" />
-      <circle className="pa-dot pa-d3" r="3.2" fill="#fff" stroke={color} strokeWidth="1.6" />
+      {paxosMessages.map((message) => {
+        const start = paxosLerp(message.from, message.to, 0)
+        const mid = paxosLerp(message.from, message.to, 0.1)
+        const end = paxosLerp(message.from, message.to, 1)
+        const soft = paxosLerp(message.from, message.to, 0.92)
+        return (
+          <g key={message.id}>
+            <circle
+              className="pa-pulse"
+              cx={message.to[0]}
+              cy={message.to[1]}
+              r="3.2"
+              style={{ animationDelay: `${message.delay}s` }}
+            />
+            {(['pa-lead', 'pa-t1', 'pa-t2'] as const).map((cls, i) => (
+              <circle
+                key={cls}
+                className={`pa-dot ${cls}`}
+                cx="0"
+                cy="0"
+                r={cls === 'pa-lead' ? 3.2 : cls === 'pa-t1' ? 2.15 : 1.45}
+                style={
+                  {
+                    animationDelay: `${message.delay + i * 0.07}s`,
+                    '--sx': start.x,
+                    '--sy': start.y,
+                    '--mx': mid.x,
+                    '--my': mid.y,
+                    '--ex': end.x,
+                    '--ey': end.y,
+                    '--tx': soft.x,
+                    '--ty': soft.y,
+                  } as CSSProperties
+                }
+              />
+            ))}
+          </g>
+        )
+      })}
     </svg>
   )
 }
