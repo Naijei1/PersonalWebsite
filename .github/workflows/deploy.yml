@@ -13,10 +13,13 @@ on:
   # Contents: Read and write on PersonalWebsite. This repo's GITHUB_TOKEN
   # cannot send that event from the other repository. No secret is added
   # in this workflow.
+  # A push on mukundgaur/gnarly can do the same with event_type "gnarly".
+  # That token lives in the gnarly repo, not here. No Firebase, Maps, or
+  # API secrets are required: /gnary is the sample companion only.
   # schedule and repository_dispatch run only after this file is on main.
   repository_dispatch:
-    types: [paxos-playground]
-  # No-token fallback: rebuild from paxos-playground main once a day.
+    types: [paxos-playground, gnarly]
+  # No-token fallback: rebuild from paxos-playground and gnarly main once a day.
   schedule:
     - cron: "17 6 * * *"
 
@@ -68,6 +71,29 @@ jobs:
 
       - name: Mount Paxos at /paxos
         run: bash scripts/mount-paxos.sh paxos-playground/dist dist/paxos
+
+      - name: Checkout Gnarly
+        uses: actions/checkout@v4
+        with:
+          repository: mukundgaur/gnarly
+          ref: main
+          path: gnarly
+
+      - name: Setup Node for Gnarly web
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: gnarly/web/package-lock.json
+
+      # Sample mode only. Do not set VITE_FIREBASE_*, VITE_GOOGLE_MAPS_*,
+      # or VITE_GNARLY_API_BASE. Vite --base rewrites asset URLs to /gnary/.
+      - name: Build Gnarly web
+        working-directory: gnarly/web
+        run: npm ci && npx tsc -b && npx vite build --base=/gnary/
+
+      - name: Mount Gnarly at /gnary
+        run: bash scripts/mount-gnary.sh gnarly/web/dist dist/gnary
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
