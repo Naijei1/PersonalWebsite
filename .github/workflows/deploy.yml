@@ -14,7 +14,7 @@ on:
   # cannot send that event from the other repository. No secret is added
   # in this workflow.
   # A push on mukundgaur/gnarly can do the same with event_type "gnarly".
-  # That token lives in the gnarly repo, not here. The /gnary production
+  # That token lives in the gnarly repo, not here. The /gnarly production
   # build inlines Firebase and Google Maps config from Actions secrets.
   # VITE_GNARLY_API_BASE stays unset until that API is deployed.
   # schedule and repository_dispatch run only after this file is on main.
@@ -99,10 +99,10 @@ jobs:
           VITE_FIREBASE_APP_ID: ${{ secrets.VITE_FIREBASE_APP_ID }}
           VITE_GOOGLE_MAPS_API_KEY: ${{ secrets.VITE_GOOGLE_MAPS_API_KEY }}
           VITE_GOOGLE_MAPS_MAP_ID: ${{ secrets.VITE_GOOGLE_MAPS_MAP_ID }}
-        run: npm ci && npx tsc -b && npx vite build --base=/gnary/
+        run: npm ci && npx tsc -b && npx vite build --base=/gnarly/
 
-      - name: Mount Gnarly at /gnary
-        run: bash scripts/mount-gnary.sh gnarly/web/dist dist/gnary
+      - name: Mount Gnarly at /gnarly
+        run: bash scripts/mount-gnarly.sh gnarly/web/dist dist/gnarly
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3

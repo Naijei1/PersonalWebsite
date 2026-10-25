@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
-# Copy a built gnarly web dist/ into the personal site output at /gnary.
-# Usage: scripts/mount-gnary.sh <gnarly-dist> <site-dist>/gnary
+# Copy a built gnarly web dist/ into the personal site output at /gnarly.
+# Usage: scripts/mount-gnarly.sh <gnarly-dist> <site-dist>/gnarly
 set -euo pipefail
 
 src=${1:?gnarly dist directory}
-dest=${2:?site dist/gnary directory}
+dest=${2:?site dist/gnarly directory}
 site_root=$(dirname "$dest")
 
 if [[ ! -f "$src/index.html" ]]; then
@@ -21,7 +21,7 @@ if [[ ! -f "$dest/index.html" ]]; then
   exit 1
 fi
 
-# The companion is a static tree. GitHub Pages serves that file for /gnary/
+# The companion is a static tree. GitHub Pages serves that file for /gnarly/
 # and only uses a root 404.html when no file matches, so the SPA fallback
 # cannot replace this page.
 if grep -q 'Naijei Jiang' "$dest/index.html"; then
@@ -29,18 +29,18 @@ if grep -q 'Naijei Jiang' "$dest/index.html"; then
   exit 1
 fi
 
-if ! grep -q '/gnary/' "$dest/index.html"; then
-  echo "refusing to mount: asset URLs are not under /gnary/" >&2
+if ! grep -q '/gnarly/' "$dest/index.html"; then
+  echo "refusing to mount: asset URLs are not under /gnarly/" >&2
   exit 1
 fi
 
 # Relative links inside the mounted app must not climb into the site shell.
 if grep -Eq 'href="\.\./|src="\.\./' "$dest/index.html"; then
-  echo "refusing to mount: index.html links outside /gnary/" >&2
+  echo "refusing to mount: index.html links outside /gnarly/" >&2
   exit 1
 fi
 
 echo "mounted $(find "$dest" -type f | wc -l) files at $dest"
 if [[ -f "$site_root/404.html" ]]; then
-  echo "root 404.html exists; /gnary/index.html is a real file and is not that fallback"
+  echo "root 404.html exists; /gnarly/index.html is a real file and is not that fallback"
 fi
