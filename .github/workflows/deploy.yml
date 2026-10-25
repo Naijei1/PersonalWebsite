@@ -14,8 +14,9 @@ on:
   # cannot send that event from the other repository. No secret is added
   # in this workflow.
   # A push on mukundgaur/gnarly can do the same with event_type "gnarly".
-  # That token lives in the gnarly repo, not here. No Firebase, Maps, or
-  # API secrets are required: /gnary is the sample companion only.
+  # That token lives in the gnarly repo, not here. The /gnary production
+  # build inlines Firebase and Google Maps config from Actions secrets.
+  # VITE_GNARLY_API_BASE stays unset until that API is deployed.
   # schedule and repository_dispatch run only after this file is on main.
   repository_dispatch:
     types: [paxos-playground, gnarly]
@@ -86,10 +87,18 @@ jobs:
           cache: npm
           cache-dependency-path: gnarly/web/package-lock.json
 
-      # Sample mode only. Do not set VITE_FIREBASE_*, VITE_GOOGLE_MAPS_*,
-      # or VITE_GNARLY_API_BASE. Vite --base rewrites asset URLs to /gnary/.
+      # Vite inlines VITE_* at build time. Values stay in Actions secrets.
+      # Do not set VITE_GNARLY_API_BASE until the publish API is deployed.
       - name: Build Gnarly web
         working-directory: gnarly/web
+        env:
+          VITE_FIREBASE_API_KEY: ${{ secrets.VITE_FIREBASE_API_KEY }}
+          VITE_FIREBASE_AUTH_DOMAIN: ${{ secrets.VITE_FIREBASE_AUTH_DOMAIN }}
+          VITE_FIREBASE_PROJECT_ID: ${{ secrets.VITE_FIREBASE_PROJECT_ID }}
+          VITE_FIREBASE_STORAGE_BUCKET: ${{ secrets.VITE_FIREBASE_STORAGE_BUCKET }}
+          VITE_FIREBASE_APP_ID: ${{ secrets.VITE_FIREBASE_APP_ID }}
+          VITE_GOOGLE_MAPS_API_KEY: ${{ secrets.VITE_GOOGLE_MAPS_API_KEY }}
+          VITE_GOOGLE_MAPS_MAP_ID: ${{ secrets.VITE_GOOGLE_MAPS_MAP_ID }}
         run: npm ci && npx tsc -b && npx vite build --base=/gnary/
 
       - name: Mount Gnarly at /gnary
