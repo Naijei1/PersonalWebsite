@@ -13,10 +13,14 @@ on:
   # Contents: Read and write on PersonalWebsite. This repo's GITHUB_TOKEN
   # cannot send that event from the other repository. No secret is added
   # in this workflow.
+  # A push on mukundgaur/gnarly can do the same with event_type "gnarly".
+  # That token lives in the gnarly repo, not here. The /gnary production
+  # build inlines Firebase and Google Maps config from Actions secrets.
+  # VITE_GNARLY_API_BASE stays unset until that API is deployed.
   # schedule and repository_dispatch run only after this file is on main.
   repository_dispatch:
-    types: [paxos-playground]
-  # No-token fallback: rebuild from paxos-playground main once a day.
+    types: [paxos-playground, gnarly]
+  # No-token fallback: rebuild from paxos-playground and gnarly main once a day.
   schedule:
     - cron: "17 6 * * *"
 
@@ -68,6 +72,37 @@ jobs:
 
       - name: Mount Paxos at /paxos
         run: bash scripts/mount-paxos.sh paxos-playground/dist dist/paxos
+
+      - name: Checkout Gnarly
+        uses: actions/checkout@v4
+        with:
+          repository: mukundgaur/gnarly
+          ref: main
+          path: gnarly
+
+      - name: Setup Node for Gnarly web
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: gnarly/web/package-lock.json
+
+      # Vite inlines VITE_* at build time. Values stay in Actions secrets.
+      # Do not set VITE_GNARLY_API_BASE until the publish API is deployed.
+      - name: Build Gnarly web
+        working-directory: gnarly/web
+        env:
+          VITE_FIREBASE_API_KEY: ${{ secrets.VITE_FIREBASE_API_KEY }}
+          VITE_FIREBASE_AUTH_DOMAIN: ${{ secrets.VITE_FIREBASE_AUTH_DOMAIN }}
+          VITE_FIREBASE_PROJECT_ID: ${{ secrets.VITE_FIREBASE_PROJECT_ID }}
+          VITE_FIREBASE_STORAGE_BUCKET: ${{ secrets.VITE_FIREBASE_STORAGE_BUCKET }}
+          VITE_FIREBASE_APP_ID: ${{ secrets.VITE_FIREBASE_APP_ID }}
+          VITE_GOOGLE_MAPS_API_KEY: ${{ secrets.VITE_GOOGLE_MAPS_API_KEY }}
+          VITE_GOOGLE_MAPS_MAP_ID: ${{ secrets.VITE_GOOGLE_MAPS_MAP_ID }}
+        run: npm ci && npx tsc -b && npx vite build --base=/gnary/
+
+      - name: Mount Gnarly at /gnary
+        run: bash scripts/mount-gnary.sh gnarly/web/dist dist/gnary
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
