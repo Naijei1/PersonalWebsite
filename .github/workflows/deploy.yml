@@ -13,14 +13,15 @@ on:
   # Contents: Read and write on PersonalWebsite. This repo's GITHUB_TOKEN
   # cannot send that event from the other repository. No secret is added
   # in this workflow.
-  # A push on mukundgaur/gnarly can do the same with event_type "gnarly".
+  # A push on Naijei1/gnarly can do the same with event_type "gnarly".
   # That token lives in the gnarly repo, not here. The /gnarly production
-  # build inlines Firebase and Google Maps config from Actions secrets.
-  # VITE_GNARLY_API_BASE stays unset until that API is deployed.
+  # build checks out Naijei1/gnarly (cursor/aws-backend-1b4f) and inlines the
+  # public AWS API and Cognito settings on the Gnarly build step. Google Maps
+  # key and map ID stay in Actions secrets. Firebase is not part of this build.
   # schedule and repository_dispatch run only after this file is on main.
   repository_dispatch:
     types: [paxos-playground, gnarly]
-  # No-token fallback: rebuild from paxos-playground and gnarly main once a day.
+  # No-token fallback: rebuild from paxos-playground main and the Gnarly AWS web branch once a day.
   schedule:
     - cron: "17 6 * * *"
 
@@ -76,8 +77,8 @@ jobs:
       - name: Checkout Gnarly
         uses: actions/checkout@v4
         with:
-          repository: mukundgaur/gnarly
-          ref: main
+          repository: Naijei1/gnarly
+          ref: cursor/aws-backend-1b4f
           path: gnarly
 
       - name: Setup Node for Gnarly web
@@ -87,19 +88,22 @@ jobs:
           cache: npm
           cache-dependency-path: gnarly/web/package-lock.json
 
-      # Vite inlines VITE_* at build time. Values stay in Actions secrets.
-      # Do not set VITE_GNARLY_API_BASE until the publish API is deployed.
+      # Vite inlines VITE_* at build time. AWS and Cognito values are public
+      # client config. The Maps key and map ID stay in Actions secrets.
       - name: Build Gnarly web
         working-directory: gnarly/web
         env:
-          VITE_FIREBASE_API_KEY: ${{ secrets.VITE_FIREBASE_API_KEY }}
-          VITE_FIREBASE_AUTH_DOMAIN: ${{ secrets.VITE_FIREBASE_AUTH_DOMAIN }}
-          VITE_FIREBASE_PROJECT_ID: ${{ secrets.VITE_FIREBASE_PROJECT_ID }}
-          VITE_FIREBASE_STORAGE_BUCKET: ${{ secrets.VITE_FIREBASE_STORAGE_BUCKET }}
-          VITE_FIREBASE_APP_ID: ${{ secrets.VITE_FIREBASE_APP_ID }}
+          VITE_GNARLY_API_BASE: https://m7sgp6qsjkimymyrwa6bilxqzq0acbhx.lambda-url.us-east-1.on.aws
+          VITE_COGNITO_USER_POOL_ID: us-east-1_pQIUmVbPJ
+          VITE_COGNITO_CLIENT_ID: 1osnrt38iuqvf5laum1tnj1hdn
+          VITE_COGNITO_DOMAIN: gnarly-naijei.auth.us-east-1.amazoncognito.com
+          VITE_COGNITO_REDIRECT_URI: https://naijei.com/gnarly/
+          VITE_ADMIN_EMAILS: nj277@cornell.edu
+          VITE_GNARLY_BUCKET: gnarly-data-402275401617-us-east-1
+          VITE_BASE: /gnarly/
           VITE_GOOGLE_MAPS_API_KEY: ${{ secrets.VITE_GOOGLE_MAPS_API_KEY }}
           VITE_GOOGLE_MAPS_MAP_ID: ${{ secrets.VITE_GOOGLE_MAPS_MAP_ID }}
-        run: npm ci && npx tsc -b && npx vite build --base=/gnarly/
+        run: npm ci && npm run build
 
       - name: Mount Gnarly at /gnarly
         run: bash scripts/mount-gnarly.sh gnarly/web/dist dist/gnarly
