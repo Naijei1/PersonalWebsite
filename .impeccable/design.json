@@ -1,0 +1,275 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-08T18:12:00Z",
+  "title": "Design System: naijei.com",
+  "extensions": {
+    "colorMeta": {
+      "blue": {
+        "role": "primary",
+        "displayName": "Blue",
+        "canonical": "oklch(63% 0.18 260)",
+        "tonalRamp": ["#000924", "#002058", "#003a92", "#165ac5", "#3b7eec", "#6da4ff", "#aacbff", "#e5efff"]
+      },
+      "blue-ink": {
+        "role": "primary",
+        "displayName": "Blue Ink",
+        "canonical": "oklch(57.4% 0.195 257.9)",
+        "tonalRamp": ["#000a22", "#002253", "#003e8a", "#005bc5", "#277ef4", "#68a5ff", "#a8cbff", "#e5efff"]
+      },
+      "red": {
+        "role": "primary",
+        "displayName": "Red",
+        "canonical": "oklch(62.6% 0.206 29.1)",
+        "tonalRamp": ["#1f0000", "#4d0000", "#810001", "#b90001", "#e33c2f", "#ff7362", "#ffb3a7", "#ffe9e5"]
+      },
+      "yellow": {
+        "role": "primary",
+        "displayName": "Yellow",
+        "canonical": "oklch(83% 0.17 84)",
+        "tonalRamp": ["#110a00", "#312200", "#553e00", "#7c5b00", "#a57a00", "#d09b00", "#fdbe0d", "#ffecc8"]
+      },
+      "green": {
+        "role": "primary",
+        "displayName": "Green",
+        "canonical": "oklch(64.8% 0.16 148.5)",
+        "tonalRamp": ["#001003", "#002e0e", "#00511d", "#00762e", "#229b47", "#4fc069", "#77e68d", "#c8ffcf"]
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Ink",
+        "canonical": "oklch(24.8% 0.006 271.2)",
+        "tonalRamp": ["#0a0b0e", "#242528", "#414245", "#606165", "#818286", "#a3a5a9", "#c8c9cd", "#edeef2"]
+      },
+      "ink-soft": {
+        "role": "neutral",
+        "displayName": "Soft Ink",
+        "canonical": "oklch(49.8% 0.009 253.9)",
+        "tonalRamp": ["#090b0f", "#22252a", "#3f4247", "#5e6267", "#7e8388", "#a1a5ab", "#c5cacf", "#eaeff5"]
+      },
+      "ink-faint": {
+        "role": "neutral",
+        "displayName": "Faint Ink",
+        "canonical": "oklch(61.7% 0.01 242.9)",
+        "tonalRamp": ["#080c0f", "#21262a", "#3e4347", "#5c6267", "#7d8388", "#a0a6ab", "#c4cad0", "#e9eff5"]
+      },
+      "night": {
+        "role": "neutral",
+        "displayName": "Night",
+        "canonical": "oklch(23.9% 0 90)",
+        "tonalRamp": ["#0b0b0b", "#252525", "#424242", "#616161", "#828282", "#a5a5a5", "#c9c9c9", "#eeeeee"]
+      },
+      "night-raised": {
+        "role": "neutral",
+        "displayName": "Raised Night",
+        "canonical": "oklch(28% 0.002 247.9)",
+        "tonalRamp": ["#0a0b0c", "#242526", "#414243", "#606162", "#818284", "#a4a5a6", "#c8c9cb", "#edeff0"]
+      },
+      "night-line": {
+        "role": "neutral",
+        "displayName": "Night Line",
+        "canonical": "oklch(36.9% 0.007 240)",
+        "tonalRamp": ["#080c0e", "#222628", "#3f4346", "#5e6265", "#7e8386", "#a1a6a9", "#c5cace", "#eaeff3"]
+      },
+      "night-text": {
+        "role": "neutral",
+        "displayName": "Night Text",
+        "canonical": "oklch(93.6% 0.005 258.3)",
+        "tonalRamp": ["#0a0b0d", "#242527", "#414245", "#606164", "#818285", "#a3a5a8", "#c7c9cc", "#edeff2"]
+      },
+      "night-soft": {
+        "role": "neutral",
+        "displayName": "Soft Night",
+        "canonical": "oklch(70.3% 0.011 248)",
+        "tonalRamp": ["#080c10", "#21262a", "#3e4348", "#5c6267", "#7d8389", "#a0a6ac", "#c4cad0", "#e9eff6"]
+      },
+      "white": {
+        "role": "neutral",
+        "displayName": "White",
+        "canonical": "oklch(100% 0 0)",
+        "tonalRamp": ["#0b0b0b", "#252525", "#424242", "#616161", "#828282", "#a5a5a5", "#c9c9c9", "#eeeeee"]
+      }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Display", "purpose": "The public wordmark." },
+      "headline": { "displayName": "Headline", "purpose": "Section titles. From 640px they step to 3rem." },
+      "title": { "displayName": "Title", "purpose": "Panel and card headings." },
+      "body": { "displayName": "Body", "purpose": "Running text." },
+      "label": { "displayName": "Label", "purpose": "Nav items, buttons, and meta." },
+      "mono": { "displayName": "Mono", "purpose": "Code and compact values." },
+      "hand": { "displayName": "Hand", "purpose": "The public handwritten aside. The admin font list does not load Caveat." }
+    },
+    "shadows": [
+      {
+        "name": "card",
+        "value": "0 1px 2px rgba(60,64,67,.12), 0 2px 6px 2px rgba(60,64,67,.08)",
+        "purpose": "Light panels, and primary buttons."
+      },
+      {
+        "name": "lift",
+        "value": "0 1px 3px rgba(60,64,67,.16), 0 8px 24px 4px rgba(60,64,67,.12)",
+        "purpose": "Hover on light cards, and hover on the public primary button."
+      }
+    ],
+    "motion": [
+      {
+        "name": "rise",
+        "value": "rise .7s cubic-bezier(.2,.8,.2,1) both",
+        "purpose": "Public hero entrance. The admin config does not include this keyframe."
+      },
+      {
+        "name": "hop",
+        "value": "hop .6s cubic-bezier(.3,1.4,.5,1)",
+        "purpose": "Public wordmark letter hop. The admin config does not include this keyframe."
+      },
+      {
+        "name": "explode",
+        "value": "explode 2.4s cubic-bezier(.2,.9,.3,1) both",
+        "purpose": "Public wordmark burst. The admin config does not include this keyframe."
+      },
+      {
+        "name": "spark",
+        "value": "spark .9s cubic-bezier(.1,.8,.3,1) both",
+        "purpose": "Public wordmark burst particle. The admin config does not include this keyframe."
+      },
+      {
+        "name": "roll",
+        "value": "roll 1.2s cubic-bezier(.45,.05,.35,1)",
+        "purpose": "Public page roll. The admin config does not include this keyframe."
+      },
+      {
+        "name": "control",
+        "value": "200ms",
+        "purpose": "Color and shadow on buttons."
+      },
+      {
+        "name": "tab",
+        "value": "300ms",
+        "purpose": "Active tab bar scale, and the public theme color fade."
+      }
+    ],
+    "breakpoints": [
+      { "name": "sm", "value": "640px" },
+      { "name": "md", "value": "768px" },
+      { "name": "lg", "value": "1024px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "The light-page action, Blue Ink with the card shadow.",
+      "html": "<button class=\"ds-btn-primary\" type=\"button\">See my projects</button>",
+      "css": ".ds-btn-primary { display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; min-height: 2.75rem; padding: 0 1.25rem; border: none; border-radius: 9999px; background: #1A73E8; color: #FFFFFF; font-family: \"Google Sans\", Roboto, system-ui, sans-serif; font-size: 0.875rem; font-weight: 500; box-shadow: 0 1px 2px rgba(60,64,67,.12), 0 2px 6px 2px rgba(60,64,67,.08); transition: background-color 200ms, box-shadow 200ms, transform 200ms; cursor: pointer; } .ds-btn-primary:hover { background: #1765cc; box-shadow: 0 1px 3px rgba(60,64,67,.16), 0 8px 24px 4px rgba(60,64,67,.12); } .ds-btn-primary:focus-visible { outline: 2px solid #4285F4; outline-offset: 2px; } .ds-btn-primary:active { transform: scale(0.97); }"
+    },
+    {
+      "name": "Primary Button, dark",
+      "kind": "button",
+      "refersTo": "button-primary-dark",
+      "description": "The same action on a night page, light blue with a deep blue label.",
+      "html": "<button class=\"ds-btn-primary-dark\" type=\"button\">See my projects</button>",
+      "css": ".ds-btn-primary-dark { display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; min-height: 2.75rem; padding: 0 1.25rem; border: none; border-radius: 9999px; background: #8AB4F8; color: #062E6F; font-family: \"Google Sans\", Roboto, system-ui, sans-serif; font-size: 0.875rem; font-weight: 500; box-shadow: 0 1px 2px rgba(60,64,67,.12), 0 2px 6px 2px rgba(60,64,67,.08); transition: background-color 200ms, box-shadow 200ms, transform 200ms; cursor: pointer; } .ds-btn-primary-dark:hover { background: #AECBFA; box-shadow: 0 1px 3px rgba(60,64,67,.16), 0 8px 24px 4px rgba(60,64,67,.12); } .ds-btn-primary-dark:focus-visible { outline: 2px solid #4285F4; outline-offset: 2px; } .ds-btn-primary-dark:active { transform: scale(0.97); }"
+    },
+    {
+      "name": "Tonal Button",
+      "kind": "button",
+      "refersTo": "button-tonal",
+      "description": "The secondary pill on a light page, gray fill and ink text.",
+      "html": "<button class=\"ds-btn-tonal\" type=\"button\">Copy email</button>",
+      "css": ".ds-btn-tonal { display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; min-height: 2.75rem; padding: 0 1.25rem; border: none; border-radius: 9999px; background: #F1F3F4; color: #202124; font-family: \"Google Sans\", Roboto, system-ui, sans-serif; font-size: 0.875rem; font-weight: 500; transition: background-color 200ms, transform 200ms; cursor: pointer; } .ds-btn-tonal:hover { background: #E8EAED; } .ds-btn-tonal:focus-visible { outline: 2px solid #4285F4; outline-offset: 2px; } .ds-btn-tonal:active { transform: scale(0.97); }"
+    },
+    {
+      "name": "Tonal Button, dark",
+      "kind": "button",
+      "refersTo": "button-tonal-dark",
+      "description": "The secondary pill on a night page, white at 10% with night text.",
+      "html": "<button class=\"ds-btn-tonal-dark\" type=\"button\">Copy email</button>",
+      "css": ".ds-btn-tonal-dark { display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; min-height: 2.75rem; padding: 0 1.25rem; border: none; border-radius: 9999px; background: rgba(255,255,255,0.1); color: #E8EAED; font-family: \"Google Sans\", Roboto, system-ui, sans-serif; font-size: 0.875rem; font-weight: 500; transition: background-color 200ms, transform 200ms; cursor: pointer; } .ds-btn-tonal-dark:hover { background: rgba(255,255,255,0.15); } .ds-btn-tonal-dark:focus-visible { outline: 2px solid #4285F4; outline-offset: 2px; } .ds-btn-tonal-dark:active { transform: scale(0.97); }"
+    },
+    {
+      "name": "Chip",
+      "kind": "chip",
+      "refersTo": "chip",
+      "description": "A small pill for a status or a short fact.",
+      "html": "<span class=\"ds-chip\">Cornell CS ’28</span>",
+      "css": ".ds-chip { display: inline-flex; align-items: center; gap: 0.375rem; padding: 0.25rem 0.75rem; border-radius: 9999px; border: 1px solid rgba(0,0,0,0.1); background: transparent; color: #5F6368; font-family: \"Google Sans\", Roboto, system-ui, sans-serif; font-size: 0.75rem; font-weight: 500; }"
+    },
+    {
+      "name": "Panel",
+      "kind": "card",
+      "refersTo": "card",
+      "description": "A light content panel with the card shadow and a hairline.",
+      "html": "<article class=\"ds-panel\"><h3 class=\"ds-panel-title\">Backend and systems</h3><p class=\"ds-panel-copy\">A short account of the work.</p></article>",
+      "css": ".ds-panel { border-radius: 1.5rem; border: 1px solid rgba(0,0,0,0.06); background: #FFFFFF; color: #202124; padding: 1.5rem; box-shadow: 0 1px 2px rgba(60,64,67,.12), 0 2px 6px 2px rgba(60,64,67,.08); font-family: \"Google Sans\", Roboto, system-ui, sans-serif; } .ds-panel-title { margin: 0; font-size: 1.25rem; font-weight: 500; letter-spacing: -0.025em; } .ds-panel-copy { margin: 0.5rem 0 0; color: #5F6368; font-size: 1rem; line-height: 1.5; }"
+    },
+    {
+      "name": "Panel, dark",
+      "kind": "card",
+      "refersTo": "card-dark",
+      "description": "A night panel. Depth is the raised fill and the hairline.",
+      "html": "<article class=\"ds-panel-dark\"><h3 class=\"ds-panel-title\">Backend and systems</h3><p class=\"ds-panel-copy\">A short account of the work.</p></article>",
+      "css": ".ds-panel-dark { border-radius: 1.5rem; border: 1px solid rgba(255,255,255,0.06); background: #28292A; color: #E8EAED; padding: 1.5rem; box-shadow: none; font-family: \"Google Sans\", Roboto, system-ui, sans-serif; } .ds-panel-dark .ds-panel-title { margin: 0; font-size: 1.25rem; font-weight: 500; letter-spacing: -0.025em; } .ds-panel-dark .ds-panel-copy { margin: 0.5rem 0 0; color: #9AA0A6; font-size: 1rem; line-height: 1.5; }"
+    },
+    {
+      "name": "Field",
+      "kind": "input",
+      "refersTo": "input",
+      "description": "A pill field at the same height as a button.",
+      "html": "<label class=\"ds-field\"><span>From</span><input class=\"ds-input\" type=\"text\" value=\"2026-11-01\"></label>",
+      "css": ".ds-field { display: block; font-family: \"Google Sans\", Roboto, system-ui, sans-serif; font-size: 0.875rem; font-weight: 400; color: #5F6368; } .ds-input { display: block; width: 12rem; margin-top: 0.25rem; min-height: 2.75rem; padding: 0 1rem; border-radius: 9999px; border: 1px solid rgba(0,0,0,0.1); background: #FFFFFF; color: #202124; font: inherit; } .ds-input:focus-visible { outline: 2px solid #4285F4; outline-offset: 2px; }"
+    },
+    {
+      "name": "Navigation",
+      "kind": "nav",
+      "refersTo": "nav-bar",
+      "description": "The 4rem bar with the N mark, marker tabs, and a round theme control.",
+      "html": "<header class=\"ds-nav\"><a class=\"ds-mark\" href=\"#top\"><span class=\"ds-mark-inner\">N</span></a><nav class=\"ds-tabs\"><a class=\"ds-tab ds-tab-active\" href=\"#about\">About<span class=\"ds-tab-bar\" style=\"background:#4285F4\"></span></a><a class=\"ds-tab\" href=\"#projects\">Projects</a></nav><button class=\"ds-icon\" type=\"button\">Light</button></header>",
+      "css": ".ds-nav { display: flex; align-items: center; gap: 0.75rem; height: 4rem; padding: 0 1.25rem; background: rgba(255,255,255,0.85); color: #202124; border-bottom: 1px solid rgba(0,0,0,0.06); font-family: \"Google Sans\", Roboto, system-ui, sans-serif; } .ds-mark { display: grid; place-items: center; width: 2rem; height: 2rem; padding: 2px; border-radius: 9999px; background: #4285F4; text-decoration: none; } .ds-mark-inner { display: grid; place-items: center; width: 100%; height: 100%; border-radius: 9999px; background: #FFFFFF; color: #4285F4; font-size: 0.875rem; font-weight: 700; } .ds-tabs { display: flex; gap: 0.25rem; margin: 0 auto; } .ds-tab { position: relative; display: flex; align-items: center; height: 4rem; padding: 0 0.75rem; color: #5F6368; font-size: 0.875rem; font-weight: 500; text-decoration: none; } .ds-tab:hover { color: #202124; } .ds-tab-active { color: #202124; } .ds-tab-bar { position: absolute; left: 0.75rem; right: 0.75rem; bottom: 0; height: 3px; border-radius: 9999px 9999px 0 0; } .ds-icon { width: 2.5rem; height: 2.5rem; border: none; border-radius: 9999px; background: transparent; color: #5F6368; font: inherit; font-size: 0.75rem; cursor: pointer; } .ds-icon:hover { background: rgba(0,0,0,0.05); } .ds-mark:focus-visible, .ds-tab:focus-visible, .ds-icon:focus-visible { outline: 2px solid #4285F4; outline-offset: 2px; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "Portfolio chrome",
+    "overview": "naijei.com is a personal portfolio set in Google's product chrome: Google Sans, ink on a white page, and night text on a near-black page. The page opens dark unless a stored theme says light. The layout is one column. Blue, red, yellow, and green mark a section, a site, a step, or a status strip. The page ground stays white or night.\n\nPanels are white or raised night, with a hairline and a large corner. Controls are pills. The N mark is a small blue ring with the letter inside. Light panels carry a soft card shadow. Dark panels use the raised fill instead. A 22px dot grid fades behind the public hero and the admin page. The public config also carries Caveat and the wordmark animations. The admin config keeps the same colors, the sans and mono families, and both shadows.",
+    "keyCharacteristics": [
+      "Dark unless the stored theme is light",
+      "Google Sans at weight 500 for titles and controls",
+      "Four marker colors, with Blue Ink for actions",
+      "Pills for controls and 1.5rem corners for panels",
+      "Soft card shadow on light panels only"
+    ],
+    "rules": [
+      {
+        "name": "The Marker Rule",
+        "body": "Blue, red, yellow, and green mark a difference: a section, a site, a step, or a status strip. Blue Ink is the action color on a light page. The page ground stays white or night.",
+        "section": "colors"
+      },
+      {
+        "name": "The Medium Weight Rule",
+        "body": "Titles and controls use weight 500. Weight 700 is reserved for the N in the mark.",
+        "section": "typography"
+      },
+      {
+        "name": "The Light Shadow Rule",
+        "body": "A dark panel does not wear a drop shadow. Its depth is the raised fill and the hairline.",
+        "section": "elevation"
+      },
+      {
+        "name": "The Pill and Panel Rule",
+        "body": "If it is pressed or typed into, it is a pill. If it holds a group of content, it is a panel with a 1.5rem corner.",
+        "section": "shapes"
+      }
+    ],
+    "dos": [
+      "**Do** default to dark unless the stored theme is light.",
+      "**Do** keep focus as a 2px Blue ring with a 2px offset.",
+      "**Do** mark the active item with a 3px bar in that item's marker color.",
+      "**Do** keep the page column at 72rem with at least 1.25rem of inline padding.",
+      "**Do** collapse animation and transitions when the user prefers reduced motion."
+    ],
+    "donts": [
+      "**Don't** introduce an accent hue beyond blue, red, yellow, and green.",
+      "**Don't** put a drop shadow on a dark panel.",
+      "**Don't** use Caveat on a surface whose font list does not load it."
+    ]
+  }
+}
