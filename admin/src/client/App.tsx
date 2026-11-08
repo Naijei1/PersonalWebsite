@@ -3,6 +3,20 @@ import Chart from './Chart'
 import type { Overview } from '../shared/overview.js'
 import { addDays, utcDay } from '../shared/range.js'
 
+type HostingReport = {
+  separateFromCollector: true
+  enabled: boolean
+  note: string
+  sources: {
+    id: string
+    label: string
+    status: 'not-configured' | 'ok' | 'no-buckets' | 'unavailable'
+    requests: number | null
+    buckets: { day: string; requests: number }[]
+    coverage: string
+  }[]
+}
+
 type Session = {
   configured: boolean
   authenticated: boolean
@@ -70,6 +84,7 @@ export default function App() {
   const [theme, setTheme] = useState<Theme>(() => (document.documentElement.classList.contains('dark') ? 'dark' : 'light'))
   const [session, setSession] = useState<Session | null>(null)
   const [overview, setOverview] = useState<Overview | null>(null)
+  const [hosting, setHosting] = useState<HostingReport | null>(null)
   const [status, setStatus] = useState<'loading' | 'ready' | 'error'>('loading')
   const [message, setMessage] = useState<string | null>(null)
   const [flash, setFlash] = useState<string | null>(null)
@@ -119,6 +134,7 @@ export default function App() {
       setSession(nextSession)
       if (!nextSession.authenticated && nextSession.preview === 'off') {
         setOverview(null)
+        setHosting(null)
         setStatus('ready')
         return
       }
@@ -126,6 +142,7 @@ export default function App() {
       if (overviewResponse.status === 401) {
         setSession({ ...nextSession, authenticated: false })
         setOverview(null)
+        setHosting(null)
         setStatus('ready')
         return
       }
@@ -134,8 +151,11 @@ export default function App() {
         throw new Error(body?.error === 'bad-range' || body?.error === 'bad-date' ? 'That date range is not valid.' : 'The range could not be loaded.')
       }
       const nextOverview = (await overviewResponse.json()) as Overview
+      const hostingResponse = await fetch(`/api/hosting?${query}`, { headers: { accept: 'application/json' } })
+      const nextHosting = hostingResponse.ok ? ((await hostingResponse.json()) as HostingReport) : null
       if (cancelled) return
       setOverview(nextOverview)
+      setHosting(nextHosting)
       setStatus('ready')
       setMessage(null)
     }
@@ -279,6 +299,7 @@ export default function App() {
         {showDashboard && overview && (
           <Dashboard
             overview={overview}
+            hosting={hosting}
             flash={flash}
             onPreset={(days) =>
               pushQuery((next) => {
@@ -379,12 +400,14 @@ function Login({ configured, flash }: { configured: boolean; flash: string | nul
 
 function Dashboard({
   overview,
+  hosting,
   flash,
   onPreset,
   onRange,
   onExport,
 }: {
   overview: Overview
+  hosting: HostingReport | null
   flash: string | null
   onPreset: (days: number) => void
   onRange: (from: string, to: string) => void
@@ -509,6 +532,8 @@ function Dashboard({
         )}
       </section>
 
+      {hosting && <HostingPanel report={hosting} />}
+
       <div className="mt-8 grid gap-8 lg:grid-cols-2">
         <DataTable
           title="Top pages"
@@ -571,6 +596,54 @@ function Dashboard({
       </section>
       <p className="mt-12 text-sm text-ink-faint dark:text-night-soft">Private admin for the naijei.com family.</p>
     </div>
+  )
+}
+
+function HostingPanel({ report }: { report: HostingReport }) {
+  return (
+    <section className="surface mt-8 p-5 sm:p-8" aria-labelledby="hosting-title">
+      <h2 id="hosting-title" className="text-xl font-medium tracking-[-0.03em]">
+        Hosting requests
+      </h2>
+      <p className="mt-3 max-w-[68ch] text-sm leading-6 text-ink-soft dark:text-night-soft">{report.note}</p>
+      <ul className="mt-6 space-y-5">
+        {report.sources.map((source) => (
+          <li key={source.id} className="border-t border-black/[0.06] pt-4 dark:border-white/[0.06]">
+            <div className="flex flex-wrap items-baseline justify-between gap-3">
+              <h3 className="text-base font-medium">{source.label}</h3>
+              <p className="text-sm tabular-nums">
+                {source.status === 'ok' && source.requests !== null
+                  ? `${formatNumber(source.requests)} requests`
+                  : source.status === 'no-buckets'
+                    ? 'No buckets'
+                    : source.status === 'not-configured'
+                      ? 'Not configured'
+                      : 'Unavailable'}
+              </p>
+            </div>
+            <p className="mt-2 max-w-[68ch] text-sm leading-6 text-ink-soft dark:text-night-soft">{source.coverage}</p>
+            {source.buckets.length > 0 && (
+              <table className="mt-3 w-full text-left text-sm">
+                <thead className="text-ink-soft dark:text-night-soft">
+                  <tr>
+                    <th className="pb-2 font-medium">UTC bucket</th>
+                    <th className="pb-2 text-right font-medium">Requests</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {source.buckets.map((bucket) => (
+                    <tr key={bucket.day} className="border-t border-black/[0.06] dark:border-white/[0.06]">
+                      <td className="py-2 tabular-nums">{formatDay(bucket.day)}</td>
+                      <td className="py-2 text-right tabular-nums">{formatNumber(bucket.requests)}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            )}
+          </li>
+        ))}
+      </ul>
+    </section>
   )
 }
 

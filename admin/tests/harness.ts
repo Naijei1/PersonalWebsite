@@ -6,6 +6,7 @@ import { join } from 'node:path'
 import { createApp, type CreateAppOptions } from '../src/server/app.js'
 import { loadConfig, type AppConfig } from '../src/server/config.js'
 import type { IdentityProvider } from '../src/server/google.js'
+import type { MetricQuerier } from '../src/server/hosting.js'
 import type { OauthTxn } from '../src/server/session.js'
 
 export const SECRET = '0123456789abcdef0123456789abcdef'
@@ -71,7 +72,13 @@ export function scriptedProvider(next: unknown): IdentityProvider {
 }
 
 export async function withServer(
-  options: { config?: AppConfig; provider?: IdentityProvider; now?: () => Date; collectPerMinute?: number },
+  options: {
+    config?: AppConfig
+    provider?: IdentityProvider
+    now?: () => Date
+    collectPerMinute?: number
+    hostingQuery?: MetricQuerier
+  },
   fn: (ctx: { base: string; origin: string; config: AppConfig }) => Promise<void>,
 ): Promise<void> {
   const dir = mkdtempSync(join(tmpdir(), 'naijei-admin-'))
@@ -81,6 +88,7 @@ export async function withServer(
     dataFile: join(dir, 'events.ndjson'),
     now: options.now ?? (() => new Date('2026-11-08T15:00:00.000Z')),
     collectPerMinute: options.collectPerMinute,
+    ...(options.hostingQuery ? { hostingQuery: options.hostingQuery } : {}),
   }
   if (options.provider) createOptions.provider = options.provider
   const app = createApp(createOptions)

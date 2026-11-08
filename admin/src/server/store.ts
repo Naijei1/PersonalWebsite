@@ -1,5 +1,5 @@
 import { createHash } from 'node:crypto'
-import { appendFileSync, existsSync, mkdirSync, readFileSync } from 'node:fs'
+import { appendFileSync, existsSync, mkdirSync, readFileSync, renameSync, writeFileSync } from 'node:fs'
 import { dirname } from 'node:path'
 import type { StoredEvent } from '../shared/overview.js'
 
@@ -59,6 +59,25 @@ export class EventStore {
     if (stored.eventHash) this.eventHashes.add(stored.eventHash)
     if (stored.visitHash) this.recent.set(recentKey, received)
     return 'stored'
+  }
+
+  /** Drops events whose UTC day is strictly before `cutoff`. Rewrites the file when anything is removed. */
+  prune(cutoff: string): number {
+    const kept = this.events.filter((event) => event.day >= cutoff)
+    const removed = this.events.length - kept.length
+    if (removed === 0) return 0
+    this.events = kept
+    this.eventHashes = new Set(kept.flatMap((event) => (event.eventHash ? [event.eventHash] : [])))
+    this.rewrite()
+    return removed
+  }
+
+  private rewrite(): void {
+    mkdirSync(dirname(this.file), { recursive: true })
+    const tmp = `${this.file}.tmp`
+    const body = this.events.map((event) => JSON.stringify(event)).join('\n')
+    writeFileSync(tmp, body.length > 0 ? `${body}\n` : '')
+    renameSync(tmp, this.file)
   }
 }
 

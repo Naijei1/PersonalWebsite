@@ -63,7 +63,7 @@ test('production ignores demo mode and refuses a short secret', () => {
 test('production boot lists missing setting names and not values', () => {
   const secret = 'super-secret-value'
   const missing = productionBlockers(loadConfig({ NODE_ENV: 'production', GOOGLE_CLIENT_SECRET: secret }))
-  assert.deepEqual(missing, ['APP_ORIGIN', 'GOOGLE_CLIENT_ID', 'SESSION_SECRET'])
+  assert.deepEqual(missing, ['APP_ORIGIN', 'GOOGLE_CLIENT_ID', 'SESSION_SECRET', 'DATA_FILE'])
   assert.equal(missing.join(' ').includes(secret), false)
 })
 

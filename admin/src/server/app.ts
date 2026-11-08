@@ -7,9 +7,10 @@ import { decideAccess, digestEqual } from './access.js'
 import { looksLikeBot, validateEvent } from '../shared/events.js'
 import { SITES, siteById } from '../shared/inventory.js'
 import { aggregate, demoOverview, emptyOverview, type Overview } from '../shared/overview.js'
-import { parseRange, utcDay } from '../shared/range.js'
+import { addDays, parseRange, utcDay } from '../shared/range.js'
 import type { AppConfig } from './config.js'
 import { GoogleIdentityProvider, type IdentityProvider } from './google.js'
+import { loadHosting, type HostingCache, type MetricQuerier } from './hosting.js'
 import { RateLimiter } from './limit.js'
 import { adminSession, newTxn, oauthSession } from './session.js'
 import { EventStore, keyHash, type NewEvent } from './store.js'
@@ -20,6 +21,7 @@ export type CreateAppOptions = {
   provider?: IdentityProvider
   now?: () => Date
   collectPerMinute?: number
+  hostingQuery?: MetricQuerier
 }
 
 const CLIENT_DIR = fileURLToPath(new URL('../../dist/client/', import.meta.url))
@@ -29,8 +31,13 @@ export function createApp(options: CreateAppOptions): express.Express {
   if (options.provider && config.nodeEnv === 'production') {
     throw new Error('Refusing an injected identity provider in production.')
   }
+  if (config.nodeEnv === 'production' && config.demo !== 'off') {
+    throw new Error('Refusing demo data in production.')
+  }
   const now = options.now ?? (() => new Date())
   const store = EventStore.open(options.dataFile)
+  if (config.retentionDays) store.prune(addDays(utcDay(now()), -config.retentionDays))
+  const hostingCache: HostingCache = new Map()
   const provider =
     options.provider ??
     (config.authReady && config.appOrigin && config.googleClientId && config.googleClientSecret
@@ -101,6 +108,33 @@ export function createApp(options: CreateAppOptions): express.Express {
       return
     }
     res.json(built)
+  }))
+
+  app.get('/api/hosting', asyncRoute(async (req, res) => {
+    if (!(await guardData(req, res, config))) return
+    const built = buildOverview(req, store, config, now)
+    if ('error' in built) {
+      res.status(400).json({ error: built.error })
+      return
+    }
+    let query = options.hostingQuery
+    if (config.hosting === 'on' && !query) {
+      try {
+        const { createCloudWatchQuerier } = await import('./cloudwatch.js')
+        query = createCloudWatchQuerier()
+      } catch {
+        query = undefined
+      }
+    }
+    const report = await loadHosting({
+      mode: config.demo === 'off' ? config.hosting : 'off',
+      site: built.site,
+      range: built.range,
+      now: now(),
+      cache: hostingCache,
+      ...(query && config.demo === 'off' ? { query } : {}),
+    })
+    res.json(report)
   }))
 
   app.get('/api/export', asyncRoute(async (req, res) => {

@@ -49,10 +49,15 @@ Copy `.env.example` to `.env` when you are ready to fill in secrets. The server 
 
 ## Google sign-in
 
-You create the OAuth client. This change does not.
+You create the OAuth client in Google Cloud project `cs-5414` after Cornell SSO and Duo. This change does not. Use a new Web client. Do not modify the Gnarly client. The full field list is in `docs/oauth.md`.
+
+Authorized redirect URIs:
+
+- `https://admin.naijei.com/auth/callback`
+- `http://127.0.0.1:8787/auth/callback`
 
 1. In Google Cloud Console, create an OAuth client of type Web application.
-2. Add the redirect URI exactly: `https://admin.naijei.com/auth/callback` and, for local use, `http://127.0.0.1:8787/auth/callback`.
+2. Add those two redirect URIs exactly, and the same two origins without the path.
 3. Put the client id and secret in `GOOGLE_CLIENT_ID` and `GOOGLE_CLIENT_SECRET`.
 4. Set `APP_ORIGIN` to the same origin as the redirect, with no path and no trailing slash. Allowed values are `https://admin.naijei.com` and `http://127.0.0.1:<port>` or `http://localhost:<port>` (port 1024–65535).
 5. Set `SESSION_SECRET` to at least 32 characters (`openssl rand -base64 32`).
@@ -69,7 +74,11 @@ Google’s network login was not exercised here. There is no OAuth client in thi
 
 Set `VISITOR_HASH_SALT` (16+ characters) as well, or estimated uniques stay unavailable.
 
-The snippet lives in `src/collector` and `collector/example/index.html`. It is not imported by the public site. `install()` does nothing unless `enabled` is exactly `true`. It loads as a module, sends `location.pathname` and the referrer hostname only, caps how often it sends, and swallows errors.
+The snippet lives in `src/collector` and `collector/example/index.html`. The public site does not import it. `install()` does nothing unless `enabled` is exactly `true`. It loads as a module, sends `location.pathname` and the referrer hostname only, caps how often it sends, and swallows errors. Per-site notes are in `docs/adoption.md`.
+
+## Hosting requests
+
+Optional and off. When `HOSTING_METRICS=1` is paired with region `us-east-1` and account `402275401617`, the server reads two Amplify `Requests` series. Those counts include assets and bots. They are not pageviews and they are not mixed into the collector totals. Unconfigured, failed, and unverified sources stay null. Details and the deployment sketch are in `docs/hosting.md`.
 
 Adopt it per document, after review. A view under `/gnarly` on `naijei.com` is stored as Gnarly, not also as the main site. Do not install the snippet twice on the same document.
 

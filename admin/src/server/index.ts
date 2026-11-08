@@ -9,7 +9,7 @@ if (blockers.length > 0) {
   process.exit(1)
 }
 
-const dataFile = process.env.DATA_FILE || fileURLToPath(new URL('../../data/events.ndjson', import.meta.url))
+const dataFile = config.dataFile || fileURLToPath(new URL('../../data/events.ndjson', import.meta.url))
 const host = process.env.HOST || '127.0.0.1'
 const app = createApp({ config, dataFile })
 

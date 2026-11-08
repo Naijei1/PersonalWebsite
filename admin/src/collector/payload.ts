@@ -72,12 +72,13 @@ export function buildBody(input: {
   referrer: string
   visitId: string | null
   visitorId: string | null
-  eventId: string
+  eventId: string | null
 }): string | null {
   const host = cleanHost(input.host)
   const path = cleanPath(input.path)
   if (!host || !path || !resolveSite(host, path)) return null
-  const body: Record<string, string> = { host, path, eventId: input.eventId }
+  const body: Record<string, string> = { host, path }
+  if (input.eventId) body.eventId = input.eventId
   const referrerHost = referrerHostname(input.referrer)
   if (referrerHost) body.referrerHost = referrerHost
   if (input.visitId) body.visitId = input.visitId

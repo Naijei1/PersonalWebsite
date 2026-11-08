@@ -5,9 +5,9 @@ const VISITOR_KEY = 'naijei_visitor'
 const GATE_KEY = 'naijei_sent'
 const VISIT_MS = 30 * 60 * 1000
 
-function uuid(): string {
+function uuid(): string | null {
   if (typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function') return crypto.randomUUID()
-  return '00000000-0000-4000-8000-000000000000'
+  return null
 }
 
 function readGate(): ClientGate | null {
@@ -41,6 +41,7 @@ function visitorId(): string | null {
     const existing = localStorage.getItem(VISITOR_KEY)
     if (existing) return existing
     const created = uuid()
+    if (!created) return null
     localStorage.setItem(VISITOR_KEY, created)
     return created
   } catch {
