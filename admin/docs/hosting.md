@@ -41,7 +41,9 @@ It does not query Lambda `Invocations` or `UrlRequestCount`. Those series exist 
 
 Queries are capped at 90 UTC days, one `GetMetricData` call, and cached for an hour. A failed or unconfigured source does not become zero and is not added to collector pageviews. A bucket CloudWatch actually returns as 0 stays 0 for that bucket only. Days with no bucket are omitted.
 
-Attach a read-only identity policy only when you choose to enable this. `iam-hosting-metrics.json` is the IAM Policy Autopilot baseline for `GetMetricData`. It is not applied. Autopilot scoped the resource to a CloudWatch dataset ARN. Standard `AWS/AmplifyHosting` metrics are often authorized with `Resource: "*"` instead, so confirm the example in IAM before attaching it.
+`iam-hosting-metrics.json` is a directly usable identity policy. It is not attached to any role.
+
+The live service authorization reference lists `cloudwatch:GetMetricData` against the `dataset` resource (`arn:aws:cloudwatch:region:account:dataset/DatasetId`) and does not list `cloudwatch:namespace` as a condition key for that action. `cloudwatch:namespace` is documented only for `cloudwatch:PutMetricData`. `AWS/AmplifyHosting` `Requests` is a standard metric, not a CloudWatch dataset, so a `dataset/*` resource does not authorize this call. AWS grants `cloudwatch:Get*` on `Resource: "*"` in the managed `CloudWatchReadOnlyAccess` policy for the same reason. Metric name, namespace, and dimension cannot be limited in IAM for `GetMetricData`. This app's source allowlist is what keeps the query to the two Amplify app ids. The policy limits the call with `aws:RequestedRegion` = `us-east-1`, which is a global condition key the CloudWatch permissions reference allows on CloudWatch actions.
 
 ## Collector
 

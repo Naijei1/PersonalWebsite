@@ -1,34 +1,23 @@
 # Google OAuth client for admin.naijei.com
 
-Create a new Web application client in Google Cloud project `cs-5414`. Opening that project needs Cornell SSO and Duo in your own browser. This repository does not create the client, and it does not read or store the secret.
+Create a new Web application client in Google Cloud project `cs-5414`. Opening that project needs Cornell SSO and Duo in your own browser. This repository does not create the client and does not read a secret. No client exists yet.
 
-Do not edit the existing Gnarly Cognito client or any Google client already used by Gnarly. Admin sign-in is a separate client.
+Do not edit the existing Gnarly client. Leave the project's Cornell Internal audience as it is. Do not switch it to External, and do not move the shared consent screen to Testing or add test users.
 
-## Exact console values
+## What the server actually uses
 
-Application type: Web application
+Sign-in is a server redirect, not the Google Identity Services script. `GET /auth/google` sends the browser to Google's authorization endpoint. Google sends it back to the redirect URI. The server then exchanges the code using the client secret, PKCE, state, and nonce. JavaScript origins are not part of this flow. Leave that field empty.
 
-Name: `naijei admin`
-
-Authorized JavaScript origins:
-
-- `https://admin.naijei.com`
-- `http://127.0.0.1:8787`
-
-Authorized redirect URIs:
+Authorized redirect URIs, with no trailing slash and no query:
 
 - `https://admin.naijei.com/auth/callback`
 - `http://127.0.0.1:8787/auth/callback`
 
-The redirect URI has no trailing slash, no query string, and no port on the public host. `APP_ORIGIN` must be exactly `https://admin.naijei.com` in production and exactly `http://127.0.0.1:8787` for that local client. A localhost origin is a different URI. Do not add `https://naijei.com` or `https://naijei.com/gnarly/`.
+`APP_ORIGIN` must be exactly `https://admin.naijei.com` in production and exactly `http://127.0.0.1:8787` for the local URI. `http://localhost:8787` is a different redirect. Do not add `https://naijei.com` or `https://naijei.com/gnarly/`.
 
-OAuth consent screen, while the app stays in Testing:
+The authorization request scope is `openid email`. `email_verified` must be the boolean `true`. The allowlist is exactly `nj277@cornell.edu`. `hd=cornell.edu` is only a hint.
 
-- User type: External
-- Test user: `nj277@cornell.edu`
-- Scopes: `openid`, `email`, and `.../auth/userinfo.email`
-
-The server requests only `openid email`. `email_verified` must come back as the boolean `true`. The allowlist is exactly `nj277@cornell.edu`. `hd=cornell.edu` is only a hint.
+Google may ask to add `naijei.com` as an authorized domain because the public redirect host is `admin.naijei.com`. That approval is the pending owner step. It is not a reason to edit the rest of the shared consent screen.
 
 ## Server settings
 
@@ -39,4 +28,4 @@ Put the client id and secret in the admin process environment, not in a `VITE_` 
 - `GOOGLE_CLIENT_SECRET`
 - `SESSION_SECRET` of at least 32 characters
 
-Production refuses to start when any of those is missing, when `DATA_FILE` is not an absolute path, or when `ADMIN_DEMO` is set. Demo numbers are never served in real data mode.
+Production also requires `DATA_FILE` to be an absolute path. It ignores `ADMIN_DEMO`, so fixture numbers are not served. It still boots if that variable is present.

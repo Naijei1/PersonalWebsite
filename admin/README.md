@@ -56,15 +56,15 @@ Authorized redirect URIs:
 - `https://admin.naijei.com/auth/callback`
 - `http://127.0.0.1:8787/auth/callback`
 
-1. In Google Cloud Console, create an OAuth client of type Web application.
-2. Add those two redirect URIs exactly, and the same two origins without the path.
+1. In Google Cloud Console, create an OAuth client of type Web application. Leave the Cornell Internal audience unchanged.
+2. Add those two redirect URIs exactly. Leave Authorized JavaScript origins empty. This server does not use the Google JavaScript sign-in library.
 3. Put the client id and secret in `GOOGLE_CLIENT_ID` and `GOOGLE_CLIENT_SECRET`.
 4. Set `APP_ORIGIN` to the same origin as the redirect, with no path and no trailing slash. Allowed values are `https://admin.naijei.com` and `http://127.0.0.1:<port>` or `http://localhost:<port>` (port 1024–65535).
 5. Set `SESSION_SECRET` to at least 32 characters (`openssl rand -base64 32`).
 
 The server uses `openid-client` (authorization code, PKCE, state, nonce, ID token checks) and `iron-session` (encrypted httpOnly cookie, SameSite=Lax, 12-hour TTL). The allowlist is the exact address `nj277@cornell.edu`, and `email_verified` must be the boolean `true`. Other accounts, missing claims, and the string `"true"` are refused. A `hd=cornell.edu` hint is sent to Google and is not the security check.
 
-Production (`NODE_ENV=production`) exits on startup if those four settings are missing or unusable. It also ignores `ADMIN_DEMO`.
+Production (`NODE_ENV=production`) exits on startup if those four settings are missing or unusable, or if `DATA_FILE` is not an absolute path. It ignores `ADMIN_DEMO` and still boots when that variable is present.
 
 Google’s network login was not exercised here. There is no OAuth client in this repo.
 

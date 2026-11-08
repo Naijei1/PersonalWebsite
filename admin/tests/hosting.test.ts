@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict'
-import { mkdtempSync, rmSync } from 'node:fs'
+import { mkdtempSync, readFileSync, rmSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { test } from 'node:test'
@@ -12,6 +12,20 @@ import { SECRET, apiHeaders, testConfig, withServer } from './harness.js'
 
 const now = new Date('2026-11-08T15:00:00.000Z')
 const range = { from: '2026-10-12', to: '2026-11-08' }
+
+test('the hosting IAM example is a usable identity policy for standard metrics', () => {
+  const policy = JSON.parse(readFileSync(new URL('../docs/iam-hosting-metrics.json', import.meta.url), 'utf8'))
+  assert.equal(policy.Version, '2012-10-17')
+  assert.equal('Policies' in policy, false)
+  assert.equal(policy.Statement.length, 1)
+  const statement = policy.Statement[0]
+  assert.equal(statement.Effect, 'Allow')
+  assert.equal(statement.Action, 'cloudwatch:GetMetricData')
+  assert.equal(statement.Resource, '*')
+  assert.deepEqual(statement.Condition, { StringEquals: { 'aws:RequestedRegion': 'us-east-1' } })
+  assert.equal(JSON.stringify(policy).includes('dataset'), false)
+  assert.equal(JSON.stringify(policy).includes('cloudwatch:namespace'), false)
+})
 
 test('hosting sources stay on the verified allowlist', () => {
   assert.deepEqual(

@@ -1,22 +1,16 @@
 {
-  "Policies": [
+  "Version": "2012-10-17",
+  "Statement": [
     {
-      "Policy": {
-        "Id": "IamPolicyAutopilot",
-        "Version": "2012-10-17",
-        "Statement": [
-          {
-            "Effect": "Allow",
-            "Action": [
-              "cloudwatch:GetMetricData"
-            ],
-            "Resource": [
-              "arn:aws:cloudwatch:us-east-1:402275401617:dataset/*"
-            ]
-          }
-        ]
-      },
-      "PolicyType": "Identity"
+      "Sid": "ReadCloudWatchMetricsInUsEast1",
+      "Effect": "Allow",
+      "Action": "cloudwatch:GetMetricData",
+      "Resource": "*",
+      "Condition": {
+        "StringEquals": {
+          "aws:RequestedRegion": "us-east-1"
+        }
+      }
     }
   ]
 }
