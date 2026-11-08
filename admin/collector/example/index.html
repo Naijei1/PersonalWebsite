@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Collector example · not installed</title>
+  </head>
+  <body>
+    <main>
+      <h1>Collector example</h1>
+      <p>
+        This file is not linked from naijei.com, and the snippet below is not running.
+        Copy it into a site only after you choose to opt in. The script does nothing
+        unless <code>enabled</code> is exactly <code>true</code>. It loads as a module,
+        sends one bounded page event, and ignores its own failures.
+      </p>
+      <pre><code>&lt;script type="module"&gt;
+  import { install } from './collect.js'
+  install({
+    enabled: true,
+    endpoint: 'https://admin.naijei.com/api/collect',
+    key: 'REPLACE_WITH_INGEST_KEY',
+    hosts: ['naijei.com', 'www.naijei.com']
+  })
+&lt;/script&gt;</code></pre>
+      <p>
+        Use one snippet per document. A page on naijei.com/gnarly is counted as Gnarly
+        from its path, so the main site and Gnarly should not both send the same view.
+        The ingest key can only submit events. It cannot read the dashboard.
+      </p>
+    </main>
+  </body>
+</html>
