@@ -27,11 +27,13 @@ test('share metadata is present', () => {
   assert.match(app, /Skip to content/)
 })
 
-test('reduced motion turns the sweep off and leaves the route line alone', () => {
-  const block = css.match(/@media\s*\(\s*prefers-reduced-motion:\s*reduce\s*\)\s*\{([\s\S]*?)\n\}/)
-  assert.ok(block, 'missing prefers-reduced-motion block')
-  assert.match(block[1], /\.sweep\s*\{[^}]*animation:\s*none/)
-  assert.doesNotMatch(block[1], /\.tape\b[^}]*\{[^}]*(?:display:\s*none|visibility:\s*hidden|opacity:\s*0)/)
+test('reduced motion turns the scan off and leaves the route line alone', () => {
+  const start = css.indexOf('@media (prefers-reduced-motion: reduce)')
+  assert.ok(start >= 0, 'missing prefers-reduced-motion block')
+  const block = css.slice(start)
+  assert.match(block, /\.scan-route\b[\s\S]*?animation:\s*none/)
+  assert.match(block, /stroke-dashoffset:\s*0/)
+  assert.doesNotMatch(block, /\.tape\b[^}]*\{[^}]*(?:display:\s*none|visibility:\s*hidden|opacity:\s*0)/)
 })
 
 test('unconfirmed claims and teammate names stay off the page', () => {

@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react'
 import { NavigateDiagram, PublishDiagram, ScanDiagram } from './diagrams'
+import { HeroScan } from './hero-scan'
 
 const liveMap = 'https://naijei.com/gnarly/'
 const film = 'https://youtu.be/XkmW11bmEXg'
@@ -29,7 +30,7 @@ function Tape() {
 }
 
 const pageLinks = [
-  { href: film, label: 'Watch the demo', external: true },
+  { href: '#film', label: 'Watch the demo', external: false },
   { href: code, label: 'View the code', external: true },
   { href: home, label: 'naijei.com', external: false },
 ]
@@ -80,66 +81,46 @@ export default function App() {
           <span className="bar-short">Live map</span>
         </a>
       </header>
-      <div className="sweep" aria-hidden="true" />
       <main id="content">
         <section className="hero" aria-labelledby="hero-title">
           <Tape />
-          <div className="hero-grid">
-            <div>
-              <h1 id="hero-title" className="sign-title">
-                Scan a building. Walk it in AR.
-              </h1>
-              <p className="lede">
-                Gnarly turns a LiDAR iPhone scan into turn-by-turn indoor navigation — on the phone, in the
-                space itself.
-              </p>
-              <div className="actions">
-                <a className="btn btn-primary" href={liveMap}>
-                  Open the live map
-                </a>
-                <Out className="btn btn-line" href={film}>
-                  Watch the demo
-                </Out>
-                <Out className="text-link" href={code}>
-                  View the code
-                </Out>
-              </div>
-            </div>
-            <figure>
-              <Out className="film" href={film}>
-                <img
-                  src={frame}
-                  width={1180}
-                  height={560}
-                  alt=""
-                  fetchPriority="high"
-                />
-                <span className="sr-only">
-                  Frame from the demo film: a phone route planner beside two people in a hallway.
-                </span>
-                <span className="film-label" aria-hidden="true">
-                  Watch the demo
-                </span>
+          <div className="hero-scene">
+            <HeroScan />
+          </div>
+          <div className="hero-copy">
+            <h1 id="hero-title" className="sign-title">
+              Scan a building. Walk it in AR.
+            </h1>
+            <p className="lede">
+              Gnarly turns a LiDAR iPhone scan into turn-by-turn indoor navigation — on the phone, in the space
+              itself.
+            </p>
+            <div className="actions">
+              <a className="btn btn-primary" href={liveMap}>
+                Open the live map
+              </a>
+              <a className="text-link" href="#film">
+                Watch the demo
+              </a>
+              <Out className="text-link" href={code}>
+                View the code
               </Out>
-              <figcaption className="caption">
-                Frame from the demo film. This still is not the North Hall sample.
-              </figcaption>
-            </figure>
+            </div>
           </div>
         </section>
 
-        <section className="band" id="problem" aria-labelledby="problem-title">
+        <section className="band band-tight" id="problem" aria-labelledby="problem-title">
           <Tape />
           <h2 id="problem-title">GPS stops at the door.</h2>
           <p className="lede">
             Inside a building, maps go stale and signs run out. Gnarly maps the rooms as they are, from the phone
             in your hand.
           </p>
-          <ul className="proofs">
-            <li>Scanned from the device</li>
-            <li>No beacons to install</li>
-            <li>The route draws in AR</li>
-          </ul>
+          <p className="facts">
+            <span>Scanned from the device</span>
+            <span>No beacons to install</span>
+            <span>The route draws in AR</span>
+          </p>
         </section>
 
         <section className="band" id="scan" aria-labelledby="scan-title">
@@ -152,14 +133,13 @@ export default function App() {
               </p>
             </div>
             <figure className="phone">
-            <div className="stage">
-              <ScanDiagram />
-              <p className="plate-label">Capture pending</p>
-            </div>
-            <figcaption className="caption">
-              Diagram of a LiDAR sweep and a walked path. This is not a recorded scan.
-            </figcaption>
-          </figure>
+              <div className="drawing">
+                <ScanDiagram />
+              </div>
+              <figcaption className="caption">
+                Capture pending. Diagram of a LiDAR sweep and a walked path, not a recorded scan.
+              </figcaption>
+            </figure>
           </div>
         </section>
 
@@ -169,14 +149,12 @@ export default function App() {
           <p className="lede">
             The web editor places zones on each floor, links elevators, and publishes the map to the cloud library.
           </p>
-          <figure>
-            <div className="stage">
-              <PublishDiagram />
-              <p className="plate-label">Capture pending</p>
-            </div>
+          <figure className="drawing drawing-wide">
+            <PublishDiagram />
             <figcaption className="caption">
-              Diagram of two zones joined through an elevator. Not a capture of North Hall. North Hall is the
-              labeled sample in the live map, and some other buildings in that list are still incomplete.
+              Capture pending. Diagram of two zones joined through an elevator, not a capture of North Hall.
+              North Hall is the labeled sample in the live map, and some other buildings in that list are still
+              incomplete.
             </figcaption>
           </figure>
         </section>
@@ -185,7 +163,6 @@ export default function App() {
           <Tape />
           <figure className="corridor">
             <NavigateDiagram />
-            <p className="plate-label">Capture pending</p>
           </figure>
           <div className="sign">
             <h2 id="navigate-title">Follow the path in the room itself.</h2>
@@ -194,10 +171,29 @@ export default function App() {
               stands in the way.
             </p>
             <p className="caption">
-              Diagram of a floor-aligned route. An AR recording of a real corridor has not been captured for this
-              page.
+              Capture pending. Diagram of a floor-aligned route. An AR recording of a real corridor has not been
+              captured for this page.
             </p>
           </div>
+        </section>
+
+        <section className="band" id="film" aria-labelledby="film-title">
+          <Tape />
+          <h2 id="film-title">Watch the walkthrough.</h2>
+          <p className="lede">
+            The recording is the demo film. This frame is not the North Hall sample.
+          </p>
+          <figure className="film-figure">
+            <Out className="film" href={film}>
+              <img src={frame} width={1180} height={560} alt="" loading="lazy" />
+              <span className="sr-only">
+                Frame from the demo film: a phone route planner beside two people in a hallway.
+              </span>
+            </Out>
+            <figcaption className="caption">
+              <Out href={film}>Watch the demo</Out>
+            </figcaption>
+          </figure>
         </section>
 
         <section className="band" id="demo" aria-labelledby="demo-title">

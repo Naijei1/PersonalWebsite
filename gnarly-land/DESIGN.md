@@ -128,7 +128,7 @@ Motion is one pass. A brighter segment travels down the first screen along the t
 - Pathway Extreme Variable, condensed on the signs
 - Pills for actions and 1.25rem frames for the film and the stage
 - Hairlines on a flat night
-- One sweep, removed when motion is reduced
+- One scan: points gather, then the route draws, and reduced motion shows the finished drawing
 
 ## Colors
 
@@ -137,7 +137,7 @@ Night ground, fog text, and a single teal route. The pale slab is a change of li
 ### Primary
 
 - **Route Teal** (`#12b5cb`): The standing tape, the primary pill, links, selection, and the route inside the diagrams. On the night ground this is the accent.
-- **Hot Tape** (`#9ae7f2`): The same route, brighter. Primary pill hover, and the moving segment of the sweep.
+- **Hot Tape** (`#9ae7f2`): The same route, brighter. Primary pill hover.
 - **Corridor Teal** (`#0a5c68`): The tape, the links, and the selection on the pale slab. Also the scrollbar thumb against the night ground.
 - **Tape Text** (`#062026`): Type and marks that sit on the route: the primary pill, the film pill, the skip link, selection text, and the chevrons on the corridor path.
 
@@ -153,7 +153,7 @@ Night ground, fog text, and a single teal route. The pale slab is a change of li
 - **Day Fog** (`#3e5258`): Secondary text on the team band.
 - **Day Hairline** (`rgba(16, 34, 38, 0.16)`): Hairlines on the team band.
 
-**The One Tape Rule.** Route teal is the only accent on the night. On the pale slab the tape, the links, and the selection switch to corridor teal. Hot tape is a lighter step of the same route, used for the primary hover and the sweep.
+**The One Tape Rule.** Route teal is the only accent on the night. On the pale slab the tape, the links, and the selection switch to corridor teal. Hot tape is a lighter step of the same route, used for the primary hover.
 
 **The One Slab Rule.** Team paper is the team band. Every other chapter stays on night ground, and plate is only the field inside a frame.
 
@@ -182,7 +182,7 @@ The loaded face is the standard variable cut, weight 100â€“900 and stretch 75%â€
 
 Chapters are full-measure bands. The gutter is the pad: 1.25rem until 960px, then 4.5rem, and never inside the safe area. The right edge mirrors the left. A 2px tape stands at that pad. Type, actions, and the footer start 1.35rem further in.
 
-The first viewport is a grid aligned to its end, at least the screen minus the 4rem bar. From 960px it is two columns, 1.05fr and 0.95fr, with a 3.5rem gap. Below that it stacks with a 2rem gap. The hero pads 1.25rem on top and 2.75rem below; from 960px those become 2rem and 3.5rem. Chapter bands pad `clamp(4.75rem, 12vh, 8rem)` on top and `clamp(2.5rem, 6vh, 4rem)` below. Actions sit 1.75rem under the lede, in a wrapping row with a 0.75rem gap.
+The first viewport is one screen minus the 4rem bar. The scan fills the upper row. The sign, lede, and one primary pill sit in the lower row, left aligned. The demo film is not in this viewport. It is a later chapter. Chapter bands pad `clamp(4.75rem, 12vh, 8rem)` on top and `clamp(2.5rem, 6vh, 4rem)` below, except the problem band, which is shorter. Actions sit 1.75rem under the lede.
 
 The navigate chapter breaks the column. Its corridor is full-bleed. The sign under it returns to the inset, with 1.5rem on top and `clamp(3rem, 8vh, 5.5rem)` below. The scan chapter splits at 960px into text and an 18.5rem phone, with a 4rem gap.
 
@@ -250,9 +250,9 @@ The term is weight 620. The description is fog. A night hairline tops each row. 
 
 The day band. Team paper, day ink, day fog, and the day hairline. For that band the tape and the link are reassigned to corridor teal, so the route, the selection, and any link inside it deepen together. The chapter rhythm is otherwise the same band.
 
-### Route tape and sweep
+### Route tape and scan
 
-A 2px solid tape runs the height of each chapter, including the footer. One fixed segment, 22vh tall, is a vertical fade through hot tape. It plays once, 2.8s, `cubic-bezier(0.16, 1, 0.3, 1)`, from above the first screen to below it, then stays at opacity 0. `prefers-reduced-motion: reduce` sets that animation to none, so the segment never appears. The standing tape is not animated.
+A 2px solid tape runs the height of each chapter, including the footer. It does not animate. The authored motion is the hero scan: returns fade in along the walls, then a route stroke draws to the door, 2.6s, `cubic-bezier(0.16, 1, 0.3, 1)`. The finished drawing is the default, so a failed animation still shows the route. `prefers-reduced-motion: reduce` sets those animations to none and keeps the stroke and the points visible.
 
 ### Diagrams
 
@@ -266,7 +266,7 @@ Line drawings. The scan and the publish diagram sit on plate. The corridor sits 
 - **Do** set the hero and chapter signs in Pathway Extreme Variable under 90% stretch, with tracking at -0.035em.
 - **Do** park the 2px tape in the pad gutter and inset the type by 1.35rem.
 - **Do** use a pill for actions and labels, and a 1.25rem frame for the film and the stage.
-- **Do** leave the sweep as a single 2.8s pass, and remove it under prefers-reduced-motion.
+- **Do** keep the hero scan as the only authored motion, and show the finished route under prefers-reduced-motion.
 
 ### Don't:
 

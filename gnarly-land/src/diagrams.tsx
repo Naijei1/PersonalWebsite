@@ -3,7 +3,7 @@
 export function ScanDiagram() {
   return (
     <svg viewBox="0 0 360 640" role="presentation" aria-hidden="true">
-      <rect width="360" height="640" fill="var(--plate)" />
+      <rect width="360" height="640" fill="none" />
       <rect x="36" y="48" width="288" height="544" rx="8" fill="none" stroke="var(--line)" strokeWidth="2" />
       <path d="M36 430 H250" fill="none" stroke="var(--mute)" strokeWidth="2" />
       <path d="M250 430 V592" fill="none" stroke="var(--mute)" strokeWidth="2" />
@@ -31,12 +31,12 @@ export function ScanDiagram() {
 export function PublishDiagram() {
   return (
     <svg viewBox="0 0 960 460" role="presentation" aria-hidden="true">
-      <rect width="960" height="460" fill="var(--plate)" />
+      <rect width="960" height="460" fill="none" />
       <rect x="48" y="70" width="340" height="300" rx="6" fill="none" stroke="var(--mute)" strokeWidth="2" />
       <rect x="572" y="70" width="340" height="300" rx="6" fill="none" stroke="var(--mute)" strokeWidth="2" />
       <path d="M48 250 H388" fill="none" stroke="var(--line)" strokeWidth="2" />
       <path d="M572 220 H912" fill="none" stroke="var(--line)" strokeWidth="2" />
-      <rect x="448" y="168" width="64" height="64" fill="var(--plate)" stroke="var(--ink)" strokeWidth="2" />
+      <rect x="448" y="168" width="64" height="64" fill="none" stroke="var(--ink)" strokeWidth="2" />
       <path d="M448 200 H512 M480 168 V232" fill="none" stroke="var(--ink)" strokeWidth="2" />
       <path
         d="M120 320 H400 C430 320 448 280 480 200 H760"

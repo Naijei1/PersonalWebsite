@@ -243,7 +243,7 @@
       {
         "name": "reduced",
         "value": "animation: none",
-        "purpose": "prefers-reduced-motion removes the sweep. The standing 2px tape remains."
+        "purpose": "prefers-reduced-motion shows the finished scan. The standing 2px tape remains."
       }
     ],
     "breakpoints": [
@@ -352,12 +352,12 @@
       "Pathway Extreme Variable, condensed on the signs",
       "Pills for actions and 1.25rem frames for the film and the stage",
       "Hairlines on a flat night",
-      "One sweep, removed when motion is reduced"
+      "One scan draw, shown finished when motion is reduced"
     ],
     "rules": [
       {
         "name": "The One Tape Rule",
-        "body": "Route teal is the only accent on the night. On the pale slab the tape, the links, and the selection switch to corridor teal. Hot tape is a lighter step of the same route, used for the primary hover and the sweep.",
+        "body": "Route teal is the only accent on the night. On the pale slab the tape, the links, and the selection switch to corridor teal. Hot tape is a lighter step of the same route, used for the primary hover.",
         "section": "colors"
       },
       {
@@ -401,7 +401,7 @@
       "Do set the hero and chapter signs in Pathway Extreme Variable under 90% stretch, with tracking at -0.035em.",
       "Do park the 2px tape in the pad gutter and inset the type by 1.35rem.",
       "Do use a pill for actions and labels, and a 1.25rem frame for the film and the stage.",
-      "Do leave the sweep as a single 2.8s pass, and remove it under prefers-reduced-motion."
+      "Do keep the hero scan as the only authored motion, and show the finished route under prefers-reduced-motion."
     ],
     "donts": [
       "Don't add a second accent hue. Hot tape is the lighter step of route teal, and corridor teal is that route on paper.",

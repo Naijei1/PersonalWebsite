@@ -19,21 +19,34 @@ test('reduced motion stops the sweep and keeps the route line visible', async ()
     })
     await page.goto('http://127.0.0.1:5198/gnarly-land/', { waitUntil: 'networkidle' })
     const state = await page.evaluate(() => {
-      const sweep = document.querySelector('.sweep')
+      const route = document.querySelector('.scan-route')
+      const point = document.querySelector('.scan-point')
       const tape = document.querySelector('.tape')
-      const sweepStyle = getComputedStyle(sweep)
+      const routeStyle = getComputedStyle(route)
+      const pointStyle = getComputedStyle(point)
       const tapeStyle = getComputedStyle(tape)
       const box = tape.getBoundingClientRect()
+      const routeBox = route.getBoundingClientRect()
       return {
-        animationName: sweepStyle.animationName,
+        routeAnimation: routeStyle.animationName,
+        routeOffset: routeStyle.strokeDashoffset,
+        pointOpacity: Number(pointStyle.opacity),
+        pointAnimation: pointStyle.animationName,
         tapeDisplay: tapeStyle.display,
         tapeVisibility: tapeStyle.visibility,
         tapeOpacity: Number(tapeStyle.opacity),
         tapeWidth: box.width,
         tapeHeight: box.height,
+        routeWidth: routeBox.width,
+        filmInHero: document.querySelector('.hero img') !== null,
       }
     })
-    assert.equal(state.animationName, 'none')
+    assert.equal(state.routeAnimation, 'none')
+    assert.equal(state.pointAnimation, 'none')
+    assert.match(state.routeOffset, /^0(px)?$/)
+    assert.ok(state.pointOpacity > 0.5, `point opacity ${state.pointOpacity}`)
+    assert.ok(state.routeWidth > 8, `route width ${state.routeWidth}`)
+    assert.equal(state.filmInHero, false)
     assert.notEqual(state.tapeDisplay, 'none')
     assert.notEqual(state.tapeVisibility, 'hidden')
     assert.ok(state.tapeOpacity > 0.5, `tape opacity ${state.tapeOpacity}`)
