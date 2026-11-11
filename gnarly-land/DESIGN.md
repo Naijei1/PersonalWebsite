@@ -115,7 +115,7 @@ components:
 
 **Creative North Star: "The Night Corridor"**
 
-Gnarly is a night corridor with one teal route. The ground is near-black, the type is Pathway Extreme Variable, and the path is a solid tape. Signs are condensed. Reading text stays at the font's standard width. Chapters run the full width of the viewport. The film and the diagrams sit in rounded frames. Actions are pills.
+Gnarly is a light page with one dark stage. The stage is a WebGL LiDAR room: points gather, then a teal route draws through them. Pathway Extreme Variable is light and large on that stage. A phone diagram sits on the stage. The nav is a floating white bar. Scan, Publish, and Navigate share one scrolling story. The film is a later chapter. Actions use an 8px corner. Reduced motion shows a static floor plan instead of the WebGL loop.
 
 The palette stays on that one route. A lighter step of the same teal is the primary hover and the single moving segment. One band, the team, turns on a pale slab and deepens the tape so the route still holds. The sticky bar is the same ground, frosted with a 14px blur. Surfaces do not cast shadows.
 
