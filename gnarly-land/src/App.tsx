@@ -184,6 +184,7 @@ export default function App() {
             </div>
             </div>
           </div>
+          <p className="hero-note">The phone is a diagram of the navigator, not a recording.</p>
         </section>
 
         <section className="band band-tight" id="problem" aria-labelledby="problem-title">

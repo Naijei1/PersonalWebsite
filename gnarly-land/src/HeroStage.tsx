@@ -61,17 +61,40 @@ export function HeroStage() {
 
 export function PhoneMock() {
   return (
-    <figure className="phone-float" aria-label="Diagram of the navigator. Not a recording.">
-      <div className="phone-bezel" aria-hidden="true">
-        <svg viewBox="0 0 180 360">
-          <rect width="180" height="360" fill="#10161a" />
-          <path d="M20 300 L90 70 L160 300" fill="none" stroke="rgba(243,246,248,0.35)" strokeWidth="2" />
-          <path d="M70 300 C78 210 86 150 90 110" fill="none" stroke="#12b5cb" strokeWidth="5" strokeLinecap="round" />
-          <path d="M78 230 L90 210 L102 230" fill="none" stroke="#f3f6f8" strokeWidth="3" strokeLinecap="round" />
-          <path d="M82 170 L90 154 L98 170" fill="none" stroke="#f3f6f8" strokeWidth="3" strokeLinecap="round" />
-        </svg>
+    <figure className="phone-float" aria-label="Diagram of the navigator, not a recording.">
+      <div className="device" aria-hidden="true">
+        <span className="device-key" />
+        <div className="device-screen">
+          <svg viewBox="0 0 180 390">
+            <rect width="180" height="390" fill="#0c1216" />
+            {Array.from({ length: 70 }, (_, i) => (
+              <circle
+                key={i}
+                cx={18 + ((i * 47) % 146)}
+                cy={36 + ((i * 29) % 250)}
+                r={i % 5 === 0 ? 1.6 : 1}
+                fill={i % 4 === 0 ? '#12b5cb' : '#d5e2e8'}
+                opacity={0.35 + (i % 5) * 0.1}
+              />
+            ))}
+            <path d="M16 300 L90 150 L164 300" fill="none" stroke="rgba(213,226,232,0.28)" strokeWidth="1.4" />
+            <path d="M28 330 L90 168 L152 330" fill="none" stroke="rgba(213,226,232,0.18)" strokeWidth="1.2" />
+            <path
+              d="M90 318 C92 250 88 200 90 168"
+              fill="none"
+              stroke="#12b5cb"
+              strokeWidth="6"
+              strokeLinecap="round"
+            />
+            <path d="M78 236 L90 214 L102 236" fill="none" stroke="#f4f7f8" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" />
+            <rect x="62" y="16" width="56" height="10" rx="5" fill="#07090b" />
+          </svg>
+          <div className="nav-sheet">
+            <span>Route</span>
+            <strong>Follow the floor</strong>
+          </div>
+        </div>
       </div>
-      <figcaption>Diagram of the navigator. Not a recording.</figcaption>
     </figure>
   )
 }

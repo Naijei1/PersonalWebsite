@@ -118,7 +118,7 @@ export function mountScan(canvas: HTMLCanvasElement) {
 
   const scene = new THREE.Scene()
   const camera = new THREE.PerspectiveCamera(46, 1, 0.1, 40)
-  camera.position.set(0.15, 2.35, 6.1)
+  camera.position.set(-1.15, 2.15, 5.7)
 
   const cloudGeo = buildCloud()
   const routeGeo = buildRoute()
@@ -163,11 +163,11 @@ export function mountScan(canvas: HTMLCanvasElement) {
     const routeHead = Math.min(1, Math.max(0, (elapsed - 0.55) / 2.1))
     ribbon.uniforms.uHead.value = routeHead
     glow.uniforms.uHead.value = routeHead
-    const aimX = pointerX * 0.55
-    const aimY = 2.25 - pointerY * 0.28
+    const aimX = -0.85 + pointerX * 0.35
+    const aimY = 2.05 - pointerY * 0.22
     camera.position.x += (aimX - camera.position.x) * 0.045
     camera.position.y += (aimY - camera.position.y) * 0.045
-    camera.lookAt(0, 0.55, -1.4)
+    camera.lookAt(1.35, 0.35, -1.5)
     renderer.render(scene, camera)
   }
   frame = requestAnimationFrame(loop)
