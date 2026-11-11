@@ -1,0 +1,413 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-11T02:12:07Z",
+  "title": "Design System: Gnarly",
+  "extensions": {
+    "colorMeta": {
+      "tape": {
+        "role": "primary",
+        "displayName": "Route Teal",
+        "canonical": "#12b5cb",
+        "tonalRamp": [
+          "#010e11",
+          "#002b31",
+          "#074b55",
+          "#206c79",
+          "#1092a4",
+          "#1cb9cf",
+          "#55def5",
+          "#d2f6fd"
+        ]
+      },
+      "tape-hot": {
+        "role": "primary",
+        "displayName": "Hot Tape",
+        "canonical": "#9ae7f2",
+        "tonalRamp": [
+          "#000e10",
+          "#062a2f",
+          "#154a51",
+          "#196d78",
+          "#428f9a",
+          "#67b3be",
+          "#8bd8e3",
+          "#cbf8ff"
+        ]
+      },
+      "tape-ink": {
+        "role": "primary",
+        "displayName": "Corridor Teal",
+        "canonical": "#0a5c68",
+        "tonalRamp": [
+          "#010e11",
+          "#012b31",
+          "#0a4b55",
+          "#236c78",
+          "#488e9b",
+          "#6cb2bf",
+          "#90d7e4",
+          "#d2f6fd"
+        ]
+      },
+      "tape-text": {
+        "role": "primary",
+        "displayName": "Tape Text",
+        "canonical": "#062026",
+        "tonalRamp": [
+          "#010e12",
+          "#0f292f",
+          "#2d474d",
+          "#4c666d",
+          "#6c888f",
+          "#8eabb2",
+          "#b2cfd7",
+          "#d6f5fd"
+        ]
+      },
+      "ground": {
+        "role": "neutral",
+        "displayName": "Night Ground",
+        "canonical": "#0b0e10",
+        "tonalRamp": [
+          "#090c0e",
+          "#222528",
+          "#3f4345",
+          "#5e6264",
+          "#7f8386",
+          "#a1a6a8",
+          "#c5cacd",
+          "#ebeff2"
+        ]
+      },
+      "plate": {
+        "role": "neutral",
+        "displayName": "Plate",
+        "canonical": "#141a1e",
+        "tonalRamp": [
+          "#070c10",
+          "#20262a",
+          "#3c4348",
+          "#5b6267",
+          "#7c8389",
+          "#9ea6ac",
+          "#c2cbd0",
+          "#e7f0f6"
+        ]
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Corridor Ink",
+        "canonical": "#f3f6f8",
+        "tonalRamp": [
+          "#0a0b0d",
+          "#232527",
+          "#404244",
+          "#5f6263",
+          "#808384",
+          "#a2a5a7",
+          "#c7cacc",
+          "#eceff1"
+        ]
+      },
+      "mute": {
+        "role": "neutral",
+        "displayName": "Fog",
+        "canonical": "#c3ced4",
+        "tonalRamp": [
+          "#050c10",
+          "#1e262b",
+          "#3b4449",
+          "#596368",
+          "#7a848a",
+          "#9ca7ad",
+          "#c0cbd1",
+          "#e5f1f7"
+        ]
+      },
+      "line": {
+        "role": "neutral",
+        "displayName": "Night Hairline",
+        "canonical": "rgba(243, 246, 248, 0.16)",
+        "tonalRamp": [
+          "#0a0b0d",
+          "#232527",
+          "#404244",
+          "#5f6263",
+          "#808384",
+          "#a2a5a7",
+          "#c7cacc",
+          "#eceff1"
+        ]
+      },
+      "paper": {
+        "role": "neutral",
+        "displayName": "Team Paper",
+        "canonical": "#e4eeef",
+        "tonalRamp": [
+          "#060d0d",
+          "#1f2727",
+          "#3c4445",
+          "#5b6364",
+          "#7b8485",
+          "#9ea7a8",
+          "#c2cbcc",
+          "#e7f1f2"
+        ]
+      },
+      "ink-day": {
+        "role": "neutral",
+        "displayName": "Day Ink",
+        "canonical": "#102226",
+        "tonalRamp": [
+          "#010e11",
+          "#16282c",
+          "#33464a",
+          "#51656a",
+          "#72878b",
+          "#94a9ae",
+          "#b8ced3",
+          "#ddf3f9"
+        ]
+      },
+      "mute-day": {
+        "role": "neutral",
+        "displayName": "Day Fog",
+        "canonical": "#3e5258",
+        "tonalRamp": [
+          "#000e13",
+          "#15282e",
+          "#32464c",
+          "#51656b",
+          "#71878d",
+          "#93a9b0",
+          "#b7ced5",
+          "#dcf3fb"
+        ]
+      },
+      "line-day": {
+        "role": "neutral",
+        "displayName": "Day Hairline",
+        "canonical": "rgba(16, 34, 38, 0.16)",
+        "tonalRamp": [
+          "#010e11",
+          "#16282c",
+          "#33464a",
+          "#51656a",
+          "#72878b",
+          "#94a9ae",
+          "#b8ced3",
+          "#ddf3f9"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "The hero sign, about 11 characters, low in the first viewport."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Chapter titles, about 18 characters."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "The wordmark in the bar."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "The lede, held to 68 characters. Notes inherit root weight 440."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "The status pill. Film pills share the weight at inherited size."
+      }
+    },
+    "shadows": [
+      {
+        "name": "hairline",
+        "value": "inset 0 0 0 1px rgba(243, 246, 248, 0.16)",
+        "purpose": "Resting ring on the line button. It is a hairline, not elevation."
+      },
+      {
+        "name": "hairline-tape",
+        "value": "inset 0 0 0 1px #12b5cb",
+        "purpose": "Line button hover. The same inset ring, drawn in route teal."
+      }
+    ],
+    "motion": [
+      {
+        "name": "pass",
+        "value": "2.8s cubic-bezier(0.16, 1, 0.3, 1) 1",
+        "purpose": "One 22vh hot-tape segment travels the first screen along the tape, from -20vh to 105vh, then stays at opacity 0."
+      },
+      {
+        "name": "reduced",
+        "value": "animation: none",
+        "purpose": "prefers-reduced-motion removes the sweep. The standing 2px tape remains."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "compact-label",
+        "value": "420px"
+      },
+      {
+        "name": "stack",
+        "value": "640px"
+      },
+      {
+        "name": "bar",
+        "value": "720px"
+      },
+      {
+        "name": "proofs",
+        "value": "800px"
+      },
+      {
+        "name": "desk",
+        "value": "960px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "The route pill. Opens the next step. Hover brightens the fill to hot tape.",
+      "html": "<a class=\"ds-btn-primary\" href=\"#map\">Open the live map</a>",
+      "css": ".ds-btn-primary { display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0 1.2rem; border-radius: 999px; background: var(--tape, #12b5cb); color: var(--tape-text, #062026); font-family: \"Pathway Extreme Variable\", sans-serif; font-weight: 600; letter-spacing: -0.015em; text-decoration: none; } .ds-btn-primary:hover { background: var(--tape-hot, #9ae7f2); } .ds-btn-primary:focus-visible { outline: 2px solid var(--tape, #12b5cb); outline-offset: 3px; }"
+    },
+    {
+      "name": "Line Button",
+      "kind": "button",
+      "refersTo": "button-line",
+      "description": "The quiet pill. An inset hairline, redrawn in route teal on hover.",
+      "html": "<a class=\"ds-btn-line\" href=\"#film\">Watch the demo</a>",
+      "css": ".ds-btn-line { display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0 1.2rem; border-radius: 999px; background: transparent; color: var(--ink, #f3f6f8); box-shadow: inset 0 0 0 1px var(--line, rgba(243, 246, 248, 0.16)); font-family: \"Pathway Extreme Variable\", sans-serif; font-weight: 600; letter-spacing: -0.015em; text-decoration: none; } .ds-btn-line:hover { box-shadow: inset 0 0 0 1px var(--tape, #12b5cb); color: var(--tape, #12b5cb); } .ds-btn-line:focus-visible { outline: 2px solid var(--tape, #12b5cb); outline-offset: 3px; }"
+    },
+    {
+      "name": "Text Link",
+      "kind": "custom",
+      "refersTo": "text-link",
+      "description": "Route teal in the action row. Color carries it; no decoration is set.",
+      "html": "<a class=\"ds-text-link\" href=\"#code\">View the code</a>",
+      "css": ".ds-text-link { display: inline-flex; align-items: center; min-height: 2.75rem; padding: 0 0.2rem; color: var(--tape, #12b5cb); font-family: \"Pathway Extreme Variable\", sans-serif; font-weight: 440; text-decoration: none; } .ds-text-link:focus-visible { outline: 2px solid var(--tape, #12b5cb); outline-offset: 3px; }"
+    },
+    {
+      "name": "Sticky Bar",
+      "kind": "nav",
+      "refersTo": "nav-link",
+      "description": "Thin frost of the night ground. Wordmark, fog links that turn to ink, and the primary pill.",
+      "html": "<header class=\"ds-bar\"><a class=\"ds-wordmark\" href=\"#content\">Gnarly</a><p class=\"ds-lockup\">A Cornell project</p><nav class=\"ds-nav\" aria-label=\"Primary\"><a href=\"#film\">Watch the demo</a><a href=\"#code\">View the code</a></nav><a class=\"ds-bar-btn\" href=\"#map\">Open the live map</a></header>",
+      "css": ".ds-bar { display: flex; align-items: center; gap: 0.35rem 0.75rem; min-height: 4rem; padding: 0.35rem 1.25rem; background: color-mix(in srgb, var(--ground, #0b0e10) 90%, transparent); border-bottom: 1px solid var(--line, rgba(243, 246, 248, 0.16)); backdrop-filter: blur(14px); font-family: \"Pathway Extreme Variable\", sans-serif; } .ds-wordmark { color: var(--ink, #f3f6f8); font-size: 1.35rem; font-weight: 660; font-stretch: 86%; letter-spacing: -0.035em; text-decoration: none; } .ds-lockup { margin: 0; color: var(--mute, #c3ced4); font-size: 0.95rem; } .ds-nav { display: flex; align-items: center; margin-left: auto; } .ds-nav a { display: inline-flex; align-items: center; min-height: 2.75rem; padding: 0 0.75rem; color: var(--mute, #c3ced4); text-decoration: none; } .ds-nav a:hover { color: var(--ink, #f3f6f8); } .ds-bar-btn { display: inline-flex; align-items: center; min-height: 2.75rem; padding: 0 1.2rem; border-radius: 999px; background: var(--tape, #12b5cb); color: #062026; font-weight: 600; letter-spacing: -0.015em; text-decoration: none; } .ds-bar-btn:hover { background: var(--tape-hot, #9ae7f2); } .ds-wordmark:focus-visible, .ds-nav a:focus-visible, .ds-bar-btn:focus-visible { outline: 2px solid var(--tape, #12b5cb); outline-offset: 3px; }"
+    },
+    {
+      "name": "Tape Chip",
+      "kind": "chip",
+      "refersTo": "chip-tape",
+      "description": "Route pill set on the film frame.",
+      "html": "<span class=\"ds-chip-tape\">Watch the demo</span>",
+      "css": ".ds-chip-tape { display: inline-flex; align-items: center; padding: 0.45rem 0.8rem; border-radius: 999px; background: var(--tape, #12b5cb); color: #062026; font-family: \"Pathway Extreme Variable\", sans-serif; font-weight: 620; }"
+    },
+    {
+      "name": "Status Pill",
+      "kind": "chip",
+      "refersTo": "chip-status",
+      "description": "Ground pill with a hairline, set on a frame to mark a diagram.",
+      "html": "<span class=\"ds-chip-status\">Capture pending</span>",
+      "css": ".ds-chip-status { display: inline-flex; align-items: center; padding: 0.4rem 0.75rem; border-radius: 999px; background: var(--ground, #0b0e10); color: var(--ink, #f3f6f8); border: 1px solid var(--line, rgba(243, 246, 248, 0.16)); font-family: \"Pathway Extreme Variable\", sans-serif; font-size: 0.8125rem; font-weight: 620; }"
+    },
+    {
+      "name": "Stage Frame",
+      "kind": "card",
+      "refersTo": "frame",
+      "description": "Plate field, 1.25rem corners, 1px hairline. Holds the film or a diagram.",
+      "html": "<figure class=\"ds-frame\"><div class=\"ds-frame-field\"></div><span class=\"ds-frame-pill\">Capture pending</span></figure>",
+      "css": ".ds-frame { position: relative; margin: 0; background: var(--plate, #141a1e); border: 1px solid var(--line, rgba(243, 246, 248, 0.16)); border-radius: 1.25rem; overflow: hidden; } .ds-frame-field { position: relative; height: 9rem; background: var(--plate, #141a1e); } .ds-frame-field::after { content: \"\"; position: absolute; left: 14%; right: 22%; top: 62%; height: 4px; border-radius: 999px; background: var(--tape, #12b5cb); } .ds-frame-pill { position: absolute; top: 0.85rem; left: 0.85rem; padding: 0.4rem 0.75rem; border-radius: 999px; background: var(--ground, #0b0e10); color: var(--ink, #f3f6f8); border: 1px solid var(--line, rgba(243, 246, 248, 0.16)); font-family: \"Pathway Extreme Variable\", sans-serif; font-size: 0.8125rem; font-weight: 620; }"
+    },
+    {
+      "name": "Proofs",
+      "kind": "custom",
+      "refersTo": "proof",
+      "description": "Short claims under a 2px route edge. A row from 800px.",
+      "html": "<ul class=\"ds-proofs\"><li>Scanned from the device</li><li>No beacons to install</li><li>The route draws in AR</li></ul>",
+      "css": ".ds-proofs { display: flex; flex-wrap: wrap; gap: 1.25rem 2.75rem; margin: 0; padding: 0; list-style: none; font-family: \"Pathway Extreme Variable\", sans-serif; } .ds-proofs li { max-width: 16rem; padding-top: 0.7rem; font-size: 1.05rem; font-weight: 600; letter-spacing: -0.02em; color: var(--ink, #f3f6f8); border-top: 2px solid var(--tape, #12b5cb); }"
+    },
+    {
+      "name": "Team Slab",
+      "kind": "custom",
+      "refersTo": "slab",
+      "description": "The one pale band. Tape and links deepen to corridor teal.",
+      "html": "<section class=\"ds-slab\"><span class=\"ds-slab-tape\" aria-hidden=\"true\"></span><div class=\"ds-slab-copy\"><h2>Built at Cornell.</h2><p>A student team started Gnarly at BigRed//Hacks 2026 and has kept building.</p></div></section>",
+      "css": ".ds-slab { position: relative; padding: 3rem 1.5rem 2.5rem 2.6rem; background: var(--paper, #e4eeef); color: #102226; font-family: \"Pathway Extreme Variable\", sans-serif; } .ds-slab-tape { position: absolute; top: 0; bottom: 0; left: 1.25rem; width: 2px; background: var(--tape-ink, #0a5c68); } .ds-slab h2 { margin: 0; max-width: 18ch; font-size: clamp(2.15rem, 4.8vw, 4.25rem); font-weight: 640; font-stretch: 88%; letter-spacing: -0.035em; line-height: 0.98; } .ds-slab p { max-width: 68ch; margin: 1.05rem 0 0; color: #3e5258; font-size: 1.125rem; font-weight: 430; line-height: 1.55; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Night Corridor",
+    "overview": "Gnarly is a night corridor with one teal route. The ground is near-black, the type is Pathway Extreme Variable, and the path is a solid tape. Signs are condensed. Reading text stays at the font's standard width. Chapters run the full width of the viewport. The film and the diagrams sit in rounded frames. Actions are pills.\n\nThe palette stays on that one route. A lighter step of the same teal is the primary hover and the single moving segment. One band, the team, turns on a pale slab and deepens the tape so the route still holds. The sticky bar is the same ground, frosted with a 14px blur. Surfaces do not cast shadows.\n\nMotion is one pass. A brighter segment travels down the first screen along the tape and ends. Reduced motion removes that pass. The standing tape stays.",
+    "keyCharacteristics": [
+      "Dark ground, with one pale team slab",
+      "One teal tape, deeper on that slab",
+      "Pathway Extreme Variable, condensed on the signs",
+      "Pills for actions and 1.25rem frames for the film and the stage",
+      "Hairlines on a flat night",
+      "One sweep, removed when motion is reduced"
+    ],
+    "rules": [
+      {
+        "name": "The One Tape Rule",
+        "body": "Route teal is the only accent on the night. On the pale slab the tape, the links, and the selection switch to corridor teal. Hot tape is a lighter step of the same route, used for the primary hover and the sweep.",
+        "section": "colors"
+      },
+      {
+        "name": "The One Slab Rule",
+        "body": "Team paper is the team band. Every other chapter stays on night ground, and plate is only the field inside a frame.",
+        "section": "colors"
+      },
+      {
+        "name": "The Condensed Sign Rule",
+        "body": "The hero, the chapter titles, and the wordmark set stretch under 90% and tracking at -0.035em. Reading text stays at the standard width.",
+        "section": "typography"
+      },
+      {
+        "name": "The Single Face Rule",
+        "body": "Pathway Extreme Variable is the only family, including the labels inside the diagrams. The fallback is generic sans-serif.",
+        "section": "typography"
+      },
+      {
+        "name": "The Full-Measure Rule",
+        "body": "A chapter is a band across the viewport.",
+        "section": "layout"
+      },
+      {
+        "name": "The Tape Gutter Rule",
+        "body": "The standing tape is 2px at the pad edge. Body copy, signs, and the footer clear it by 1.35rem. The corridor diagram bleeds past the gutter, and the tape still runs over it.",
+        "section": "layout"
+      },
+      {
+        "name": "The Flat Night Rule",
+        "body": "Surfaces stay flat at rest and on hover. The line button's inset ring is a hairline. Depth comes from night ground, plate, and the one paper slab.",
+        "section": "elevation"
+      },
+      {
+        "name": "The Pill and Frame Rule",
+        "body": "Actions and labels are pills. The film and the stage are 1.25rem frames. Diagram-only corners stay inside the drawing.",
+        "section": "shapes"
+      }
+    ],
+    "dos": [
+      "Do keep chapters on night ground, plate inside frames, and team paper on the one pale band.",
+      "Do set the hero and chapter signs in Pathway Extreme Variable under 90% stretch, with tracking at -0.035em.",
+      "Do park the 2px tape in the pad gutter and inset the type by 1.35rem.",
+      "Do use a pill for actions and labels, and a 1.25rem frame for the film and the stage.",
+      "Do leave the sweep as a single 2.8s pass, and remove it under prefers-reduced-motion."
+    ],
+    "donts": [
+      "Don't add a second accent hue. Hot tape is the lighter step of route teal, and corridor teal is that route on paper.",
+      "Don't add a drop shadow, a glow on the tape or the frames, or a second typeface. The bar's 14px blur is the frost on the ground.",
+      "Don't wrap the bands in a centered max-width column.",
+      "Don't turn the standing tape into a dash, a blur, or a second animated line."
+    ]
+  }
+}
