@@ -7,7 +7,7 @@
     "dev": "vite",
     "build": "tsc --noEmit && vite build",
     "preview": "vite preview",
-    "test": "node --test tests/page.test.mjs"
+    "test": "node --test tests/*.test.mjs"
   },
   "dependencies": {
     "@fontsource-variable/pathway-extreme": "^5.2.8",
@@ -19,6 +19,7 @@
     "@types/react-dom": "^18.3.0",
     "@vitejs/plugin-react": "^4.3.1",
     "autoprefixer": "^10.4.20",
+    "playwright": "^1.48.2",
     "postcss": "^8.4.41",
     "tailwindcss": "^3.4.10",
     "typescript": "^5.5.3",

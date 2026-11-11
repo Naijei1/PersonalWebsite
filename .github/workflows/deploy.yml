@@ -119,6 +119,10 @@ jobs:
 
       - name: Build Gnarly landing page
         working-directory: gnarly-land
+        env:
+          # The motion test uses Playwright locally. The Pages build does not
+          # run that test, so it does not need the browser download.
+          PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: 1
         run: npm ci && npm run build
 
       - name: Mount Gnarly landing page at /gnarly-land

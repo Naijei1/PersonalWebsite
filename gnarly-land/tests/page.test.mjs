@@ -20,12 +20,18 @@ test('real destinations and the three CTAs are present', () => {
   assert.match(page, /Gaussian splat/)
 })
 
-test('share metadata and motion fallback exist', () => {
+test('share metadata is present', () => {
   assert.match(html, /rel="canonical" href="https:\/\/naijei.com\/gnarly-land\/"/)
   assert.match(html, /property="og:image" content="https:\/\/naijei.com\/gnarly-land\/og.png"/)
   assert.match(html, /name="description"/)
-  assert.match(css, /prefers-reduced-motion/)
   assert.match(app, /Skip to content/)
+})
+
+test('reduced motion turns the sweep off and leaves the route line alone', () => {
+  const block = css.match(/@media\s*\(\s*prefers-reduced-motion:\s*reduce\s*\)\s*\{([\s\S]*?)\n\}/)
+  assert.ok(block, 'missing prefers-reduced-motion block')
+  assert.match(block[1], /\.sweep\s*\{[^}]*animation:\s*none/)
+  assert.doesNotMatch(block[1], /\.tape\b[^}]*\{[^}]*(?:display:\s*none|visibility:\s*hidden|opacity:\s*0)/)
 })
 
 test('unconfirmed claims and teammate names stay off the page', () => {
