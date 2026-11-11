@@ -12,7 +12,8 @@
   "dependencies": {
     "@fontsource-variable/pathway-extreme": "^5.2.8",
     "react": "^18.3.1",
-    "react-dom": "^18.3.1"
+    "react-dom": "^18.3.1",
+    "three": "^0.169.0"
   },
   "devDependencies": {
     "@types/react": "^18.3.5",

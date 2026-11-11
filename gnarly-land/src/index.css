@@ -18,9 +18,9 @@
   --line-day: rgba(16, 34, 38, 0.16);
   --pad: max(1.25rem, env(safe-area-inset-left));
   --pad-r: max(1.25rem, env(safe-area-inset-right));
-  color-scheme: dark;
-  background: var(--ground);
-  color: var(--ink);
+  color-scheme: light;
+  background: var(--paper);
+  color: var(--ink-day);
   font-family: 'Pathway Extreme Variable', sans-serif;
   font-weight: 440;
   font-synthesis: none;
@@ -49,8 +49,14 @@ h2 {
 body {
   margin: 0;
   min-height: 100svh;
+  background: var(--paper);
+  color: var(--ink-day);
+}
+
+.night {
   background: var(--ground);
   color: var(--ink);
+  color-scheme: dark;
 }
 
 ::selection {
@@ -83,24 +89,29 @@ body {
 
 .bar {
   position: sticky;
-  top: 0;
+  top: 0.65rem;
   z-index: 30;
   display: flex;
   flex-wrap: nowrap;
   align-items: center;
   gap: 0.35rem 0.75rem;
-  min-height: 4rem;
-  padding: 0.35rem var(--pad-r) 0.35rem calc(var(--pad) + 1.35rem);
-  background: color-mix(in srgb, var(--ground) 90%, transparent);
-  border-bottom: 1px solid var(--line);
-  backdrop-filter: blur(14px);
+  width: min(72rem, calc(100% - 1.5rem));
+  min-height: 3.6rem;
+  margin: 0.65rem auto 0;
+  padding: 0.35rem 0.45rem 0.35rem 1rem;
+  color: var(--ink-day);
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid var(--line-day);
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(16, 34, 38, 0.08);
+  backdrop-filter: blur(16px);
 }
 
 .wordmark {
   display: inline-flex;
   align-items: center;
   min-height: 2.75rem;
-  color: var(--ink);
+  color: var(--ink-day);
   font-size: 1.35rem;
   font-weight: 660;
   font-stretch: 86%;
@@ -110,7 +121,7 @@ body {
 
 .lockup {
   margin: 0;
-  color: var(--mute);
+  color: var(--mute-day);
   font-size: 0.8125rem;
 }
 
@@ -150,13 +161,13 @@ body {
   align-items: center;
   min-height: 2.75rem;
   padding: 0 0.75rem;
-  color: var(--mute);
+  color: var(--mute-day);
   text-decoration: none;
 }
 
 .desk a:hover,
 .menu nav a:hover {
-  color: var(--ink);
+  color: var(--ink-day);
 }
 
 .menu summary {
@@ -166,7 +177,7 @@ body {
   padding: 0 0.75rem;
   cursor: pointer;
   list-style: none;
-  color: var(--ink);
+  color: var(--ink-day);
 }
 
 .menu summary::-webkit-details-marker {
@@ -181,8 +192,8 @@ body {
   z-index: 31;
   display: grid;
   padding: 0.35rem var(--pad-r) 0.55rem calc(var(--pad) + 1.35rem);
-  background: var(--ground);
-  border-bottom: 1px solid var(--line);
+  background: #fff;
+  border-bottom: 1px solid var(--line-day);
 }
 
 @media (min-width: 960px) {
@@ -201,7 +212,7 @@ body {
   justify-content: center;
   min-height: 2.75rem;
   padding: 0 1.2rem;
-  border-radius: 999px;
+  border-radius: 8px;
   font-weight: 600;
   letter-spacing: -0.015em;
   text-decoration: none;
@@ -234,24 +245,80 @@ body {
 
 .hero {
   position: relative;
-  display: grid;
-  grid-template-rows: minmax(0, 1fr) auto;
-  height: calc(100svh - 4rem);
-  padding: 0 var(--pad-r) 1.75rem calc(var(--pad) + 1.35rem);
-  overflow: hidden;
+  padding: 0.4rem var(--pad-r) 2.5rem var(--pad);
 }
 
-.hero-scene {
-  min-height: 0;
-  margin-right: calc(-1 * var(--pad-r));
-  margin-left: calc(-1 * (var(--pad) + 1.35rem));
+.stage-frame {
+  position: relative;
+  height: min(70vh, 680px);
   overflow: hidden;
+  background: #10161a;
+  border-radius: 20px;
 }
 
-.hero-scan {
-  display: block;
+.stage-frame::after {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1;
+  height: 46%;
+  pointer-events: none;
+  content: '';
+  background: linear-gradient(to top, #10161a 18%, transparent);
+}
+
+.floor-fallback,
+.hero-canvas {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
+}
+
+.floor-fallback {
+  display: block;
+}
+
+.hero-canvas {
+  display: none;
+}
+
+.hero-canvas.is-live {
+  display: block;
+}
+
+.stage-frame:has(.is-live) .floor-fallback {
+  display: none;
+}
+
+.phone-float {
+  position: absolute;
+  right: 4%;
+  bottom: 28%;
+  z-index: 2;
+  width: min(13.5rem, 28vw);
+  margin: 0;
+}
+
+.phone-bezel {
+  overflow: hidden;
+  background: #10161a;
+  border: 1px solid rgba(243, 246, 248, 0.28);
+  border-radius: 1.6rem;
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.35);
+}
+
+.phone-bezel svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.phone-float figcaption {
+  margin-top: 0.45rem;
+  color: var(--mute);
+  font-size: 0.8125rem;
 }
 
 .scan-point,
@@ -309,31 +376,54 @@ body {
   }
 }
 
-.hero-copy {
-  position: relative;
-  z-index: 1;
-  max-width: 38rem;
-  padding-top: 0.5rem;
-}
-
 .sign-title {
   margin: 0;
   max-width: 11ch;
-  font-size: clamp(2.7rem, 6.2vw, 6rem);
-  font-weight: 650;
-  font-stretch: 84%;
-  letter-spacing: -0.035em;
-  line-height: 0.94;
+  font-size: clamp(3.1rem, 6.4vw, 6rem);
+  font-weight: 360;
+  font-stretch: 100%;
+  letter-spacing: -0.04em;
+  line-height: 0.92;
   text-wrap: balance;
+}
+
+.hero-copy {
+  position: absolute;
+  right: 18rem;
+  bottom: 1.4rem;
+  left: 1.6rem;
+  z-index: 3;
+  max-width: 40rem;
+  color: var(--ink);
+}
+
+.hero-copy .lede {
+  max-width: 36rem;
+  color: var(--mute);
 }
 
 .lede {
   max-width: 68ch;
   margin: 1.05rem 0 0;
-  color: var(--mute);
+  color: var(--mute-day);
   font-size: 1.125rem;
   font-weight: 430;
   line-height: 1.55;
+}
+
+.night .lede,
+.night .caption,
+.night .note {
+  color: var(--mute);
+}
+
+.text-link {
+  color: var(--tape-ink);
+}
+
+.night .text-link,
+.hero-copy .text-link {
+  color: var(--tape);
 }
 
 .actions {
@@ -377,7 +467,7 @@ body {
 .caption {
   max-width: 68ch;
   margin: 0.8rem 0 0;
-  color: var(--mute);
+  color: var(--mute-day);
   font-size: 0.8125rem;
   line-height: 1.45;
 }
@@ -587,15 +677,15 @@ body {
   gap: 0.75rem 1.5rem;
   align-items: center;
   padding: 1.35rem var(--pad-r) max(2rem, env(safe-area-inset-bottom)) calc(var(--pad) + 1.35rem);
-  color: var(--mute);
-  border-top: 1px solid var(--line);
+  color: var(--mute-day);
+  border-top: 1px solid var(--line-day);
 }
 
 .foot a {
   display: inline-flex;
   align-items: center;
   min-height: 2.75rem;
-  color: var(--link);
+  color: var(--tape-ink);
 }
 
 .sr-only {
@@ -626,6 +716,137 @@ body {
   }
 }
 
+.story {
+  height: 230vh;
+}
+
+.story-sticky {
+  position: sticky;
+  top: 5rem;
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  gap: 2rem;
+  align-items: center;
+  height: calc(100svh - 6rem);
+}
+
+.story-copy {
+  position: relative;
+  min-height: 14rem;
+}
+
+.step {
+  position: absolute;
+  inset: 0 auto auto 0;
+  max-width: 36rem;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.step.is-on {
+  position: relative;
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.story-visual {
+  position: relative;
+  min-height: 22rem;
+}
+
+.visual {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.visual.is-on {
+  opacity: 1;
+}
+
+.visual svg {
+  width: 100%;
+  height: auto;
+  max-height: 62vh;
+}
+
+.story h2 {
+  max-width: 16ch;
+  margin: 0;
+  font-size: clamp(2.4rem, 4.4vw, 4.25rem);
+  font-weight: 380;
+  font-stretch: 100%;
+  letter-spacing: -0.04em;
+  line-height: 0.96;
+}
+
+@media (max-width: 860px) {
+  .story {
+    height: auto;
+  }
+
+  .story-sticky {
+    position: static;
+    display: block;
+    height: auto;
+  }
+
+  .step,
+  .visual {
+    position: relative;
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .step + .step {
+    margin-top: 3rem;
+  }
+
+  .stage-frame {
+    height: auto;
+    overflow: visible;
+    background: transparent;
+  }
+
+  .stage-frame::after {
+    display: none;
+  }
+
+  .floor-fallback,
+  .hero-canvas {
+    position: relative;
+    height: 44vh;
+    background: #10161a;
+    border-radius: 20px;
+  }
+
+  .phone-float {
+    top: 0.55rem;
+    right: 0.55rem;
+    bottom: auto;
+    width: 6.5rem;
+  }
+
+  .phone-float figcaption {
+    display: none;
+  }
+
+  .hero-copy {
+    position: relative;
+    right: auto;
+    bottom: auto;
+    left: auto;
+    margin-top: 1.15rem;
+    color: var(--ink-day);
+  }
+
+  .hero-copy .lede,
+  .hero-copy .text-link {
+    color: var(--tape-ink);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .scan-route,
   .scan-point,
@@ -640,6 +861,22 @@ body {
   .scan-point,
   .scan-chev {
     opacity: 0.78;
+  }
+
+  .story {
+    height: auto;
+  }
+
+  .story-sticky {
+    position: static;
+    display: block;
+    height: auto;
+  }
+
+  .step,
+  .visual {
+    position: relative;
+    opacity: 1;
   }
 
   html {

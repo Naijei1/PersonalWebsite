@@ -1,6 +1,6 @@
-import type { ReactNode } from 'react'
+import { useEffect, useRef, useState, type ReactNode } from 'react'
 import { NavigateDiagram, PublishDiagram, ScanDiagram } from './diagrams'
-import { HeroScan } from './hero-scan'
+import { HeroStage, PhoneMock } from './HeroStage'
 
 const liveMap = 'https://naijei.com/gnarly/'
 const film = 'https://youtu.be/XkmW11bmEXg'
@@ -27,6 +27,83 @@ function Out({
 
 function Tape() {
   return <div className="tape" aria-hidden="true" />
+}
+
+const steps = [
+  {
+    id: 'scan',
+    title: 'Walk the space. The phone keeps the map.',
+    body: 'The mapper uses iPhone LiDAR and RoomPlan to capture rooms, doorways, and a path you can walk again.',
+    note: 'Capture pending. Diagram of a LiDAR sweep, not a recorded scan.',
+  },
+  {
+    id: 'publish',
+    title: 'Join the rooms, then share the building.',
+    body: 'The web editor places zones on each floor, links elevators, and publishes the map to the cloud library.',
+    note: 'Capture pending. Diagram of two zones and an elevator, not a capture of North Hall.',
+  },
+  {
+    id: 'navigate',
+    title: 'Follow the path in the room itself.',
+    body: 'The navigator relocalizes, draws a floor-aligned AR route, and uses LiDAR and haptics when something stands in the way.',
+    note: 'Capture pending. Diagram of a floor-aligned route, not an AR recording.',
+  },
+] as const
+
+function Story() {
+  const ref = useRef<HTMLElement>(null)
+  const [step, setStep] = useState(0)
+
+  useEffect(() => {
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    const narrow = window.matchMedia('(max-width: 860px)').matches
+    if (reduce || narrow) return
+    let frame = 0
+    const onScroll = () => {
+      cancelAnimationFrame(frame)
+      frame = requestAnimationFrame(() => {
+        const el = ref.current
+        if (!el) return
+        const total = el.offsetHeight - window.innerHeight
+        if (total <= 0) return
+        const progress = Math.min(1, Math.max(0, -el.getBoundingClientRect().top / total))
+        setStep(progress < 0.34 ? 0 : progress < 0.67 ? 1 : 2)
+      })
+    }
+    onScroll()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => {
+      cancelAnimationFrame(frame)
+      window.removeEventListener('scroll', onScroll)
+    }
+  }, [])
+
+  return (
+    <section className="story night" ref={ref} aria-labelledby="scan-title">
+      <div className="story-sticky">
+        <div className="story-copy">
+          {steps.map((item, index) => (
+            <article key={item.id} id={item.id} className={index === step ? 'step is-on' : 'step'}>
+              <h2 id={index === 0 ? 'scan-title' : undefined}>{item.title}</h2>
+              <p className="lede">{item.body}</p>
+              <p className="caption">{item.note}</p>
+            </article>
+          ))}
+        </div>
+        <div className="story-visual" aria-hidden="true">
+          <div className={step === 0 ? 'visual is-on' : 'visual'}>
+            <ScanDiagram />
+          </div>
+          <div className={step === 1 ? 'visual is-on' : 'visual'}>
+            <PublishDiagram />
+          </div>
+          <div className={step === 2 ? 'visual is-on' : 'visual'}>
+            <NavigateDiagram />
+          </div>
+        </div>
+      </div>
+    </section>
+  )
 }
 
 const pageLinks = [
@@ -83,11 +160,10 @@ export default function App() {
       </header>
       <main id="content">
         <section className="hero" aria-labelledby="hero-title">
-          <Tape />
-          <div className="hero-scene">
-            <HeroScan />
-          </div>
-          <div className="hero-copy">
+          <div className="stage-frame">
+            <HeroStage />
+            <PhoneMock />
+            <div className="hero-copy">
             <h1 id="hero-title" className="sign-title">
               Scan a building. Walk it in AR.
             </h1>
@@ -106,6 +182,7 @@ export default function App() {
                 View the code
               </Out>
             </div>
+            </div>
           </div>
         </section>
 
@@ -123,59 +200,7 @@ export default function App() {
           </p>
         </section>
 
-        <section className="band" id="scan" aria-labelledby="scan-title">
-          <Tape />
-          <div className="split">
-            <div>
-              <h2 id="scan-title">Walk the space. The phone keeps the map.</h2>
-              <p className="lede">
-                The mapper uses iPhone LiDAR and RoomPlan to capture rooms, doorways, and a path you can walk again.
-              </p>
-            </div>
-            <figure className="phone">
-              <div className="drawing">
-                <ScanDiagram />
-              </div>
-              <figcaption className="caption">
-                Capture pending. Diagram of a LiDAR sweep and a walked path, not a recorded scan.
-              </figcaption>
-            </figure>
-          </div>
-        </section>
-
-        <section className="band" id="publish" aria-labelledby="publish-title">
-          <Tape />
-          <h2 id="publish-title">Join the rooms, then share the building.</h2>
-          <p className="lede">
-            The web editor places zones on each floor, links elevators, and publishes the map to the cloud library.
-          </p>
-          <figure className="drawing drawing-wide">
-            <PublishDiagram />
-            <figcaption className="caption">
-              Capture pending. Diagram of two zones joined through an elevator, not a capture of North Hall.
-              North Hall is the labeled sample in the live map, and some other buildings in that list are still
-              incomplete.
-            </figcaption>
-          </figure>
-        </section>
-
-        <section className="navigate" id="navigate" aria-labelledby="navigate-title">
-          <Tape />
-          <figure className="corridor">
-            <NavigateDiagram />
-          </figure>
-          <div className="sign">
-            <h2 id="navigate-title">Follow the path in the room itself.</h2>
-            <p className="lede">
-              The navigator relocalizes, draws a floor-aligned AR route, and uses LiDAR and haptics when something
-              stands in the way.
-            </p>
-            <p className="caption">
-              Capture pending. Diagram of a floor-aligned route. An AR recording of a real corridor has not been
-              captured for this page.
-            </p>
-          </div>
-        </section>
+        <Story />
 
         <section className="band" id="film" aria-labelledby="film-title">
           <Tape />
@@ -196,7 +221,7 @@ export default function App() {
           </figure>
         </section>
 
-        <section className="band" id="demo" aria-labelledby="demo-title">
+        <section className="band night" id="demo" aria-labelledby="demo-title">
           <Tape />
           <h2 id="demo-title">Try a building in the browser.</h2>
           <p className="lede">
@@ -210,7 +235,7 @@ export default function App() {
           </div>
         </section>
 
-        <section className="band" id="tech" aria-labelledby="tech-title">
+        <section className="band night" id="tech" aria-labelledby="tech-title">
           <Tape />
           <h2 id="tech-title">On the phone, in the cloud, in the browser.</h2>
           <p className="lede">
@@ -253,7 +278,7 @@ export default function App() {
           </p>
         </section>
 
-        <section className="band" id="close" aria-labelledby="close-title">
+        <section className="band night" id="close" aria-labelledby="close-title">
           <Tape />
           <h2 id="close-title">See it, or read the code.</h2>
           <p className="lede">Open the live map, watch the walkthrough, or go to the repository.</p>
