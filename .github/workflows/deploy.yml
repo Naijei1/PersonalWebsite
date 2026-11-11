@@ -69,6 +69,26 @@ jobs:
       - name: Mount Paxos at /paxos
         run: bash scripts/mount-paxos.sh paxos-playground/dist dist/paxos
 
+      # Landing page lives in this repo. /gnarly stays the static redirect
+      # to gnarlynav.com; this mount only writes /gnarly-land.
+      - name: Setup Node for Gnarly landing page
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: gnarly-land/package-lock.json
+
+      - name: Build Gnarly landing page
+        working-directory: gnarly-land
+        env:
+          # The motion test uses Playwright locally. The Pages build does not
+          # run that test, so it does not need the browser download.
+          PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: 1
+        run: npm ci && npm run build
+
+      - name: Mount Gnarly landing page at /gnarly-land
+        run: bash scripts/mount-gnarly-land.sh gnarly-land/dist dist/gnarly-land
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:

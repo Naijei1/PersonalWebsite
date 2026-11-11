@@ -3,3 +3,7 @@ dist/
 .env
 .DS_Store
 *.local
+
+.impeccable/review/
+
+.github/skills/impeccable/scripts/bin/

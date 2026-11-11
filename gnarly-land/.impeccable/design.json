@@ -1,0 +1,371 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-11T04:15:03.104111+00:00",
+  "title": "Design System: Gnarly",
+  "extensions": {
+    "colorMeta": {
+      "tape": {
+        "role": "primary",
+        "displayName": "Periwinkle Light",
+        "tonalRamp": [
+          "oklch(15% 0.024 265)",
+          "oklch(25% 0.054 265)",
+          "oklch(35% 0.09 265)",
+          "oklch(45% 0.12 265)",
+          "oklch(60% 0.12 265)",
+          "oklch(75% 0.096 265)",
+          "oklch(87% 0.06 265)",
+          "oklch(95% 0.018 265)"
+        ]
+      },
+      "route": {
+        "role": "primary",
+        "displayName": "Route Light",
+        "tonalRamp": [
+          "oklch(15% 0.03 265)",
+          "oklch(25% 0.0675 265)",
+          "oklch(35% 0.1125 265)",
+          "oklch(45% 0.15 265)",
+          "oklch(60% 0.15 265)",
+          "oklch(75% 0.12 265)",
+          "oklch(87% 0.075 265)",
+          "oklch(95% 0.0225 265)"
+        ]
+      },
+      "route-wash": {
+        "role": "primary",
+        "displayName": "Route Halo",
+        "tonalRamp": [
+          "oklch(15% 0.04 265)",
+          "oklch(25% 0.09 265)",
+          "oklch(35% 0.15 265)",
+          "oklch(45% 0.2 265)",
+          "oklch(60% 0.2 265)",
+          "oklch(75% 0.16 265)",
+          "oklch(87% 0.1 265)",
+          "oklch(95% 0.03 265)"
+        ]
+      },
+      "focus": {
+        "role": "primary",
+        "displayName": "Focus Blue",
+        "tonalRamp": [
+          "oklch(15% 0.032 265)",
+          "oklch(25% 0.072 265)",
+          "oklch(35% 0.12 265)",
+          "oklch(45% 0.16 265)",
+          "oklch(60% 0.16 265)",
+          "oklch(75% 0.128 265)",
+          "oklch(87% 0.08 265)",
+          "oklch(95% 0.024 265)"
+        ]
+      },
+      "paper": {
+        "role": "neutral",
+        "displayName": "White Paper",
+        "tonalRamp": [
+          "oklch(15% 0.0 260)",
+          "oklch(25% 0.0 260)",
+          "oklch(35% 0.0 260)",
+          "oklch(45% 0 260)",
+          "oklch(60% 0 260)",
+          "oklch(75% 0.0 260)",
+          "oklch(87% 0.0 260)",
+          "oklch(95% 0.0 260)"
+        ]
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Graphite Ink",
+        "tonalRamp": [
+          "oklch(15% 0.004 260)",
+          "oklch(25% 0.009 260)",
+          "oklch(35% 0.015 260)",
+          "oklch(45% 0.02 260)",
+          "oklch(60% 0.02 260)",
+          "oklch(75% 0.016 260)",
+          "oklch(87% 0.01 260)",
+          "oklch(95% 0.003 260)"
+        ]
+      },
+      "mute": {
+        "role": "neutral",
+        "displayName": "Quiet Gray",
+        "tonalRamp": [
+          "oklch(15% 0.005 260)",
+          "oklch(25% 0.0113 260)",
+          "oklch(35% 0.0188 260)",
+          "oklch(45% 0.025 260)",
+          "oklch(60% 0.025 260)",
+          "oklch(75% 0.02 260)",
+          "oklch(87% 0.0125 260)",
+          "oklch(95% 0.0037 260)"
+        ]
+      },
+      "line": {
+        "role": "neutral",
+        "displayName": "Fine Rule",
+        "tonalRamp": [
+          "oklch(15% 0.003 260)",
+          "oklch(25% 0.0067 260)",
+          "oklch(35% 0.0112 260)",
+          "oklch(45% 0.015 260)",
+          "oklch(60% 0.015 260)",
+          "oklch(75% 0.012 260)",
+          "oklch(87% 0.0075 260)",
+          "oklch(95% 0.0022 260)"
+        ]
+      },
+      "ground": {
+        "role": "neutral",
+        "displayName": "Midnight Ground",
+        "tonalRamp": [
+          "oklch(15% 0.006 265)",
+          "oklch(25% 0.0135 265)",
+          "oklch(35% 0.0225 265)",
+          "oklch(45% 0.03 265)",
+          "oklch(60% 0.03 265)",
+          "oklch(75% 0.024 265)",
+          "oklch(87% 0.015 265)",
+          "oklch(95% 0.0045 265)"
+        ]
+      },
+      "plate": {
+        "role": "neutral",
+        "displayName": "Navy Plate",
+        "tonalRamp": [
+          "oklch(15% 0.008 265)",
+          "oklch(25% 0.018 265)",
+          "oklch(35% 0.03 265)",
+          "oklch(45% 0.04 265)",
+          "oklch(60% 0.04 265)",
+          "oklch(75% 0.032 265)",
+          "oklch(87% 0.02 265)",
+          "oklch(95% 0.006 265)"
+        ]
+      },
+      "hero-ink": {
+        "role": "neutral",
+        "displayName": "Hero Light",
+        "tonalRamp": [
+          "oklch(15% 0.006 265)",
+          "oklch(25% 0.0135 265)",
+          "oklch(35% 0.0225 265)",
+          "oklch(45% 0.03 265)",
+          "oklch(60% 0.03 265)",
+          "oklch(75% 0.024 265)",
+          "oklch(87% 0.015 265)",
+          "oklch(95% 0.0045 265)"
+        ]
+      },
+      "hero-mute": {
+        "role": "neutral",
+        "displayName": "Hero Mist",
+        "tonalRamp": [
+          "oklch(15% 0.01 265)",
+          "oklch(25% 0.0225 265)",
+          "oklch(35% 0.0375 265)",
+          "oklch(45% 0.05 265)",
+          "oklch(60% 0.05 265)",
+          "oklch(75% 0.04 265)",
+          "oklch(87% 0.025 265)",
+          "oklch(95% 0.0075 265)"
+        ]
+      },
+      "action": {
+        "role": "neutral",
+        "displayName": "Navy Action",
+        "tonalRamp": [
+          "oklch(15% 0.011 265)",
+          "oklch(25% 0.0248 265)",
+          "oklch(35% 0.0413 265)",
+          "oklch(45% 0.055 265)",
+          "oklch(60% 0.055 265)",
+          "oklch(75% 0.044 265)",
+          "oklch(87% 0.0275 265)",
+          "oklch(95% 0.0083 265)"
+        ]
+      },
+      "action-hover": {
+        "role": "neutral",
+        "displayName": "Lifted Navy",
+        "tonalRamp": [
+          "oklch(15% 0.014 265)",
+          "oklch(25% 0.0315 265)",
+          "oklch(35% 0.0525 265)",
+          "oklch(45% 0.07 265)",
+          "oklch(60% 0.07 265)",
+          "oklch(75% 0.056 265)",
+          "oklch(87% 0.035 265)",
+          "oklch(95% 0.0105 265)"
+        ]
+      },
+      "light-action": {
+        "role": "neutral",
+        "displayName": "Light Action",
+        "tonalRamp": [
+          "oklch(15% 0.006 265)",
+          "oklch(25% 0.0135 265)",
+          "oklch(35% 0.0225 265)",
+          "oklch(45% 0.03 265)",
+          "oklch(60% 0.03 265)",
+          "oklch(75% 0.024 265)",
+          "oklch(87% 0.015 265)",
+          "oklch(95% 0.0045 265)"
+        ]
+      },
+      "light-action-hover": {
+        "role": "neutral",
+        "displayName": "Lifted Light",
+        "tonalRamp": [
+          "oklch(15% 0.014 265)",
+          "oklch(25% 0.0315 265)",
+          "oklch(35% 0.0525 265)",
+          "oklch(45% 0.07 265)",
+          "oklch(60% 0.07 265)",
+          "oklch(75% 0.056 265)",
+          "oklch(87% 0.035 265)",
+          "oklch(95% 0.0105 265)"
+        ]
+      },
+      "panel": {
+        "role": "neutral",
+        "displayName": "Destination Panel",
+        "tonalRamp": [
+          "oklch(15% 0.008 265)",
+          "oklch(25% 0.018 265)",
+          "oklch(35% 0.03 265)",
+          "oklch(45% 0.04 265)",
+          "oklch(60% 0.04 265)",
+          "oklch(75% 0.032 265)",
+          "oklch(87% 0.02 265)",
+          "oklch(95% 0.006 265)"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Cinematic Display",
+        "purpose": "Left-aligned visible hero headline over the environment."
+      },
+      "headline": {
+        "displayName": "Editorial Headline",
+        "purpose": "White reading sections and gray continuation lines."
+      },
+      "body": {
+        "displayName": "Reading Copy",
+        "purpose": "Short, spacious product explanations."
+      },
+      "label": {
+        "displayName": "Action Label",
+        "purpose": "Compact sentence-case actions."
+      }
+    },
+    "shadows": [],
+    "motion": [
+      {
+        "name": "cinematic-journey",
+        "value": "10.5s",
+        "purpose": "Finite scan, connected-building, doorway/corridor, and route-overview sequence; pauses offscreen or hidden."
+      },
+      {
+        "name": "destination-camera",
+        "value": "1.65s quartic ease-out; 1.8s rendering window",
+        "purpose": "Destination changes update route and ease camera and target, then stop."
+      },
+      {
+        "name": "fallback-route",
+        "value": "1.8s cubic-bezier(0.16, 1, 0.3, 1)",
+        "purpose": "SVG path draw; disabled for reduced motion."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "wide-min",
+        "value": "1600px"
+      },
+      {
+        "name": "compact-max",
+        "value": "1050px"
+      },
+      {
+        "name": "mobile-max",
+        "value": "700px"
+      },
+      {
+        "name": "narrow-max",
+        "value": "360px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Demo Action",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Primary conversion on the white demo surface; hero/header invert to the light-action variant.",
+      "html": "<a class=\"ds-demo\" href=\"#request-demo\">Request a demo <svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" aria-hidden=\"true\"><path d=\"M4 12h15m-6-6 6 6-6 6\"/></svg></a>",
+      "css": ".ds-demo{font-family:\"Inter Variable\",sans-serif;display:inline-flex;align-items:center;justify-content:center;gap:.85rem;min-height:48px;padding:.9rem 1.2rem;font-size:.82rem;font-weight:550;line-height:1.3;border-radius:7px;text-decoration:none;cursor:pointer;background:var(--action,#253552);color:var(--paper,#fff);border:1px solid var(--action,#253552)}.ds-demo:hover{background:var(--action-hover,#364d74);border-color:var(--action-hover,#364d74)}.ds-demo:focus-visible{outline:2px solid var(--focus,#6087e7);outline-offset:5px}"
+    },
+    {
+      "name": "Hero Secondary Action",
+      "kind": "button",
+      "refersTo": "button-line",
+      "description": "Quiet outlined action for exploring the visible workflow.",
+      "html": "<div class=\"ds-action-ground\"><a class=\"ds-explore\" href=\"#technology\">Explore Gnarly <svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" aria-hidden=\"true\"><path d=\"M4 12h15m-6-6 6 6-6 6\"/></svg></a></div>",
+      "css": ".ds-action-ground{background:var(--ground,#080d17);padding:1.5rem}.ds-explore{font-family:\"Inter Variable\",sans-serif;display:inline-flex;align-items:center;justify-content:center;gap:.85rem;min-height:48px;padding:.9rem 1.2rem;font-size:.82rem;font-weight:550;line-height:1.3;border-radius:7px;text-decoration:none;cursor:pointer;background:transparent;border:1px solid #4c5d7a;color:#dce6fc}.ds-explore:hover{border-color:#a6c1f4;background:#263c5a55}.ds-explore:focus-visible{outline:2px solid var(--focus,#6087e7);outline-offset:5px}"
+    },
+    {
+      "name": "Dark Navigation",
+      "kind": "nav",
+      "description": "Navy bar with quiet navigation and a light demo action.",
+      "html": "<nav class=\"ds-nav\" aria-label=\"Example navigation\"><a class=\"ds-brand\" href=\"#content\">gnarly</a><a href=\"#platform\">Platform</a><a href=\"#technology\">How it works</a><a class=\"ds-nav-demo\" href=\"#request-demo\">Request a demo</a></nav>",
+      "css": ".ds-nav{font-family:\"Inter Variable\",sans-serif;display:flex;align-items:center;gap:2rem;min-height:72px;padding:0 1.5rem;background:var(--ground,#080d17);border-bottom:1px solid #26324a;color:#eef3ff}.ds-nav a{display:inline-flex;align-items:center;min-height:44px;color:#b9c7e0;font-size:.78rem;text-decoration:none}.ds-nav .ds-brand{margin-right:auto;font-size:1.5rem;font-weight:600;letter-spacing:-.04em;color:#eef3ff}.ds-nav .ds-nav-demo{min-height:44px;border-radius:7px;padding:0 1rem;font-size:.73rem;font-weight:550;background:var(--light-action,#eaf0ff);color:#14213b}.ds-nav a:hover{color:#fff}.ds-nav .ds-nav-demo:hover{background:var(--light-action-hover,#c9daff);color:#14213b}.ds-nav a:focus-visible{outline:2px solid var(--focus,#6087e7);outline-offset:5px}@media(max-width:440px){.ds-nav{gap:1rem;flex-wrap:wrap;padding:1rem}}"
+    },
+    {
+      "name": "Destination Selector",
+      "kind": "custom",
+      "refersTo": "destination-panel",
+      "description": "Native destination choice; application changes route geometry, camera, and live directions. Preview is a standalone select.",
+      "html": "<div class=\"ds-destination\"><label for=\"ds-destination\">Where would you like to go?</label><select id=\"ds-destination\"><option>Reception</option><option>Workspace</option><option>Meeting room</option></select><p>Turn left into reception.</p></div>",
+      "css": ".ds-destination{font-family:\"Inter Variable\",sans-serif;max-width:265px;padding:1.1rem 1.1rem .9rem;border:1px solid #3b5073;border-radius:10px;background:var(--panel,#101c2f);color:#edf3ff}.ds-destination label{font-size:.68rem;color:#b7c8e3}.ds-destination select{font-family:\"Inter Variable\",sans-serif;display:block;width:100%;min-height:44px;margin-top:.8rem;padding:.3rem .2rem;background:var(--panel,#101c2f);border:0;border-bottom:1px solid #4e6486;color:#edf3ff;font-size:.95rem;color-scheme:dark;cursor:pointer}.ds-destination select:hover{border-bottom-color:#a6c1f4}.ds-destination select:focus-visible{outline:2px solid var(--focus,#6087e7);outline-offset:5px}.ds-destination p{font-size:.65rem;line-height:1.6;color:#a5badd;margin:.65rem 0 0}"
+    },
+    {
+      "name": "Demo Form Input",
+      "kind": "input",
+      "description": "Explicit required label and calm, bordered field for demo requests.",
+      "html": "<label class=\"ds-field\" for=\"ds-email\">Work email<input id=\"ds-email\" name=\"email\" type=\"email\" autocomplete=\"email\" required maxlength=\"254\" /></label>",
+      "css": ".ds-field{font-family:\"Inter Variable\",sans-serif;display:grid;gap:.6rem;max-width:420px;font-size:.75rem;font-weight:500;color:#3b475c}.ds-field input{font-family:\"Inter Variable\",sans-serif;min-width:0;min-height:46px;border:1px solid #cfd7e4;border-radius:6px;padding:.8rem .9rem;background:#fafbfd;color:#24334b;font-size:.85rem;font-weight:400;line-height:1.5;caret-color:#3a66ce}.ds-field input:hover{border-color:#91a5c4}.ds-field input:focus-visible{outline:2px solid #6489d9;outline-offset:2px;background:#fff}@media(max-width:700px){.ds-field input{font-size:1rem}}"
+    }
+  ],
+  "narrative": {
+    "northStar": "A Space Connected",
+    "overview": "Gnarly opens inside a dark procedural building: a scan becomes three connected floors, the camera returns through the doorway, and a blue route appears. A visible headline and demo action give this cinematic world a clear purpose. White editorial sections then explain the product with the same precise typography and restrained spatial diagrams.",
+    "keyCharacteristics": [
+      "Full-bleed navy environment and luminous blue routes.",
+      "Visible Inter Variable headline and decisive demo action.",
+      "Three open workflow chapters with illustrative diagrams.",
+      "Compact native controls and quiet white reading surfaces."
+    ],
+    "rules": [
+      {
+        "name": "Route",
+        "body": "Concentrate luminous blue in the navigation path, spatial accents, and interaction cues.",
+        "section": "colors"
+      },
+      {
+        "name": "Spatial Depth",
+        "body": "Let the environment carry depth; keep reading surfaces flat and clear.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do keep the headline and demo action available throughout the cinematic journey.",
+      "Do retain keyboard access, reduced motion, honest form feedback, and illustrative disclosures."
+    ],
+    "donts": [
+      "Don't introduce personal-domain labels, student or school branding, fake floor tabs, or unsupported product claims.",
+      "Don't loop the WebGL journey indefinitely or hide workflow content behind an accordion."
+    ]
+  }
+}
