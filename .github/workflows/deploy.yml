@@ -13,15 +13,10 @@ on:
   # Contents: Read and write on PersonalWebsite. This repo's GITHUB_TOKEN
   # cannot send that event from the other repository. No secret is added
   # in this workflow.
-  # A push on Naijei1/gnarly can do the same with event_type "gnarly".
-  # That token lives in the gnarly repo, not here. The /gnarly production
-  # build checks out Naijei1/gnarly (cursor/aws-backend-1b4f) and inlines the
-  # public AWS API and Cognito settings on the Gnarly build step. Google Maps
-  # key and map ID stay in Actions secrets. Firebase is not part of this build.
   # schedule and repository_dispatch run only after this file is on main.
   repository_dispatch:
-    types: [paxos-playground, gnarly]
-  # No-token fallback: rebuild from paxos-playground main and the Gnarly AWS web branch once a day.
+    types: [paxos-playground]
+  # No-token fallback: rebuild from paxos-playground main once a day.
   schedule:
     - cron: "17 6 * * *"
 
@@ -73,40 +68,6 @@ jobs:
 
       - name: Mount Paxos at /paxos
         run: bash scripts/mount-paxos.sh paxos-playground/dist dist/paxos
-
-      - name: Checkout Gnarly
-        uses: actions/checkout@v4
-        with:
-          repository: Naijei1/gnarly
-          ref: cursor/aws-backend-1b4f
-          path: gnarly
-
-      - name: Setup Node for Gnarly web
-        uses: actions/setup-node@v4
-        with:
-          node-version: 22
-          cache: npm
-          cache-dependency-path: gnarly/web/package-lock.json
-
-      # Vite inlines VITE_* at build time. AWS and Cognito values are public
-      # client config. The Maps key and map ID stay in Actions secrets.
-      - name: Build Gnarly web
-        working-directory: gnarly/web
-        env:
-          VITE_GNARLY_API_BASE: https://m7sgp6qsjkimymyrwa6bilxqzq0acbhx.lambda-url.us-east-1.on.aws
-          VITE_COGNITO_USER_POOL_ID: us-east-1_pQIUmVbPJ
-          VITE_COGNITO_CLIENT_ID: 1osnrt38iuqvf5laum1tnj1hdn
-          VITE_COGNITO_DOMAIN: gnarly-naijei.auth.us-east-1.amazoncognito.com
-          VITE_COGNITO_REDIRECT_URI: https://naijei.com/gnarly/
-          VITE_ADMIN_EMAILS: nj277@cornell.edu
-          VITE_GNARLY_BUCKET: gnarly-data-402275401617-us-east-1
-          VITE_BASE: /gnarly/
-          VITE_GOOGLE_MAPS_API_KEY: ${{ secrets.VITE_GOOGLE_MAPS_API_KEY }}
-          VITE_GOOGLE_MAPS_MAP_ID: ${{ secrets.VITE_GOOGLE_MAPS_MAP_ID }}
-        run: npm ci && npm run build
-
-      - name: Mount Gnarly at /gnarly
-        run: bash scripts/mount-gnarly.sh gnarly/web/dist dist/gnarly
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
