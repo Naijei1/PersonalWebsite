@@ -78,9 +78,9 @@ Bar and content cap at 1440px. On screens at least 900×620 without reduced moti
 Frames in `public/evidence/` are crops of the team's recorded walkthrough (`https://youtu.be/XkmW11bmEXg`), each linked to its timestamp. Captions state only what the frame shows. The hero carries an "Illustrative model" tag. Never present a render as footage, and never add customers, pilots, metrics, testimonials, or team claims without a source.
 
 ## Components
-**Actions:** header and hero "Request a demo" → `#request-demo`; "See a mapped route" → `#product`. Live map → `https://gnarlynav.com`. No secondary "Explore"/"Discover" links.
+**Actions:** header and hero "Request a demo" → `#request-demo`; "See a mapped route" → `#product`. Live map and "Explore the live map" → `/demo/`. No secondary "Explore"/"Discover" links.
 **Demo form:** required name, email, organization, space type; optional building description. Success only after an accepted provider response without activation messaging; failure keeps details and announces an alert; 15s timeout. FormSubmit default recipient `nj277@cornell.edu` (delivery configuration, never shown), overridable with `VITE_DEMO_FORM_ENDPOINT`.
-**Metadata:** canonical, `og:url`, and image URLs are absolute, built from `GNARLY_SITE_URL` (default `https://naijei.com/gnarly-land/`).
+**Metadata:** canonical, `og:url`, and image URLs are absolute, built from `GNARLY_SITE_URL` (default `https://gnarlynav.com/`).
 
 ## Do's and Don'ts
 - Do keep the headline, demo action, and an understandable model on the first screen at every size.

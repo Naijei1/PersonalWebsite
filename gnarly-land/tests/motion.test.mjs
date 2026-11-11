@@ -3,7 +3,7 @@ import { test } from "node:test";
 import { chromium } from "playwright";
 import { createServer } from "vite";
 
-const url = "http://127.0.0.1:5198/gnarly-land/";
+const url = "http://127.0.0.1:5198/";
 test(
   "responsive destination explorer, links, evidence, and demo form delivery states",
   { timeout: 90000 },
@@ -83,7 +83,7 @@ test(
       for (const href of links) {
         if (href.startsWith("#"))
           assert.ok(await page.locator(href).count(), `missing target ${href}`);
-        else
+        else if (href !== "/demo/" && href !== "/demo")
           assert.match(
             href,
             /^https:\/\/(youtu\.be|gnarlynav\.com|github\.com|formsubmit\.co)\b/,

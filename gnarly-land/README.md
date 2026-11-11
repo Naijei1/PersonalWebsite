@@ -1,6 +1,6 @@
 # Gnarly landing page
 
-Run `npm ci`, then `npm run dev`. The page is served at `/gnarly-land/`.
+Run `npm ci`, then `npm run dev`. The page is served at `/`. Companion-app links go to `/demo/`.
 `npm run build` creates the GitHub Pages artifact; `npm test` checks responsive
 layouts, accessible destination selection, reduced motion, form validation,
 provider errors, activation responses, and successful submission.

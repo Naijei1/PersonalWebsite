@@ -6,7 +6,7 @@ const film = "https://youtu.be/XkmW11bmEXg";
 const filmAt = (seconds: number) => `${film}?t=${seconds}`;
 const timecode = (seconds: number) =>
   `${Math.floor(seconds / 60)}:${String(seconds % 60).padStart(2, "0")}`;
-const webMap = "https://gnarlynav.com";
+const webMap = "/demo/";
 const code = "https://github.com/gnarly-nav/gnarly";
 const asset = (name: string) => `${import.meta.env.BASE_URL}evidence/${name}`;
 

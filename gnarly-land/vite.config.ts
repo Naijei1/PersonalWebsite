@@ -6,7 +6,7 @@ export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), "GNARLY_");
   const proxy = env.GNARLY_PREVIEW_ORIGIN
     ? {
-        "/gnarly/": {
+        "/demo/": {
           target: env.GNARLY_PREVIEW_ORIGIN,
           changeOrigin: true,
           secure: true,
@@ -16,7 +16,7 @@ export default defineConfig(({ mode }) => {
 
   // Canonical and Open Graph URLs must be absolute. Override for another host.
   const site = new URL(
-    env.GNARLY_SITE_URL || "https://naijei.com/gnarly-land/",
+    env.GNARLY_SITE_URL || "https://gnarlynav.com/",
   ).href.replace(/\/?$/, "/");
 
   return {
@@ -30,7 +30,7 @@ export default defineConfig(({ mode }) => {
         },
       },
     ],
-    base: "/gnarly-land/",
+    base: "/",
     server: { port: 5174, strictPort: true, proxy },
     preview: { port: 4174, strictPort: true, proxy },
   };

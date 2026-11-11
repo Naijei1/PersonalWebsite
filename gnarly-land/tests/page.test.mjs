@@ -14,8 +14,9 @@ test("startup branding, real evidence, demo conversion, and walkthrough", () => 
   assert.match(app, /Give visitors directions\./);
   assert.match(app, /See a mapped route/);
   assert.match(app, /Watch the walkthrough/);
-  assert.match(app, /https:\/\/gnarlynav\.com/);
-  assert.doesNotMatch(app + form, /href="\/gnarly\/"/);
+  assert.match(app, /const webMap = "\/demo\/"/);
+  assert.match(app, /Explore the live map/);
+  assert.doesNotMatch(app + form, /href="\/gnarly\/"|naijei\.com\/gnarly|https:\/\/gnarlynav\.com"/);
   assert.doesNotMatch(app, /Illustrative diagram|Discover Gnarly|Explore Gnarly/);
   for (const name of ["plan", "hallway", "ar", "capture", "connect", "elevator"])
     assert.ok(
