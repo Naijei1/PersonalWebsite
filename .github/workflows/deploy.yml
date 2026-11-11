@@ -108,6 +108,22 @@ jobs:
       - name: Mount Gnarly at /gnarly
         run: bash scripts/mount-gnarly.sh gnarly/web/dist dist/gnarly
 
+      # Landing page lives in this repo. It does not rebuild the companion
+      # and it does not change the Cognito redirect above.
+      - name: Setup Node for Gnarly landing page
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: gnarly-land/package-lock.json
+
+      - name: Build Gnarly landing page
+        working-directory: gnarly-land
+        run: npm ci && npm run build
+
+      - name: Mount Gnarly landing page at /gnarly-land
+        run: bash scripts/mount-gnarly-land.sh gnarly-land/dist dist/gnarly-land
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
