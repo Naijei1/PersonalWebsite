@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Page not found</title>
+  <!-- GitHub Pages serves this for any missing path, including /gnarly/map. -->
+  <script>
+    (function () {
+      var match = location.pathname.match(/^\/(?:gnarly|gnary)(?:\/(.*))?$/);
+      if (!match) return;
+      var rest = (match[1] || "").replace(/^\/+/, "");
+      if (rest === "index.html") rest = "";
+      location.replace("https://gnarlynav.com/" + rest + location.search + location.hash);
+    })();
+  </script>
+</head>
+<body>
+  <p>This page is not on naijei.com. <a href="/">Back to naijei.com</a>.</p>
+  <p>Gnarly has moved to <a href="https://gnarlynav.com/">gnarlynav.com</a>.</p>
+</body>
+</html>
