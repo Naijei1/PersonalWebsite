@@ -43,31 +43,84 @@ test(
         });
       });
       await page.goto(url, { waitUntil: "networkidle" });
-      assert.equal(
-        await page.locator(".cinematic-hero").getAttribute("data-phase"),
-        "ready",
-      );
+      // Reduced motion skips the WebGL sweep. The SVG route stays on screen,
+      // fully drawn, and the canvas that would play the scan stays hidden.
+      const reducedScene = () =>
+        page.evaluate(() => {
+          const route = document.querySelector(".scan-route");
+          const point = document.querySelector(".scan-point");
+          const fallback = document.querySelector(".spatial-fallback");
+          const canvas = document.querySelector(".cinematic-canvas");
+          const hero = document.querySelector(".cinematic-hero");
+          const routeStyle = getComputedStyle(route);
+          const pointStyle = getComputedStyle(point);
+          const fallbackStyle = getComputedStyle(fallback);
+          const canvasStyle = getComputedStyle(canvas);
+          const routeBox = route.getBoundingClientRect();
+          const pointBox = point.getBoundingClientRect();
+          const fallbackBox = fallback.getBoundingClientRect();
+          return {
+            phase: hero.getAttribute("data-phase"),
+            hasScene: hero.classList.contains("has-scene"),
+            staticTrack: document
+              .querySelector(".hero-track")
+              .classList.contains("is-static"),
+            heroPosition: getComputedStyle(hero).position,
+            controls: document.querySelectorAll(".cinematic-controls button")
+              .length,
+            routeAnimation: routeStyle.animationName,
+            routeOffset: routeStyle.strokeDashoffset,
+            routeWidth: routeBox.width,
+            routeHeight: routeBox.height,
+            pointAnimation: pointStyle.animationName,
+            pointWidth: pointBox.width,
+            pointOpacity: Number(pointStyle.opacity),
+            fallbackDisplay: fallbackStyle.display,
+            fallbackVisibility: fallbackStyle.visibility,
+            fallbackOpacity: Number(fallbackStyle.opacity),
+            fallbackWidth: fallbackBox.width,
+            fallbackHeight: fallbackBox.height,
+            canvasOpacity: Number(canvasStyle.opacity),
+            routePath: route.getAttribute("d"),
+          };
+        });
+      const assertRouteHeld = (state, label) => {
+        assert.equal(state.phase, "ready", label);
+        assert.equal(state.hasScene, false, label);
+        assert.equal(state.staticTrack, true, label);
+        assert.equal(state.heroPosition, "relative", label);
+        assert.equal(state.controls, 0, label);
+        assert.equal(state.routeAnimation, "none", label);
+        assert.equal(state.pointAnimation, "none", label);
+        assert.match(state.routeOffset, /^0(px)?$/, label);
+        assert.ok(
+          state.routeWidth > 8 && state.routeHeight > 8,
+          `${label} route box ${state.routeWidth}x${state.routeHeight}`,
+        );
+        assert.ok(
+          state.pointWidth > 2 && state.pointOpacity > 0.5,
+          `${label} point ${state.pointWidth}px at opacity ${state.pointOpacity}`,
+        );
+        assert.notEqual(state.fallbackDisplay, "none", label);
+        assert.notEqual(state.fallbackVisibility, "hidden", label);
+        assert.ok(
+          state.fallbackOpacity > 0.5 &&
+            state.fallbackWidth > 100 &&
+            state.fallbackHeight > 100,
+          `${label} fallback ${state.fallbackWidth}x${state.fallbackHeight} at opacity ${state.fallbackOpacity}`,
+        );
+        assert.equal(state.canvasOpacity, 0, label);
+      };
+      const resting = await reducedScene();
+      assertRouteHeld(resting, "reduced motion");
       assert.equal(
         await page.getByRole("button", { name: "Pause animation" }).count(),
         0,
       );
-      assert.equal(
-        await page
-          .locator(".scan-route")
-          .evaluate((el) => getComputedStyle(el).animationName),
-        "none",
-      );
-      // Reduced motion does not pin the hero.
-      assert.equal(
-        await page.locator(".hero").evaluate((el) => getComputedStyle(el).position),
-        "relative",
-      );
-      const firstRoute = await page.locator(".scan-route").getAttribute("d");
       await page.getByLabel("Choose a destination").selectOption("2");
-      assert.notEqual(
-        await page.locator(".scan-route").getAttribute("d"),
-        firstRoute,
-      );
+      const chosen = await reducedScene();
+      assertRouteHeld(chosen, "reduced motion after a destination change");
+      assert.notEqual(chosen.routePath, resting.routePath);
       assert.match(
         await page.locator(".spatial-fallback").textContent(),
         /Front desk/,
