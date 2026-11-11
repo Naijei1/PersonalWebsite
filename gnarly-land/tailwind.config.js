@@ -14,7 +14,7 @@ export default {
         paper: 'var(--paper)',
       },
       fontFamily: {
-        sans: ['"Pathway Extreme Variable"', 'sans-serif'],
+        sans: ['"Inter Variable"', 'sans-serif'],
       },
       letterSpacing: {
         sign: '-0.035em',

@@ -10,7 +10,7 @@
     "test": "node --test tests/*.test.mjs"
   },
   "dependencies": {
-    "@fontsource-variable/pathway-extreme": "^5.2.8",
+    "@fontsource-variable/inter": "^5.3.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "three": "^0.169.0"
@@ -18,12 +18,13 @@
   "devDependencies": {
     "@types/react": "^18.3.5",
     "@types/react-dom": "^18.3.0",
+    "@types/three": "^0.169.0",
     "@vitejs/plugin-react": "^4.3.1",
     "autoprefixer": "^10.4.20",
     "playwright": "^1.48.2",
     "postcss": "^8.4.41",
     "tailwindcss": "^3.4.10",
     "typescript": "^5.5.3",
-    "vite": "^5.4.2"
+    "vite": "^8.3.8"
   }
 }
