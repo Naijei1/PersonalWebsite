@@ -29,7 +29,7 @@ const endpoints = [
   new THREE.Vector3(-2.85, 0.12, 3.7),
 ];
 const entrance = new THREE.Vector3(0, 0.12, 6.1);
-/** Procedural scan → three connected floors → one route on the ground floor. */
+/** Procedural scan → two connected floors → one route on the ground floor. */
 export function mountCinematic(
   canvas: HTMLCanvasElement,
   {
@@ -52,14 +52,14 @@ export function mountCinematic(
     powerPreference: "low-power",
   });
   renderer.setPixelRatio(Math.min(devicePixelRatio || 1, 1.5));
-  renderer.setClearColor("#080d17");
+  renderer.setClearColor("#0a0f18");
   renderer.outputColorSpace = THREE.SRGBColorSpace;
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
   const scene = new THREE.Scene();
-  scene.fog = new THREE.FogExp2("#080d17", 0.022);
+  scene.fog = new THREE.FogExp2("#0a0f18", 0.022);
   const camera = new THREE.PerspectiveCamera(40, 1, 0.1, 100);
-  scene.add(new THREE.HemisphereLight("#b8d1ff", "#0b1424", 2.2));
-  const key = new THREE.DirectionalLight("#b2cdff", 3.2);
+  scene.add(new THREE.HemisphereLight("#cfe9ff", "#0a1018", 2.2));
+  const key = new THREE.DirectionalLight("#bfe6ff", 3.2);
   key.position.set(4, 10, 6);
   scene.add(key);
   const building = new THREE.Group();
@@ -71,10 +71,10 @@ export function mountCinematic(
     cloud: THREE.Points;
     count: number;
   }[] = [];
-  const narrow = () => canvas.clientWidth < 700;
-  // Below 900px the copy sits above the canvas instead of beside the model.
-  const stacked = () => canvas.clientWidth < 900;
-  for (let level = 0; level < 3; level++) {
+  // The copy never sits over the canvas: it is beside the model on wide
+  // screens and above it on phones, so the model is framed on its own.
+  const narrow = () => innerWidth < 700;
+  for (let level = 0; level < 2; level++) {
     const group = new THREE.Group();
     building.add(group);
     const materials: THREE.MeshStandardMaterial[] = [];
@@ -102,7 +102,7 @@ export function mountCinematic(
       mesh.position.set(x, y, z);
       group.add(mesh);
       const lineMat = new THREE.LineBasicMaterial({
-        color: "#8eaad4",
+        color: "#86b9d6",
         transparent: true,
         opacity: 0,
       });
@@ -114,21 +114,21 @@ export function mountCinematic(
       lines.position.copy(mesh.position);
       group.add(lines);
     };
-    box(9, 0.12, 11, 0, -0.1, 0, "#1d2a40");
+    box(9, 0.12, 11, 0, -0.1, 0, "#18212e");
     for (const x of [-2.85, 2.85])
       for (const z of [-3.7, 0, 3.7]) {
         const inner = x + (x < 0 ? 1.55 : -1.55);
-        box(3.1, 0.04, 3.2, x, 0.01, z, "#26354e");
-        box(3.1, 1.35, 0.075, x, 0.68, z - 1.6, "#263851");
-        box(0.075, 1.35, 3.2, x + (x < 0 ? -1.55 : 1.55), 0.68, z, "#2c3c55");
+        box(3.1, 0.04, 3.2, x, 0.01, z, "#1f2b3a");
+        box(3.1, 1.35, 0.075, x, 0.68, z - 1.6, "#223142");
+        box(0.075, 1.35, 3.2, x + (x < 0 ? -1.55 : 1.55), 0.68, z, "#27384a");
         // Corridor wall with a doorway in the middle.
-        box(0.07, 1.35, 0.9, inner, 0.68, z - 1.15, "#3b506e");
-        box(0.07, 1.35, 0.9, inner, 0.68, z + 1.15, "#3b506e");
+        box(0.07, 1.35, 0.9, inner, 0.68, z - 1.15, "#35506a");
+        box(0.07, 1.35, 0.9, inner, 0.68, z + 1.15, "#35506a");
       }
     if (level === 0) {
-      box(0.12, 2.2, 0.15, -1.05, 1.1, 5.45, "#5a7aa8");
-      box(0.12, 2.2, 0.15, 1.05, 1.1, 5.45, "#5a7aa8");
-      box(2.2, 0.12, 0.15, 0, 2.2, 5.45, "#7896c2");
+      box(0.12, 2.2, 0.15, -1.05, 1.1, 5.45, "#4f86a8");
+      box(0.12, 2.2, 0.15, 1.05, 1.1, 5.45, "#4f86a8");
+      box(2.2, 0.12, 0.15, 0, 2.2, 5.45, "#6fb3d6");
     }
     const points: number[][] = [],
       density = narrow() ? 20 : 30;
@@ -154,7 +154,7 @@ export function mountCinematic(
         new THREE.Float32BufferAttribute(points.flat(), 3),
       ),
       mat = new THREE.PointsMaterial({
-        color: "#a8c8ff",
+        color: "#9be6ff",
         size: 0.04,
         transparent: true,
         opacity: 0.9,
@@ -165,17 +165,17 @@ export function mountCinematic(
     geo.setDrawRange(0, 0);
     floors.push({ group, materials, edges, cloud, count: points.length });
   }
-  const grid = new THREE.GridHelper(48, 48, "#22344f", "#141f33");
+  const grid = new THREE.GridHelper(48, 48, "#1c2b3a", "#111a24");
   grid.position.y = -0.22;
   scene.add(grid);
   // The scan sweep: a tinted sheet with a bright leading frame, tall enough for every floor.
   const sweep = new THREE.Group();
-  const sheetGeo = new THREE.PlaneGeometry(10, 9.6);
+  const sheetGeo = new THREE.PlaneGeometry(10, 5.8);
   sweep.add(
     new THREE.Mesh(
       sheetGeo,
       new THREE.MeshBasicMaterial({
-        color: "#5d8dff",
+        color: "#4cc9ff",
         transparent: true,
         opacity: 0.16,
         side: THREE.DoubleSide,
@@ -186,13 +186,13 @@ export function mountCinematic(
     new THREE.LineSegments(
       new THREE.EdgesGeometry(sheetGeo),
       new THREE.LineBasicMaterial({
-        color: "#c3d8ff",
+        color: "#c9f1ff",
         transparent: true,
         opacity: 0.9,
       }),
     ),
   );
-  sweep.position.y = 4.6;
+  sweep.position.y = 2.7;
   scene.add(sweep);
   let route: THREE.Mesh,
     wash: THREE.Mesh,
@@ -200,7 +200,7 @@ export function mountCinematic(
     selected = 0;
   const beacon = new THREE.Mesh(
     new THREE.TorusGeometry(0.24, 0.045, 8, 40),
-    new THREE.MeshBasicMaterial({ color: "#e4efff", toneMapped: false }),
+    new THREE.MeshBasicMaterial({ color: "#e3f7ff", toneMapped: false }),
   );
   beacon.rotation.x = -Math.PI / 2;
   scene.add(beacon);
@@ -235,7 +235,7 @@ export function mountCinematic(
     route = new THREE.Mesh(
       new THREE.TubeGeometry(curve, 140, 0.075, 10, false),
       new THREE.MeshBasicMaterial({
-        color: "#d6e6ff",
+        color: "#e3f7ff",
         toneMapped: false,
         depthTest: false,
         transparent: true,
@@ -244,7 +244,7 @@ export function mountCinematic(
     wash = new THREE.Mesh(
       new THREE.TubeGeometry(curve, 140, 0.24, 10, false),
       new THREE.MeshBasicMaterial({
-        color: "#4d7bff",
+        color: "#4cc9ff",
         transparent: true,
         opacity: 0.3,
         depthWrite: false,
@@ -290,15 +290,6 @@ export function mountCinematic(
     if (!w || !h) return;
     renderer.setSize(w, h, false);
     camera.aspect = w / h;
-    // Leave the left of a wide stage for the headline.
-    camera.setViewOffset(
-      w,
-      h,
-      stacked() ? 0 : -w * (w < 1200 ? 0.23 : 0.17),
-      0,
-      w,
-      h,
-    );
     camera.updateProjectionMatrix();
     requestRender();
   };
@@ -382,19 +373,18 @@ export function mountCinematic(
     if (t < HOLD) {
       const p = ease((t - START) / (HOLD - 0.4 - START));
       position.copy(scanView).lerp(overview, p);
-      target.set(0, 2.6 + p * 1.2, 0);
+      target.set(0, 1.6 + p * 0.8, 0);
     } else {
       const p = ease((t - HOLD) / 1.9);
       position.copy(overview).lerp(floorView, p);
-      // Aim below the floor so the model sits above the copy and route picker.
       target
-        .set(0, 3.8, 0)
-        .lerp(new THREE.Vector3(focus.x, stacked() ? 0 : -1, focus.z + 0.4), p);
+        .set(0, 2.4, 0)
+        .lerp(new THREE.Vector3(focus.x, 0, focus.z + 0.4), p);
       position.x += focus.x * p;
-      // Small stages come closer once only the ground floor matters.
-      zoom = 1 - (stacked() ? (narrow() ? 0.34 : 0.2) : 0) * p;
+      // Come closer once only the ground floor matters.
+      zoom = 1 - (narrow() ? 0.34 : 0.2) * p;
     }
-    // Pull back on tall stages so all three floors stay in frame.
+    // Pull back on tall stages so both floors stay in frame.
     const fit = THREE.MathUtils.clamp(1.65 / camera.aspect, 1, 1.45) * zoom;
     camera.position.copy(target).lerp(position, fit);
     camera.lookAt(target);

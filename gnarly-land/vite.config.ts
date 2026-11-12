@@ -16,7 +16,7 @@ export default defineConfig(({ mode }) => {
 
   // Canonical and Open Graph URLs must be absolute. Override for another host.
   const site = new URL(
-    env.GNARLY_SITE_URL || "https://naijei.com/gnarly-land/",
+    env.GNARLY_SITE_URL || "https://gnarlynav.com/",
   ).href.replace(/\/?$/, "/");
 
   return {

@@ -1,31 +1,11 @@
-/** Tokens live in src/index.css. Tailwind only points at them. */
+/** Tokens live in src/index.css. Tailwind only provides the reset. */
 export default {
   content: ['./index.html', './src/**/*.{ts,tsx}'],
   theme: {
     extend: {
-      colors: {
-        ground: 'var(--ground)',
-        ink: 'var(--ink)',
-        mute: 'var(--mute)',
-        tape: 'var(--tape)',
-        'tape-ink': 'var(--tape-ink)',
-        line: 'var(--line)',
-        plate: 'var(--plate)',
-        paper: 'var(--paper)',
-      },
       fontFamily: {
-        sans: ['"Inter Variable"', 'sans-serif'],
-      },
-      letterSpacing: {
-        sign: '-0.035em',
-      },
-      maxWidth: {
-        measure: '68ch',
-        page: '76rem',
-      },
-      borderRadius: {
-        stage: '1.25rem',
-        phone: '1.75rem',
+        sans: ['"Geist Variable"', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+        mono: ['"Geist Mono Variable"', 'ui-monospace', 'monospace'],
       },
     },
   },

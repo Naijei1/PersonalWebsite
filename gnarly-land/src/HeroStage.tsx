@@ -6,23 +6,13 @@ const descriptions = [
   "Continue down the corridor. Room 104 is the second door on your right.",
   "Walk in, then take the first door on your left.",
 ];
-const paths = [
-  "M440 520V130H245",
-  "M440 520V290H625",
-  "M440 520V450H245",
-];
+const paths = ["M440 520V130H245", "M440 520V290H625", "M440 520V450H245"];
 // Plan coordinates after the fallback's skew, for upright labels.
 const fallbackLabels = [
   { x: 336, y: 122 },
   { x: 570, y: 300 },
   { x: 160, y: 300 },
 ];
-const captions: Record<ScenePhase, string> = {
-  scanning: "Scanning with a LiDAR iPhone",
-  mapping: "Rooms, doorways and floors connected",
-  navigating: "Drawing the route",
-  ready: "Finally connected.",
-};
 /** Wide screens scrub the route with scroll; phones play the short version. */
 const scrubQuery = "(min-width: 900px) and (min-height: 620px)";
 function SpatialFallback({ destination }: { destination: number }) {
@@ -40,30 +30,30 @@ function SpatialFallback({ destination }: { destination: number }) {
           height="32"
           patternUnits="userSpaceOnUse"
         >
-          <path d="M32 0H0V32" stroke="#6c8cb6" strokeOpacity=".13" />
+          <path d="M32 0H0V32" stroke="#7fa6c4" strokeOpacity=".12" />
         </pattern>
       </defs>
       <g transform="translate(230 10) matrix(.8 .24 -.55 .55 0 0)">
-        <path d="M100 40H760V560H100Z" fill="#17253a" stroke="#8ca6cd" />
+        <path d="M100 40H760V560H100Z" fill="#111a26" stroke="#7d9cb8" />
         <path d="M100 40H760V560H100Z" fill="url(#room-grid)" />
         {[70, 230, 390].map((y) => (
           <g key={y}>
             <path
               d={`M130 ${y}h230v120H130Z M520 ${y}h210v120H520Z`}
-              fill="#243850"
-              stroke="#6b87ac"
+              fill="#1a2737"
+              stroke="#5f7d99"
             />
             <path
               d={`M360 ${y}v40 M360 ${y + 80}v40 M520 ${y}v40 M520 ${y + 80}v40`}
-              stroke="#94afd3"
+              stroke="#9be6ff"
               strokeWidth="3"
             />
           </g>
         ))}
         <path
           d={paths[destination]}
-          stroke="#4d7bff"
-          strokeOpacity=".35"
+          stroke="#4cc9ff"
+          strokeOpacity=".3"
           strokeWidth="22"
           strokeLinecap="round"
           strokeLinejoin="round"
@@ -73,7 +63,7 @@ function SpatialFallback({ destination }: { destination: number }) {
           key={destination}
           d={paths[destination]}
           pathLength="1"
-          stroke="#d6e6ff"
+          stroke="#e3f7ff"
           strokeWidth="8"
           strokeLinecap="round"
           strokeLinejoin="round"
@@ -154,7 +144,7 @@ export function HeroStage({ children }: { children: ReactNode }) {
         controller.current = instance;
         instance.setScrubbed(wide.matches);
         setScrubbed(wide.matches);
-        instance.setProgress(progress());
+        instance.setProgress(frame());
         if (selectionMade.current) instance.destination(destinationRef.current);
       } catch {
         setReady(false);
@@ -172,12 +162,19 @@ export function HeroStage({ children }: { children: ReactNode }) {
     const resize = () => {
       instance?.setScrubbed(wide.matches);
       setScrubbed(wide.matches);
+      frame();
+    };
+    // The frame opens to full bleed as the pinned scroll draws the route.
+    const frame = () => {
+      const open = instance && wide.matches ? progress() : 0;
+      track.current?.style.setProperty("--open", open.toFixed(3));
+      return open;
     };
     const scroll = () => {
       if (pending) return;
       pending = requestAnimationFrame(() => {
         pending = 0;
-        instance?.setProgress(progress());
+        instance?.setProgress(frame());
       });
     };
     preference.addEventListener("change", change);
@@ -235,12 +232,13 @@ export function HeroStage({ children }: { children: ReactNode }) {
       document.getElementById("destination")?.focus();
     }
   }, [revealed]);
-  // One persistent button keeps focus as its job changes.
+  // One persistent button keeps focus as its job changes. While the desktop
+  // pin holds on the overview nothing moves, so scroll alone draws the route.
   const primary =
     phase === "ready"
       ? { label: "Replay the journey", run: replay }
       : holding
-        ? { label: "Show the route", run: finish }
+        ? null
         : {
             label: paused ? "Play animation" : "Pause animation",
             run: () => {
@@ -250,57 +248,48 @@ export function HeroStage({ children }: { children: ReactNode }) {
             },
           };
   return (
-    <div
-      ref={track}
-      className={`hero-track ${live ? "" : "is-static"}`}
-    >
+    <div ref={track} className={`hero-track ${live ? "" : "is-static"}`}>
       <section
         className={`hero cinematic-hero ${ready ? "has-scene" : ""}`}
         aria-labelledby="hero-title"
         data-phase={phase}
+        data-holding={holding}
       >
-        {children}
-        <div className="cinematic-scene">
-          <SpatialFallback destination={destination} />
-          <canvas
-            ref={canvas}
-            className="cinematic-canvas"
-            aria-hidden="true"
-          />
-          <span className="scene-label" aria-hidden="true" ref={startLabel}>
-            <span>Main entrance</span>
-          </span>
-          <span
-            className="scene-label is-end"
-            aria-hidden="true"
-            ref={endLabel}
-          >
-            <span>{destinations[destination]}</span>
-          </span>
-          <div className="scene-shade" aria-hidden="true" />
-          <p className="scene-caption">
-            <span className="scene-dot" aria-hidden="true" />
-            <span>{live ? captions[phase] : captions.ready}</span>
+        <div className="hero-frame">
+          <div className="cinematic-scene">
+            <SpatialFallback destination={destination} />
+            <canvas
+              ref={canvas}
+              className="cinematic-canvas"
+              aria-hidden="true"
+            />
+            <span className="scene-label" aria-hidden="true" ref={startLabel}>
+              <span>Main entrance</span>
+            </span>
+            <span
+              className="scene-label is-end"
+              aria-hidden="true"
+              ref={endLabel}
+            >
+              <span>{destinations[destination]}</span>
+            </span>
+            <div className="scene-shade" aria-hidden="true" />
             <span className="scene-tag">Illustrative model</span>
-          </p>
-          {live && (
-            <div className="cinematic-controls">
-              {holding && (
-                <span className="scroll-cue" aria-hidden="true">
-                  Scroll to draw the route
-                </span>
-              )}
-              <button type="button" onClick={primary.run}>
-                {primary.label}
-              </button>
-              {!holding && phase !== "ready" && (
-                <button type="button" onClick={finish}>
-                  Skip intro
+            {live && primary && (
+              <div className="cinematic-controls">
+                <button type="button" onClick={primary.run}>
+                  {primary.label}
                 </button>
-              )}
-            </div>
-          )}
+                {phase !== "ready" && (
+                  <button type="button" onClick={finish}>
+                    Skip intro
+                  </button>
+                )}
+              </div>
+            )}
+          </div>
         </div>
+        {children}
         <div
           className="destination-panel"
           id="try-a-route"

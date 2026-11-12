@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState, type FormEvent } from "react";
+import { Eyebrow } from "./ui";
 const endpoint =
   import.meta.env.VITE_DEMO_FORM_ENDPOINT ||
   "https://formsubmit.co/ajax/nj277@cornell.edu";
@@ -60,15 +61,14 @@ export function DemoRequest() {
   };
   return (
     <section
-      className="demo-section section"
+      className="demo section"
       id="request-demo"
       aria-labelledby="demo-title"
     >
-      <div className="demo-intro">
-        <h2 id="demo-title">
-          Tell us about
-          <br />
-          <span>your building.</span>
+      <div className="demo-intro" data-reveal>
+        <Eyebrow>Request a demo</Eyebrow>
+        <h2 id="demo-title" className="display">
+          Tell us about <span className="muted">your building.</span>
         </h2>
         <p>
           Floors, entrances, and the rooms visitors ask for most. We’ll reply
@@ -160,10 +160,7 @@ export function DemoRequest() {
               <option value="" disabled>
                 Select your space
               </option>
-              <option>Offices & workplaces</option>
-              <option>Campuses & education</option>
-              <option>Healthcare</option>
-              <option>Events & public venues</option>
+              <option>Campus building</option>
               <option>Another kind of space</option>
             </select>
           </label>

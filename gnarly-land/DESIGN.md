@@ -1,89 +1,78 @@
 ---
 name: Gnarly — Walk a Building
-description: One dark spatial page where a scan becomes a route, followed by recorded proof.
+description: A dark, editorial page with one light chapter. A scan becomes a route, then recorded proof, steps, the product and a demo request.
 colors:
-  ground: "#080d17"
-  plate: "#0e1727"
-  raise: "#132036"
-  line: "#1f2d45"
-  line-strong: "#34486a"
-  ink: "#eef3ff"
-  body: "#c3d0e6"
-  mute: "#9aabc8"
-  tape: "#91b3ff"
-  tape-hover: "#b3caff"
-  tape-ink: "#0a1630"
-  route-core: "#d6e6ff"
-  route-wash: "#4d7bff"
+  ink-950: "#070a10"
+  ink-900: "#0c1119"
+  ink-800: "#141b27"
+  paper: "#f4f5f1"
+  text-on-dark: "#eef2f8"
+  muted-on-dark: "#98a1b0"
+  text-on-light: "#0b0f16"
+  muted-on-light: "#586070"
+  scan: "#4cc9ff"
+  scan-hover: "#8adcff"
+  scan-ink: "#04121c"
+  scan-deep: "#0b7fb8"
+  depth-1: "#4cc9ff"
+  depth-2: "#6b7cff"
+  depth-3: "#b26bff"
+  depth-4: "#ff7ab6"
 typography:
-  display: {fontFamily: '"Inter Variable", sans-serif', fontSize: "clamp(2.9rem, 5vw, 4.75rem)", fontWeight: 560, lineHeight: 1.02, letterSpacing: "-0.04em"}
-  headline: {fontFamily: '"Inter Variable", sans-serif', fontSize: "clamp(2.1rem, 3.6vw, 3.25rem)", fontWeight: 560, lineHeight: 1.08, letterSpacing: "-0.035em"}
-  lede: {fontFamily: '"Inter Variable", sans-serif', fontSize: "1.125rem", fontWeight: 400, lineHeight: 1.6}
-  body: {fontFamily: '"Inter Variable", sans-serif', fontSize: "1.0625rem", fontWeight: 400, lineHeight: 1.65}
-  ui: {fontFamily: '"Inter Variable", sans-serif', fontSize: "0.875rem", fontWeight: 520, lineHeight: 1.4}
-  caption: {fontFamily: '"Inter Variable", sans-serif', fontSize: "0.8125rem", fontWeight: 400, lineHeight: 1.55}
+  display: {fontFamily: '"Geist Variable", sans-serif', fontSize: "min(clamp(2.6rem, 1rem + 5.6vw, 7rem), 11.5svh)", fontWeight: 300, lineHeight: 0.96, letterSpacing: "-0.05em"}
+  headline-display: {fontFamily: '"Geist Variable", sans-serif', fontSize: "clamp(2.4rem, 1.5rem + 3.4vw, 4.5rem)", fontWeight: 350, lineHeight: 1.08, letterSpacing: "-0.035em"}
+  headline: {fontFamily: '"Geist Variable", sans-serif', fontSize: "clamp(2rem, 1.35rem + 2.4vw, 3.5rem)", fontWeight: 350, lineHeight: 1.08, letterSpacing: "-0.035em"}
+  quote: {fontFamily: '"Geist Variable", sans-serif', fontSize: "clamp(1.35rem, 1.1rem + 1vw, 2rem)", fontWeight: 350, lineHeight: 1.2, letterSpacing: "-0.025em"}
+  lede: {fontFamily: '"Geist Variable", sans-serif', fontSize: "clamp(1.05rem, 0.95rem + 0.35vw, 1.25rem)", fontWeight: 400, lineHeight: 1.45}
+  ui: {fontFamily: '"Geist Variable", sans-serif', fontSize: "0.95rem", fontWeight: 500, lineHeight: 1}
+  label: {fontFamily: '"Geist Mono Variable", monospace', fontSize: "0.75rem", fontWeight: 450, letterSpacing: "0.07em", textTransform: uppercase}
 rounded:
   button: "8px"
-  panel: "12px"
-  form: "14px"
-  phone-frame: "22px"
+  card: "12px"
+  nav: "14px"
+  frame: "24px (20px under 64rem)"
+  phone: "1.9rem"
   pill: "999px"
 spacing:
-  page: "clamp(1.25rem, 5vw, 5rem)"
-  bar: "64px"
-  bar-mobile: "58px"
-  section: "120px"
-  section-mobile: "72px"
-components:
-  button-primary:
-    backgroundColor: "{colors.tape}"
-    textColor: "{colors.tape-ink}"
-    rounded: "{rounded.button}"
-    height: "48px"
-  button-line:
-    backgroundColor: "transparent"
-    textColor: "{colors.ink}"
-    borderColor: "{colors.line-strong}"
-    rounded: "{rounded.button}"
-  destination-panel:
-    backgroundColor: "#0d1729"
-    rounded: "{rounded.panel}"
-  scene-label-end:
-    backgroundColor: "{colors.tape}"
-    textColor: "{colors.tape-ink}"
-    rounded: "{rounded.pill}"
+  content: "90rem"
+  gutter: "clamp(1rem, 0.4rem + 2.4vw, 2.5rem)"
+  section: "clamp(4rem, 2rem + 6vw, 9rem) bottom, 0.6× top"
 ---
 # Design System: Gnarly
 
 ## Overview
-**North Star: "Walk a building. Give visitors directions."**
-The page is one continuous night surface. The hero is an illustrative model of the promise: a LiDAR sweep reveals three floors, the stack holds, the ground floor comes forward, and the route draws from a labelled main entrance to a named room. Directly below, the same story is proven with recorded footage of a real route. There is no change to a white page; depth comes from the scene, hairlines, and the footage itself.
+**North Star: "Walk a building. Give visitors directions."** The page is dark-first and editorial: thin, oversized type, hairlines instead of boxes, and one saturated accent. Its visual metaphors are gnarly's own: LiDAR point clouds, scan sweeps, depth-coloured geometry and a route on the floor. A single light chapter (Tools) breaks the dark run.
 
-## Colors
-Ground, plate, and raise build the surfaces. Ink is for headings and controls, body for paragraphs, mute for labels and secondary headline lines. Tape is route blue: the primary action, focus ring, scene accents, and the destination pill.
-**The Route Rule.** In the 3D model the route is the brightest element (route-core with an additive route-wash). Nothing else in the scene may compete with it.
+Order: floating nav → framed hero (copy left, illustrative model right) → field test proof (recorded footage) → pinned How it works → **Product (light)** → demo request → footer.
+
+## Colour
+Ink 950/900/800 build dark surfaces; paper is the light chapter. **Scan (`#4cc9ff`) is the only accent** and does every job: primary buttons, the route, open states, focus, bullets, timecodes. It matches the AR route in the real footage. On paper or white, links and focus rings use `scan-deep` for contrast. The depth ramp tints art only (point clouds, use-case icons, bento art bands), never chrome.
 
 ## Typography
-Inter Variable through `@fontsource-variable/inter/standard.css`; only the Latin subset downloads (unicode-range). Body text never drops below 16px on phones; supporting UI stays at 13–14px. The hero second line and the "Finally connected." caption use tape.
+Geist Variable for everything; display at 300–350 with tight tracking. Geist Mono for labels, chips, timecodes and scene captions: the "instrument" voice. Body copy never drops below 16px on phones; labels are 12px minimum.
+**The accent word.** One word of the H1 ("directions.") is set in solid `--scan`. No stripes, glow or sweep.
 
 ## Layout
-Bar and content cap at 1440px. On screens at least 900×620 without reduced motion, the hero sits in a track 80vh taller than the stage, so the stage pins while scroll draws the route; one firm scroll reaches the evidence. Copy sits bottom left, the destination panel bottom right, controls bottom left under the copy. Below 900px the hero stacks in reading order: copy, map (with playback controls in its lower edge), then the route picker directly beneath. Evidence frames share one height on desktop (columns follow their aspect ratios) and become hallway-over-two-phones on narrow screens.
+Content caps at 90rem. Dark sections in a row share a 1px hairline. The hero copy sits bottom-left over the frame, with the route picker bottom-right. Below 900px the hero stacks in reading order: copy, the framed map, then the picker joined to its bottom edge.
 
 ## Motion
-**Hero timeline:** autoplay 0.6s→4.4s (scan sweep, materialize, floor separation), then hold. Scroll progress maps the hold to the end (8.4s): upper floors fade, the camera comes to the ground floor, the route draws (6–7.8s), the beacon lands, "Finally connected." appears and the picker reveals. Scrolling up rewinds to the floor overview. Phones autoplay the whole sequence once.
-**Controls:** one persistent button changes between Pause/Play, Show the route, and Replay the journey so focus is never lost; Skip intro appears during autoplay. Skipping moves focus to the route picker, which is `inert` until revealed. Rendering stops when idle, offscreen, or hidden. Reduced motion, WebGL failure, and context loss show an SVG plan with the same entrance, destinations, and route changes, without a pin.
-**Destination change:** new route geometry redraws over 1.1s and the camera eases toward the new room.
+No animation libraries. Easing: `--ease-out` (0.16,1,0.3,1), `--ease-in-out` (0.83,0,0.17,1), `--ease-spring` (0.34,1.56,0.64,1).
+- **Hero intro:** the frame opens out of a small pill (clip-path, 1.2s), headline lines rise out of masks (35–50ms stagger), and the CTAs spring in. While the pinned hero scrolls, the frame's inset and radius go to zero (`--open`, driven by the same progress that draws the route).
+- **Hero scene:** the existing timeline. Autoplay to the floor overview, then scroll draws the route. Pause, skip and replay stay available; while the pin holds on the overview, scroll alone draws the route. Reduced motion, WebGL failure and context loss show the SVG plan.
+- **How it works:** at ≥64rem wide and ≥40rem tall it pins and steps with scroll (45svh per step). Smaller screens autoplay 6s per step, timed by the hairline above the open row, paused on hover, on focus or off-screen. Reduced motion opens steps on request. Inactive stage panels are `inert`.
+- **Reveals:** sections rise 16px and fade in once. Skipped under reduced motion.
 
 ## Evidence
-Frames in `public/evidence/` are crops of the team's recorded walkthrough (`https://youtu.be/XkmW11bmEXg`), each linked to its timestamp. Captions state only what the frame shows. The hero carries an "Illustrative model" tag. Never present a render as footage, and never add customers, pilots, metrics, testimonials, or team claims without a source.
+Frames in `public/evidence/` are crops of the team's recorded walkthrough (`https://youtu.be/XkmW11bmEXg`), each linked to its timestamp. The hero model and the showcase point cloud are labelled "Illustrative model". Never present a render as footage, and never add customers, pilots, metrics, testimonials or team claims without a source.
 
 ## Components
-**Actions:** header and hero "Request a demo" → `#request-demo`; "See a mapped route" → `#product`. Live map → `https://gnarlynav.com`. No secondary "Explore"/"Discover" links.
-**Demo form:** required name, email, organization, space type; optional building description. Success only after an accepted provider response without activation messaging; failure keeps details and announces an alert; 15s timeout. FormSubmit default recipient `nj277@cornell.edu` (delivery configuration, never shown), overridable with `VITE_DEMO_FORM_ENDPOINT`.
-**Metadata:** canonical, `og:url`, and image URLs are absolute, built from `GNARLY_SITE_URL` (default `https://naijei.com/gnarly-land/`).
+**Nav:** a dark glass card, fixed and inset from the top. Below 48rem the links fold into a menu (clip-path unroll) that closes on Escape, an outside click or a link choice; the CTA stays visible.
+**Actions:** "Request a demo" → `#request-demo`; hero secondary "Explore the live map" → `https://gnarlynav.com`.
+**Demo form:** a white card on dark. Required name, email, organization and space type; optional building description. Success only after an accepted provider response without activation messaging; failure keeps details and announces an alert; 15s timeout.
 
 ## Do's and Don'ts
-- Do keep the headline, demo action, and an understandable model on the first screen at every size.
-- Do keep keyboard access, reduced motion, and honest form states.
-- Don't introduce personal-domain labels, school or hackathon branding, or unsupported claims.
-- Don't lengthen the pin, loop the scene, or add smooth-scroll libraries; native scroll keeps the pin honest and accessible.
+- Do keep the headline, demo action and an understandable model on the first screen at every size.
+- Do keep keyboard access, reduced motion and honest form states.
+- Don't add a second accent, warm cream surfaces, maze or contour art, or dot-matrix lettering.
+- Don't claim iPad support, mesh or splat output, privacy guarantees or outside statistics until the team confirms them.
+- Don't add smooth-scroll libraries; native scroll keeps both pins honest and accessible.
