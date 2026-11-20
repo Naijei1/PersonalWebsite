@@ -1,6 +1,6 @@
 import { useLayoutEffect, useRef, useState } from 'react'
 
-type Point = { day: string; pageviews: number }
+type Point = { day: string; value: number }
 
 function formatDay(day: string): string {
   return new Intl.DateTimeFormat('en-US', { month: 'short', day: 'numeric', timeZone: 'UTC' }).format(
@@ -17,11 +17,11 @@ export default function Chart({ points, color, label }: { points: Point[]; color
   const pad = { l: 56, r: 8, t: 16, b: 32 }
   const innerW = width - pad.l - pad.r
   const innerH = height - pad.t - pad.b
-  const peak = Math.max(0, ...points.map((point) => point.pageviews))
+  const peak = Math.max(0, ...points.map((point) => point.value))
   const max = Math.max(peak, 1)
   const coords = points.map((point, index) => {
     const x = pad.l + (points.length <= 1 ? innerW / 2 : (index / (points.length - 1)) * innerW)
-    const y = pad.t + innerH - (point.pageviews / max) * innerH
+    const y = pad.t + innerH - (point.value / max) * innerH
     return { ...point, x, y }
   })
   const line = coords.map((point, index) => `${index === 0 ? 'M' : 'L'}${point.x.toFixed(1)} ${point.y.toFixed(1)}`).join(' ')
@@ -43,7 +43,7 @@ export default function Chart({ points, color, label }: { points: Point[]; color
 
   return (
     <svg viewBox={`0 0 ${width} ${height}`} role="img" aria-label={label} className="h-auto w-full font-sans">
-      {ticks.map((tick) => {
+      {[...new Set(ticks)].map((tick) => {
         const y = pad.t + innerH - (tick / max) * innerH
         return (
           <g key={tick}>
@@ -68,7 +68,7 @@ export default function Chart({ points, color, label }: { points: Point[]; color
       />
       {points.length <= 14 &&
         coords.map((point) => <circle key={point.day} cx={point.x} cy={point.y} r="3" fill={color} />)}
-      {labelIndexes.map((index) => {
+      {[...new Set(labelIndexes)].map((index) => {
         const point = coords[index]
         return (
           <text

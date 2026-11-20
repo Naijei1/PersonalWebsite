@@ -1,6 +1,6 @@
 import { CloudWatchClient, GetMetricDataCommand } from '@aws-sdk/client-cloudwatch'
 import { fromNodeProviderChain } from '@aws-sdk/credential-providers'
-import { HOSTING_REGION, type MetricQuerier } from './hosting.js'
+import { HOSTING_MAX_DAYS, HOSTING_REGION, type MetricQuerier } from './hosting.js'
 
 export function createCloudWatchQuerier(): MetricQuerier {
   const client = new CloudWatchClient({
@@ -13,7 +13,7 @@ export function createCloudWatchQuerier(): MetricQuerier {
       new GetMetricDataCommand({
         StartTime: input.start,
         EndTime: input.end,
-        MaxDatapoints: 200,
+        MaxDatapoints: input.queries.length * HOSTING_MAX_DAYS,
         MetricDataQueries: input.queries.map((query) => ({
           Id: query.id,
           MetricStat: {

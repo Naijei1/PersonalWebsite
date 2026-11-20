@@ -8,7 +8,8 @@ import { looksLikeBot, validateEvent } from '../shared/events.js'
 import { SITES, siteById } from '../shared/inventory.js'
 import { aggregate, demoOverview, emptyOverview, type Overview } from '../shared/overview.js'
 import { addDays, parseRange, utcDay } from '../shared/range.js'
-import type { AppConfig } from './config.js'
+import { createGoatCounter, fixtureVisitors } from './goatcounter.js'
+import { GOATCOUNTER_SITES, type AppConfig } from './config.js'
 import { GoogleIdentityProvider, type IdentityProvider } from './google.js'
 import { loadHosting, type HostingCache, type MetricQuerier } from './hosting.js'
 import { RateLimiter } from './limit.js'
@@ -21,6 +22,7 @@ export type CreateAppOptions = {
   provider?: IdentityProvider
   now?: () => Date
   collectPerMinute?: number
+  goatcounterFetch?: typeof fetch
   hostingQuery?: MetricQuerier
 }
 
@@ -37,6 +39,7 @@ export function createApp(options: CreateAppOptions): express.Express {
   const now = options.now ?? (() => new Date())
   const store = EventStore.open(options.dataFile)
   if (config.retentionDays) store.prune(addDays(utcDay(now()), -config.retentionDays))
+  const loadVisitors = createGoatCounter(config.goatcounterToken, options.goatcounterFetch, () => now().getTime())
   const hostingCache: HostingCache = new Map()
   const provider =
     options.provider ??
@@ -135,6 +138,21 @@ export function createApp(options: CreateAppOptions): express.Express {
       ...(query && config.demo === 'off' ? { query } : {}),
     })
     res.json(report)
+  }))
+
+  app.get('/api/goatcounter', asyncRoute(async (req, res) => {
+    if (!(await guardData(req, res, config))) return
+    const filters = parseFilters(req, now)
+    if ('error' in filters) {
+      res.status(400).json(filters)
+      return
+    }
+    const site = GOATCOUNTER_SITES.find((item) => item.key === filters.site)
+    if (!site) {
+      res.status(400).json({ error: 'bad-site' })
+      return
+    }
+    res.json(config.demo === 'off' ? await loadVisitors(site, filters.range) : fixtureVisitors(filters.range, config.demo === 'empty'))
   }))
 
   app.get('/api/export', asyncRoute(async (req, res) => {
@@ -423,17 +441,9 @@ function buildOverview(
   config: AppConfig,
   now: () => Date,
 ): Overview | { error: string } {
-  if (Array.isArray(req.query.site) || Array.isArray(req.query.from) || Array.isArray(req.query.to)) {
-    return { error: 'bad-date' }
-  }
-  const site = typeof req.query.site === 'string' && req.query.site !== '' ? req.query.site : 'all'
-  if (site !== 'all' && !siteById(site)) return { error: 'bad-site' }
-  const range = parseRange(
-    typeof req.query.from === 'string' ? req.query.from : undefined,
-    typeof req.query.to === 'string' ? req.query.to : undefined,
-    now(),
-  )
-  if ('error' in range) return range
+  const filters = parseFilters(req, now)
+  if ('error' in filters) return filters
+  const { site, range } = filters
   if (config.demo === 'demo') return demoOverview(range, site)
   if (config.demo === 'empty') return emptyOverview(range, site, 'empty')
   return aggregate(store.all, range, site, { unreadableRows: store.unreadableRows, truncated: store.truncated })
@@ -482,4 +492,19 @@ function toCsv(overview: Overview): string {
     lines.push(['referrer', '', overview.site, referrer.host, referrer.pageviews, '', ''].map(csvCell).join(','))
   }
   return `${lines.join('\n')}\n`
+}
+
+function parseFilters(req: Request, now: () => Date): { site: string; range: { from: string; to: string } } | { error: string } {
+  if (Array.isArray(req.query.site) || Array.isArray(req.query.from) || Array.isArray(req.query.to)) {
+    return { error: 'bad-date' }
+  }
+  const site = typeof req.query.site === 'string' && req.query.site !== '' ? req.query.site : 'all'
+  if (site !== 'all' && !siteById(site)) return { error: 'bad-site' }
+  const range = parseRange(
+    typeof req.query.from === 'string' ? req.query.from : undefined,
+    typeof req.query.to === 'string' ? req.query.to : undefined,
+    now(),
+  )
+  if ('error' in range) return range
+  return { site, range }
 }

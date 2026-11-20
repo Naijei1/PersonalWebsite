@@ -19,7 +19,7 @@ install({
 })
 ```
 
-The Pages workflow does not set those variables. Paths under `/gnarly` on `naijei.com` are classified as Gnarly by the server. The mounted Gnarly app is a different document, so it does not run this snippet unless that repo opts in on its own.
+The Pages workflow does not set those variables. Paths under `/gnarly` on `naijei.com` are classified as Gnarly by the server. `/gnarly` now redirects to gnarlynav.com. The Gnarly landing page at `/gnarly-land/` belongs to the main site.
 
 ## flashcards.naijei.com
 
@@ -27,12 +27,12 @@ Next.js. A later client component can call `install()` inside `useEffect`, or lo
 
 ## sql.naijei.com
 
-A separate app. Add one deferred module script at the end of the document, host `sql.naijei.com`. Lightsail instance `sql-workshop` has no verified HTTP history, so this snippet is the only future pageview source. Do not change that app from this branch.
+A separate app. Add one deferred module script at the end of the document, host `sql.naijei.com`. Lightsail instance `sql-workshop` has no verified HTTP history, and the optional local collector is separate from GoatCounter. Do not change that app from this branch.
 
 ## voter.naijei.com
 
 Amplify app Candate-voter. Same pattern as a single client bundle, host `voter.naijei.com`. Amplify `Requests` are already a separate hosting series and are not pageviews. Do not change that app from this branch.
 
-## naijei.com/gnarly
+## gnarlynav.com
 
-The Gnarly web app lives in another repository and has its own auth client. Do not modify that client or that repo. A later snippet would use host `naijei.com` or `www.naijei.com`. The path prefix selects the Gnarly site. Do not also record Lambda invocations as pageviews.
+The Gnarly web app lives in another repository and has its own auth client. Do not modify that client or that repo. A later snippet would use host `gnarlynav.com` or `www.gnarlynav.com`. Do not also record Lambda invocations as pageviews.

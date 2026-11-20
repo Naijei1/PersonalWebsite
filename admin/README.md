@@ -2,13 +2,13 @@
 
 Private dashboard for the naijei.com family. It is a separate app from the public Vite site and is not part of the GitHub Pages build.
 
-Nothing in this folder is live. It does not change DNS, hosting, or the public site, and it does not install a collector on any site.
+The owner dashboard reads GoatCounter visitors, raw Amplify requests, and events from the optional local collector. Each has its own coverage.
 
 ## What it can see
 
-Until a site opts in, the dashboard is empty. Empty means this app received no events. It does not mean the sites had no visitors.
+The collector panels show accepted local events. GoatCounter and CloudWatch have independent data sources and configuration.
 
-This app cannot see:
+The local collector cannot see:
 
 - GitHub Pages request logs
 - visitors who never run an opted-in collector
@@ -76,11 +76,17 @@ Set `VISITOR_HASH_SALT` (16+ characters) as well, or estimated uniques stay unav
 
 The snippet lives in `src/collector` and `collector/example/index.html`. The public site does not import it. `install()` does nothing unless `enabled` is exactly `true`. It loads as a module, sends `location.pathname` and the referrer hostname only, caps how often it sends, and swallows errors. Per-site notes are in `docs/adoption.md`.
 
+## GoatCounter visitors
+
+Set `GOATCOUNTER_API_TOKEN` in the admin server environment to a read-only token with statistics access to the five configured GoatCounter sites. The server requests only the selected site and UTC date range, and caches successful results for one hour. The Visitors panel shows the daily trend and up to ten countries, referrers and pages. A missing token displays “not configured”. Rate-limited sites serve their last cached result for the selected range when available.
+
+The `naijei` code covers naijei.com, including `/gnarly-land/`. `/gnarly` redirects to gnarlynav.com, which uses `gnarlynav`. Flashcards, Voter and SQL use `naijei-flashcards`, `naijei-voter` and `naijei-sql`. Each of those hosts needs its own public tracker to collect data. The admin itself has no tracking script. Keep the token out of public build variables.
+
+On Lightsail, update the root-only environment file used by the running service and restart the Node process using the steps in [hosting.md](docs/hosting.md#lightsail-environment-and-restart). `ADMIN_DEMO=1` in the local preview command above also populates the Visitors panel for screenshots.
+
 ## Hosting requests
 
-Optional and off. When `HOSTING_METRICS=1` is paired with region `us-east-1` and account `402275401617`, the server reads two Amplify `Requests` series. Those counts include assets and bots. They are not pageviews and they are not mixed into the collector totals. Unconfigured, failed, and unverified sources stay null. Details and the deployment sketch are in `docs/hosting.md`.
-
-Adopt it per document, after review. A view under `/gnarly` on `naijei.com` is stored as Gnarly, not also as the main site. Do not install the snippet twice on the same document.
+Optional and off. When `HOSTING_METRICS=1` is paired with region `us-east-1` and account `402275401617`, the server reads three Amplify `Requests` series. Those counts include assets and bots. They are not pageviews and they are not mixed into the collector totals. Unconfigured, failed, and unverified sources stay null. Details and the deployment sketch are in `docs/hosting.md`.
 
 Events are appended to `data/events.ndjson` (gitignored). One Node process is assumed. The in-memory rate limit is 30 accepted attempts per minute per socket address and resets on restart. Query strings, unexpected fields, and non-inventory hosts are rejected.
 

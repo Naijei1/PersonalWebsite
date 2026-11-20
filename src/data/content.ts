@@ -180,7 +180,7 @@ export const featured: Featured[] = [
     tags: ['Swift', 'ARKit', 'RoomPlan', 'Unity', 'React', 'Firebase'],
     accent: '#12B5CB',
     links: [
-      { label: 'Live demo', href: '/gnarly/' },
+      { label: 'Live demo', href: 'https://gnarlynav.com' },
       { label: 'Watch demo', href: 'https://youtu.be/XkmW11bmEXg' },
       { label: 'Code', href: 'https://github.com/mukundgaur/gnarly' },
     ],

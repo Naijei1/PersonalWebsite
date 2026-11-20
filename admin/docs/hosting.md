@@ -9,7 +9,7 @@ The admin is one Node process. GitHub Pages cannot host it. Do not put it on the
 - a platform machine plus a 1 GB volume, or
 - one small VPS with Caddy or the platform's TLS in front
 
-Budget a few dollars a month for the smallest always-on machine and about the host's per-GB disk price. Check the current price before creating anything. The Google OAuth client has no charge at this login volume. CloudWatch `GetMetricData` for two Amplify series, cached for an hour, stays inside the free tier for a personal account, but confirm that before enabling it.
+Budget a few dollars a month for the smallest always-on machine and about the host's per-GB disk price. Check the current price before creating anything. The Google OAuth client has no charge at this login volume. CloudWatch `GetMetricData` for three Amplify series, cached for an hour, stays inside the free tier for a personal account, but confirm that before enabling it.
 
 ## What the process needs
 
@@ -18,9 +18,27 @@ Budget a few dollars a month for the smallest always-on machine and about the ho
 - `DATA_FILE` as an absolute path on the persistent disk, for example `/var/lib/naijei-admin/events.ndjson`
 - `RETENTION_DAYS` optional, default 400, allowed range 30–800. Older UTC days are removed at startup
 - Secrets in the host secret store or a root-only environment file: `SESSION_SECRET`, `GOOGLE_CLIENT_SECRET`, and later `INGEST_KEY` and `VISITOR_HASH_SALT`
+- Optional `GOATCOUNTER_API_TOKEN` in the same server environment for visitor statistics
 - No secret in the browser bundle
 
 A redeploy that does not keep `DATA_FILE` on a volume will look empty again. That emptiness is missing storage, not a traffic measurement.
+
+## Lightsail environment and restart
+
+For a systemd deployment, identify the admin unit and read its `EnvironmentFiles` property to find the actual environment file on that machine. The unit name and absolute file path are deployment settings. For example, if the unit is `naijei-admin.service`:
+
+```sh
+systemctl show naijei-admin.service --property=EnvironmentFiles
+```
+
+Use `sudoedit` on the listed file and set `GOATCOUNTER_API_TOKEN` there. Keep it root-owned with mode `0600`. If provisioning a new unit, one possible location is `EnvironmentFile=/etc/naijei-admin.env`. After saving the environment file, restart and check the service:
+
+```sh
+sudo systemctl restart naijei-admin.service
+sudo systemctl is-active naijei-admin.service
+```
+
+The signed-in dashboard reads the new token on startup. Select a site under Visitors to check its statistics access.
 
 ## Hosting request metrics
 
@@ -36,14 +54,17 @@ Credentials come from the standard Node provider chain on the server (an instanc
 
 - `AWS/AmplifyHosting` `Requests`, dimension `App=d3otcaeyemrjvk` (FlashCardApp)
 - `AWS/AmplifyHosting` `Requests`, dimension `App=d253xhq1uabld3` (Candate-voter)
+- `AWS/AmplifyHosting` `Requests`, dimension `App=d3fmnitnjitx6a` (gnarlynav.com)
 
-It does not query Lambda `Invocations` or `UrlRequestCount`. Those series exist for `gnarly-api` and would double-count the same API activity. SQL Lightsail `sql-workshop` has no verified HTTP history. GitHub Pages for naijei.com and the `/gnarly` frontend have no request series here. Those sources stay unavailable, with a null total, not a zero.
+It does not query Lambda `Invocations` or `UrlRequestCount`. Those series exist for `gnarly-api` and would double-count the same API activity. SQL Lightsail `sql-workshop` has no verified HTTP history. GitHub Pages for naijei.com, including `/gnarly-land/`, have no request series here. Those sources stay unavailable, with a null total, not a zero.
 
 Queries are capped at 90 UTC days, one `GetMetricData` call, and cached for an hour. A failed or unconfigured source does not become zero and is not added to collector pageviews. A bucket CloudWatch actually returns as 0 stays 0 for that bucket only. Days with no bucket are omitted.
 
 `iam-hosting-metrics.json` is a directly usable identity policy. It is not attached to any role.
 
-The live service authorization reference lists `cloudwatch:GetMetricData` against the `dataset` resource (`arn:aws:cloudwatch:region:account:dataset/DatasetId`) and does not list `cloudwatch:namespace` as a condition key for that action. `cloudwatch:namespace` is documented only for `cloudwatch:PutMetricData`. `AWS/AmplifyHosting` `Requests` is a standard metric, not a CloudWatch dataset, so a `dataset/*` resource does not authorize this call. AWS grants `cloudwatch:Get*` on `Resource: "*"` in the managed `CloudWatchReadOnlyAccess` policy for the same reason. Metric name, namespace, and dimension cannot be limited in IAM for `GetMetricData`. This app's source allowlist is what keeps the query to the two Amplify app ids. The policy limits the call with `aws:RequestedRegion` = `us-east-1`, which is a global condition key the CloudWatch permissions reference allows on CloudWatch actions.
+The live service authorization reference lists `cloudwatch:GetMetricData` against the `dataset` resource (`arn:aws:cloudwatch:region:account:dataset/DatasetId`) and does not list `cloudwatch:namespace` as a condition key for that action. `cloudwatch:namespace` is documented only for `cloudwatch:PutMetricData`. `AWS/AmplifyHosting` `Requests` is a standard metric, not a CloudWatch dataset, so a `dataset/*` resource does not authorize this call. AWS grants `cloudwatch:Get*` on `Resource: "*"` in the managed `CloudWatchReadOnlyAccess` policy for the same reason. Metric name, namespace, and dimension cannot be limited in IAM for `GetMetricData`. This app's source allowlist is what keeps the query to the three Amplify app ids. The policy limits the call with `aws:RequestedRegion` = `us-east-1`, which is a global condition key the CloudWatch permissions reference allows on CloudWatch actions.
+
+`naijei.com/gnarly` redirects to gnarlynav.com.
 
 ## Collector
 

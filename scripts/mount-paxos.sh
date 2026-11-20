@@ -40,6 +40,19 @@ if grep -Eq 'href="\.\./|src="\.\./' "$dest/index.html"; then
   exit 1
 fi
 
+# The playground builds in another repository. Tag its published HTML at mount time.
+node --input-type=module - "$dest" <<'JS'
+import { readdirSync, readFileSync, writeFileSync } from 'node:fs'
+import { join } from 'node:path'
+const dest = process.argv[2]
+for (const entry of readdirSync(dest, { recursive: true, withFileTypes: true })) {
+  if (!entry.isFile() || !entry.name.endsWith('.html')) continue
+  const path = join(entry.parentPath, entry.name)
+  const html = readFileSync(path, 'utf8')
+  writeFileSync(path, html.replace(/<\/head>/i, '<script defer src="/analytics.js"></script></head>'))
+}
+JS
+
 echo "mounted $(find "$dest" -type f | wc -l) files at $dest"
 if [[ -f "$site_root/404.html" ]]; then
   echo "root 404.html exists; /paxos/index.html is a real file and is not that fallback"

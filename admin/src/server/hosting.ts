@@ -25,18 +25,18 @@ export type MetricQuerier = (input: {
 }) => Promise<{ id: string; points: MetricPoint[] }[]>
 
 type AmplifySource = {
-  id: 'flashcards-amplify' | 'voter-amplify'
-  queryId: 'flashcards' | 'voter'
+  id: 'flashcards-amplify' | 'voter-amplify' | 'gnarly-amplify'
+  queryId: 'flashcards' | 'voter' | 'gnarly'
   label: string
   appId: string
-  siteId: 'flashcards' | 'voter'
+  siteId: 'flashcards' | 'voter' | 'gnarly'
   coverage: string
 }
 
 type GapSource = {
-  id: 'sql-lightsail' | 'naijei-pages' | 'gnarly-frontend'
+  id: 'sql-lightsail' | 'naijei-pages'
   label: string
-  siteId: 'sql' | 'naijei' | 'gnarly'
+  siteId: 'sql' | 'naijei'
   coverage: string
 }
 
@@ -60,6 +60,14 @@ export const AMPLIFY_SOURCES: readonly AmplifySource[] = [
     coverage:
       'App-level AWS/AmplifyHosting Requests for App d253xhq1uabld3. The hostname and git branch were not verified. Buckets are CloudWatch UTC periods, not a local calendar day. The count includes assets and bots. It is not pageviews, visits, or unique people.',
   },
+  {
+    id: 'gnarly-amplify',
+    queryId: 'gnarly',
+    label: 'gnarlynav.com Amplify',
+    appId: 'd3fmnitnjitx6a',
+    siteId: 'gnarly',
+    coverage: 'Raw server requests for gnarlynav.com in us-east-1, including bots and assets. The old naijei.com/gnarly address redirects here.',
+  },
 ]
 
 export const GAP_SOURCES: readonly GapSource[] = [
@@ -73,14 +81,7 @@ export const GAP_SOURCES: readonly GapSource[] = [
     id: 'naijei-pages',
     label: 'naijei.com Pages',
     siteId: 'naijei',
-    coverage: 'GitHub Pages request history for the main site is not available to this app.',
-  },
-  {
-    id: 'gnarly-frontend',
-    label: 'naijei.com/gnarly frontend',
-    siteId: 'gnarly',
-    coverage:
-      'Request history for the /gnarly frontend is not available. Lambda invocation counts were left out so API calls are not shown as site traffic.',
+    coverage: 'GitHub Pages request history for the main site, including /gnarly-land/, is not available to this app.',
   },
 ]
 

@@ -77,6 +77,7 @@ export async function withServer(
     provider?: IdentityProvider
     now?: () => Date
     collectPerMinute?: number
+    goatcounterFetch?: typeof fetch
     hostingQuery?: MetricQuerier
   },
   fn: (ctx: { base: string; origin: string; config: AppConfig }) => Promise<void>,
@@ -88,6 +89,7 @@ export async function withServer(
     dataFile: join(dir, 'events.ndjson'),
     now: options.now ?? (() => new Date('2026-11-08T15:00:00.000Z')),
     collectPerMinute: options.collectPerMinute,
+    goatcounterFetch: options.goatcounterFetch,
     ...(options.hostingQuery ? { hostingQuery: options.hostingQuery } : {}),
   }
   if (options.provider) createOptions.provider = options.provider
