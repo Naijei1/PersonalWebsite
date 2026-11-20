@@ -8,10 +8,6 @@ export type Site = {
   excludePrefixes: readonly string[]
 }
 
-/**
- * naijei.com/gnarly is its own site. The main site excludes that prefix
- * so one event cannot land in both.
- */
 export const SITES: readonly Site[] = [
   {
     id: 'naijei',
@@ -24,11 +20,11 @@ export const SITES: readonly Site[] = [
   },
   {
     id: 'gnarly',
-    label: 'naijei.com/gnarly',
-    short: '/gnarly',
+    label: 'gnarlynav.com',
+    short: 'Gnarly',
     color: '#EA4335',
-    hosts: ['naijei.com', 'www.naijei.com'],
-    pathPrefix: '/gnarly',
+    hosts: ['gnarlynav.com', 'www.gnarlynav.com'],
+    pathPrefix: '/',
     excludePrefixes: [],
   },
   {
@@ -71,6 +67,11 @@ export function pathMatches(path: string, prefix: string): boolean {
 
 /** Fail closed: zero or more than one match is not a site. */
 export function resolveSite(host: string, path: string): Site | null {
+  // Preserve attribution for legacy collector clients at the old redirect path.
+  const legacyHosts = ['naijei.com', 'www.naijei.com']
+  if (legacyHosts.includes(host) && pathMatches(path, '/gnarly')) {
+    return { ...siteById('gnarly')!, hosts: legacyHosts, pathPrefix: '/gnarly' }
+  }
   const matches = SITES.filter(
     (site) =>
       site.hosts.includes(host) &&

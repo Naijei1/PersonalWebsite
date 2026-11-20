@@ -193,8 +193,8 @@ export function demoCount(siteIndex: number, day: string): number {
 }
 
 const DEMO_PATHS: Record<string, readonly string[]> = {
-  naijei: ['/', '/paxos/', '/downloader/'],
-  gnarly: ['/gnarly/', '/gnarly/map'],
+  naijei: ['/', '/paxos/', '/downloader/', '/gnarly-land/'],
+  gnarly: ['/', '/demo/'],
   flashcards: ['/', '/review', '/decks'],
   sql: ['/', '/play'],
   voter: ['/', '/board'],

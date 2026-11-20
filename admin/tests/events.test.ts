@@ -23,6 +23,9 @@ function stored(partial: Partial<StoredEvent> & Pick<StoredEvent, 'siteId' | 'pa
 test('gnarly is one site and is excluded from the main site', () => {
   assert.equal(resolveSite('naijei.com', '/')?.id, 'naijei')
   assert.equal(resolveSite('www.naijei.com', '/about')?.id, 'naijei')
+  assert.equal(resolveSite('gnarlynav.com', '/demo/')?.id, 'gnarly')
+  assert.equal(resolveSite('www.gnarlynav.com', '/')?.id, 'gnarly')
+  assert.equal(resolveSite('naijei.com', '/gnarly-land/')?.id, 'naijei')
   assert.equal(resolveSite('naijei.com', '/gnarly')?.id, 'gnarly')
   assert.equal(resolveSite('www.naijei.com', '/gnarly/map')?.id, 'gnarly')
   assert.equal(resolveSite('naijei.com', '/gnarlyish')?.id, 'naijei')
