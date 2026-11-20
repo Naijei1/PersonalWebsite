@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import Chart from './Chart'
+import type { VisitorReport } from '../shared/visitors.js'
 import type { Overview } from '../shared/overview.js'
 import { addDays, utcDay } from '../shared/range.js'
 
@@ -247,7 +248,7 @@ export default function App() {
                 <SiteTab
                   key={site.id}
                   id={site.id}
-                  label={site.id === 'naijei' ? 'naijei.com' : site.id === 'gnarly' ? '/gnarly' : site.label.replace('.naijei.com', '')}
+                  label={site.label.replace('.naijei.com', '')}
                   color={site.color}
                   active={activeSite === site.id}
                   onSelect={() => pushQuery((next) => next.set('site', site.id))}
@@ -365,7 +366,7 @@ function Login({ configured, flash }: { configured: boolean; flash: string | nul
         Sign in
       </h1>
       <p className="mt-5 max-w-[42rem] text-xl leading-relaxed text-ink-soft dark:text-night-soft sm:text-2xl">
-        Private analytics for naijei.com, /gnarly, flashcards, SQL, and voter.
+        Private analytics for naijei.com, gnarlynav.com, flashcards, SQL, and voter.
       </p>
       {flash && (
         <p className="mt-6 max-w-xl text-base text-ink dark:text-night-text" role="status">
@@ -511,7 +512,7 @@ function Dashboard({
             />
           </dl>
           <Chart
-            points={overview.trend}
+            points={overview.trend.map((point) => ({ day: point.day, value: point.pageviews }))}
             color={color}
             label={`${title} pageviews for ${siteLabel}`}
           />
@@ -531,6 +532,8 @@ function Dashboard({
           </ul>
         )}
       </section>
+
+      <VisitorsPanel overview={overview} />
 
       {hosting && <HostingPanel report={hosting} />}
 
@@ -599,11 +602,75 @@ function Dashboard({
   )
 }
 
+const visitorMessages = {
+  'not-configured': 'GoatCounter is not configured. Set the API token on the admin server to see visitors.',
+  unauthorized: 'GoatCounter declined the API token for this site.',
+  'rate-limited': 'GoatCounter is rate limited. Try again later.',
+  unavailable: 'Visitor data is temporarily unavailable.',
+}
+
+function VisitorsPanel({ overview }: { overview: Overview }) {
+  const [selected, setSelected] = useState('naijei')
+  const site = overview.site === 'all' ? selected : overview.site
+  const current = overview.sites.find((item) => item.id === site)!
+  const query = new URLSearchParams({ site, ...overview.range }).toString()
+  const [result, setResult] = useState<{ query: string; report: VisitorReport } | null>(null)
+  const report = result?.query === query ? result.report : null
+  useEffect(() => {
+    const controller = new AbortController()
+    async function load() {
+      const response = await fetch(`/api/goatcounter?${query}`, { signal: controller.signal })
+      if (!response.ok) throw new Error('Visitor report unavailable')
+      const report: VisitorReport = await response.json()
+      if (!controller.signal.aborted) setResult({ query, report })
+    }
+    load().catch(() => {
+      if (!controller.signal.aborted) setResult({ query, report: { status: 'unavailable' } })
+    })
+    return () => controller.abort()
+  }, [query])
+
+  return (
+    <section className="surface mt-8 p-5 sm:p-8" aria-labelledby="visitors-title">
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <h2 id="visitors-title" className="text-xl font-medium">Visitors (GoatCounter)</h2>
+        {overview.site === 'all' ? (
+          <label className="text-sm">Site
+            <select className="btn-tonal ml-2 px-4" value={selected} onChange={(event) => setSelected(event.target.value)}>
+              {overview.sites.map((item) => <option key={item.id} value={item.id}>{item.label}</option>)}
+            </select>
+          </label>
+        ) : <span className="text-sm">{current.label}</span>}
+      </div>
+      {report && 'data' in report ? <>
+        {report.status === 'stale' && <p className="mt-3" role="status">Showing cached data while GoatCounter is rate limited.</p>}
+        <div className="my-6 grid items-center gap-4 md:grid-cols-[10rem_1fr]">
+          <dl><Figure value={formatNumber(report.data.visitors)} label="Visitors" /></dl>
+          <Chart points={report.data.trend.map((point) => ({ day: point.day, value: point.visitors }))}
+            color={current.color} label={`Daily visitors for ${current.label}`} />
+        </div>
+        {report.data.visitors === 0 && <p className="mb-4 text-sm">No visitors in this range.</p>}
+        <div className="grid gap-4 lg:grid-cols-3">
+          {([['countries', 'Countries', 'Country'], ['referrers', 'Referrers', 'Source'], ['pages', 'Top pages', 'Path']] as const)
+            .map(([key, title, label]) => {
+              const rows = report.data[key]
+              const peak = Math.max(1, ...rows.map((row) => row.count))
+              return <DataTable key={key} title={title} labelHeading={label} valueLabel="Visitors" tint={current.color}
+                empty={`No ${key} in this range.`} rows={rows.map((row) => ({ label: row.label, value: row.count, width: `${100 * row.count / peak}%` }))} />
+            })}
+        </div>
+      </> : <p className="mt-3 text-sm text-ink-soft dark:text-night-soft" role="status">
+        {report ? visitorMessages[report.status] : 'Loading visitors…'}
+      </p>}
+    </section>
+  )
+}
+
 function HostingPanel({ report }: { report: HostingReport }) {
   return (
     <section className="surface mt-8 p-5 sm:p-8" aria-labelledby="hosting-title">
       <h2 id="hosting-title" className="text-xl font-medium tracking-[-0.03em]">
-        Hosting requests
+        Raw server requests (includes bots and assets)
       </h2>
       <p className="mt-3 max-w-[68ch] text-sm leading-6 text-ink-soft dark:text-night-soft">{report.note}</p>
       <ul className="mt-6 space-y-5">
@@ -665,6 +732,7 @@ function DataTable({
   rows,
   tint,
   valueLabel,
+  labelHeading = title === 'Referrers' ? 'Host' : 'Page',
 }: {
   title: string
   hint?: string
@@ -672,6 +740,7 @@ function DataTable({
   rows: { label: string; value: number; width: string }[]
   tint: string
   valueLabel: string
+  labelHeading?: string
 }) {
   return (
     <section className="surface overflow-hidden">
@@ -682,7 +751,7 @@ function DataTable({
       <table className="mt-4 w-full text-left text-sm">
         <thead className="text-ink-soft dark:text-night-soft">
           <tr>
-            <th className="px-5 pb-2 font-medium sm:px-6">{title === 'Referrers' ? 'Host' : 'Page'}</th>
+            <th className="px-5 pb-2 font-medium sm:px-6">{labelHeading}</th>
             <th className="px-5 pb-2 text-right font-medium sm:px-6">{valueLabel}</th>
           </tr>
         </thead>
@@ -694,8 +763,8 @@ function DataTable({
               </td>
             </tr>
           ) : (
-            rows.map((row) => (
-              <tr key={row.label} className="border-t border-black/[0.06] dark:border-white/[0.06]">
+            rows.map((row, index) => (
+              <tr key={`${row.label}-${index}`} className="border-t border-black/[0.06] dark:border-white/[0.06]">
                 <td
                   className="bar-cell break-all px-5 py-3 font-mono text-[13px] sm:px-6"
                   style={{ ['--bar' as string]: row.width, ['--tint' as string]: tint }}

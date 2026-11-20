@@ -30,10 +30,10 @@ test('the hosting IAM example is a usable identity policy for standard metrics',
 test('hosting sources stay on the verified allowlist', () => {
   assert.deepEqual(
     AMPLIFY_SOURCES.map((source) => source.appId),
-    ['d3otcaeyemrjvk', 'd253xhq1uabld3'],
+    ['d3otcaeyemrjvk', 'd253xhq1uabld3', 'd3fmnitnjitx6a'],
   )
-  assert.equal(AMPLIFY_SOURCES.some((source) => source.id.includes('lambda') || source.id.includes('gnarly')), false)
-  assert.equal(GAP_SOURCES.some((source) => source.id === 'gnarly-frontend'), true)
+  assert.equal(AMPLIFY_SOURCES.some((source) => source.id.includes('lambda')), false)
+  assert.equal(AMPLIFY_SOURCES.some((source) => source.id === 'gnarly-amplify'), true)
   assert.equal(GAP_SOURCES.some((source) => source.id === 'sql-lightsail'), true)
 })
 
@@ -167,7 +167,11 @@ test('an enabled adapter reports requests separately from collector pageviews', 
       config,
       hostingQuery: async () => {
         calls += 1
-        return [{ id: 'flashcards', points: [{ timestamp: '2026-11-07T00:00:00.000Z', value: 40 }] }, { id: 'voter', points: [] }]
+        return [
+          { id: 'flashcards', points: [{ timestamp: '2026-11-07T00:00:00.000Z', value: 40 }] },
+          { id: 'voter', points: [] },
+          { id: 'gnarly', points: [] },
+        ]
       },
     },
     async ({ base, origin }) => {

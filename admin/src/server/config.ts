@@ -1,5 +1,13 @@
 import { isAbsolute } from 'node:path'
 
+export const GOATCOUNTER_SITES = [
+  { key: 'naijei', label: 'naijei.com', code: 'naijei', host: 'naijei.com' },
+  { key: 'flashcards', label: 'Flashcards', code: 'naijei-flashcards', host: 'flashcards.naijei.com' },
+  { key: 'voter', label: 'Voter', code: 'naijei-voter', host: 'voter.naijei.com' },
+  { key: 'sql', label: 'SQL', code: 'naijei-sql', host: 'sql.naijei.com' },
+  { key: 'gnarly', label: 'Gnarly', code: 'gnarlynav', host: 'gnarlynav.com' },
+] as const
+
 export type AppConfig = {
   nodeEnv: string
   port: number
@@ -7,6 +15,7 @@ export type AppConfig = {
   googleClientId: string | null
   googleClientSecret: string | null
   sessionSecret: string | null
+  goatcounterToken: string | null
   ingestKey: string | null
   visitorSalt: string | null
   demo: 'off' | 'demo' | 'empty'
@@ -62,6 +71,7 @@ export function loadConfig(env: NodeJS.ProcessEnv): AppConfig {
     googleClientId,
     googleClientSecret,
     sessionSecret,
+    goatcounterToken: present(env.GOATCOUNTER_API_TOKEN),
     ingestKey,
     visitorSalt,
     demo,
